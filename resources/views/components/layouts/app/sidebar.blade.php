@@ -40,8 +40,8 @@
             [
                 'name' => 'Entradas',
                 'icon' => 'arrow-down-circle',
-                'url' => route('customers.index'),
-                'current' => request()->routeIs('customers.*'),
+                'url' => route('entries.index'),
+                'current' => request()->routeIs('entries.*'),
             ],
             [
                 'name' => 'Salidas/Facturación',
@@ -54,8 +54,8 @@
             [
                 'name' => 'Usuarios',
                 'icon' => 'user',
-                'url' => route('customers.index'),
-                'current' => request()->routeIs('customers.*'),
+                'url' => route('users.index'),
+                'current' => request()->routeIs('users.*'),
             ],
         ],
     ];

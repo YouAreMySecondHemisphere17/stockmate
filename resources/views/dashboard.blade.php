@@ -1,13 +1,21 @@
 <x-layouts.app :title="__('Dashboard')">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
+        <!-- Usuarios -->
+        <div class="flex items-center gap-4 bg-[#8398f3da] text-black p-4 rounded-xl shadow-m">
+            <div>
+                <div class="text-sm">Usuarios</div>
+                <div class="text-2xl font-bold">879</div>
+            </div>
+        </div> 
+
         <!-- Categorías -->
         <div class="flex items-center gap-4 bg-[#9c8353da] text-white p-4 rounded-xl shadow-md">
             <div>
                 <div class="text-sm">Categorías</div>
                 <div class="text-2xl font-bold">879</div>
             </div>
-        </div> 
+        </div>        
         
         <!-- Productos -->
         <div class="flex items-center gap-4 bg-[#faefbddc] text-black p-4 rounded-xl shadow-md">

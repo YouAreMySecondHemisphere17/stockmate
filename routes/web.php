@@ -7,8 +7,10 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EntryController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Models\Product;
 
@@ -33,8 +35,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('vendors', VendorController::class)->names('vendors');
 
+    Route::resource('entries', EntryController::class)->names('entries');
+
     Route::resource('customers', CustomerController::class)->names('customers');
  
+    Route::resource('users', UserController::class)->names('users');
+
     //FACTURAS
     Route::get('invoices', [InvoiceController::class, 'index'])->name('invoices.index');
 
