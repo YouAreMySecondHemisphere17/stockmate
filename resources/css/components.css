@@ -1,0 +1,112 @@
+.btn {
+    @apply font-bold py-2 px-4 rounded;
+}
+
+.btn-blue {
+    @apply bg-blue-500 text-white hover:bg-blue-700;
+}
+
+.btn-cambiar-imagen {
+    @apply bg-gray-200 text-black px-4 py-2 rounded-lg cursor-pointer font-semibold border border-gray-400 hover:bg-gray-300;
+}
+
+.btn-red {
+    @apply bg-red-500 text-white hover:bg-red-700;
+}
+
+.card {
+    @apply bg-white px-6 py-8 shadow-lg rounded-lg;
+}
+
+.cell-head-bordered {
+    @apply border border-black text-center px-6 py-2;
+}
+
+.cell-bordered {
+    @apply border border-black px-6 py-2;
+}
+
+.container-lightgray {
+    @apply bg-gray-100 p-6 rounded-lg shadow-md;
+}
+
+
+:root {
+    --color-background: #f9f8f6;
+    --color-border: #e5d3b3;
+    --color-primary: #fca311;
+    --color-primary-hover: #ff8c00;
+    --color-text: #3e3b36;
+    --color-label: #6b7280;
+    --color-input-background: #ffffff;
+    --color-secondary: #5a9e6f;
+}
+
+.form-custom {
+    background-color: var(--color-background);
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid var(--color-border);
+}
+
+.form-custom input,
+.form-custom select
+ {
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 14px;
+    background-color: var(--color-input-background);
+}
+
+.form-custom textarea {
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 14px;
+    background-color: var(--color-input-background);
+    width: 100%;
+}
+
+.form-custom label {
+    font-size: 14px;
+    color: var(--color-label);
+}
+
+.form-custom button {
+    background-color: var(--color-primary);
+    color: var(--color-text); 
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.form-custom button:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.form-custom .add-product-btn {
+    background-color: var(--color-secondary);
+    color: var(--color-text); 
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-custom .add-product-btn:hover {
+    background-color: #38755b;
+}
+
+.form-custom select {
+    background-color: var(--color-input-background);
+    color: var(--color-text);
+}
+
+.form-custom input:focus,
+.form-custom select:focus {
+    border-color: var(--color-primary);
+    outline: none;
+}
