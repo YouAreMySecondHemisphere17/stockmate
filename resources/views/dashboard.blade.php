@@ -13,7 +13,7 @@
         <div class="flex items-center gap-4 bg-[#9c8353da] text-white p-4 rounded-xl shadow-md">
             <div>
                 <div class="text-sm">Categorías</div>
-                <div class="text-2xl font-bold">879</div>
+                <div class="text-2xl font-bold">{{ Category::getTotalCategories() }}</div>
             </div>
         </div>        
         

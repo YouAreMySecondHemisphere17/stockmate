@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Models\Purchase;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 
 class EntryController extends Controller
@@ -23,7 +25,10 @@ class EntryController extends Controller
      */
     public function create()
     {
-        return view('entries.create');
+        $products = Product::all();
+        $vendors = Vendor::all();
+
+        return view('entries.create', compact('products', 'vendors'));
     }
 
     /**
@@ -32,18 +37,20 @@ class EntryController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|string|min:3|max:255',
-            'phone' => 'required|string|max:255',
-            'email' => 'nullable|string|email|max:255',
-            'address' => 'nullable|string',
+            'product_id' => 'required|exists:products,id',
+            'vendor_id' => 'required|exists:vendors,id',
+            'price' => 'required|numeric|min:0',
+            'quantity' => 'required|integer|min:1',
+            'transaction_date' => 'required|date',
         ]);
 
-        Purchase::create($data);
+        $entry = Purchase::create($data);
+        Product::calculateStock($entry->product->id);
 
         session()->flash('swal', [
             'icon' => 'success',
             'title' => '¡Bien hecho!',
-            'text' => 'El proveedor se ha creado correctamente',
+            'text' => 'La entrada se ha creado correctamente',
         ]);
 
         return redirect()->route('entries.index');
@@ -60,24 +67,30 @@ class EntryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Purchase $purchase)
+    public function edit(Purchase $entry)
     {
-        return view('entries.edit', compact('purchase'));
+        $products = Product::all();
+        $vendors = Vendor::all();
+
+        return view('entries.edit', compact('entry', 'products', 'vendors'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Purchase $purchase)
+    public function update(Request $request, Purchase $entry)
     {
         $data = $request->validate([
-            'name' => 'required|string|min:3|max:255',
-            'phone' => 'required|string|max:255',
-            'email' => 'nullable|string|email|max:255',
-            'address' => 'nullable|string',
+            'product_id' => 'required|exists:products,id',
+            'vendor_id' => 'required|exists:vendors,id',
+            'price' => 'required|numeric|min:0',
+            'quantity' => 'required|integer|min:1',
+            'transaction_date' => 'required|date',
         ]);
 
-        $purchase->update($data);
+        $entry->update($data);
+
+        Product::calculateStock($entry->product->id);
 
         session()->flash('swal', [
             'icon' => 'success',
@@ -85,16 +98,18 @@ class EntryController extends Controller
             'text' => 'El proveedor se ha actualizado correctamente',
         ]);
 
-        return redirect()->route('entries.edit', $purchase);
+        return redirect()->route('entries.edit', $entry);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Purchase $purchase)
+    public function destroy(Purchase $entry)
     {
-        $purchase->delete();
+        $entry->delete();
 
+        Product::calculateStock($entry->product->id);
+        
         session()->flash('swal', [
             'icon' => 'success',
             'title' => '¡Bien hecho!',

@@ -40,11 +40,19 @@ class Product extends Model
         return $this->hasMany(Sell::class);
     }
 
-    public function calculateStock()
+    public function sellDetails()
     {
-        $entries = $this->purchases()->sum('quantity'); 
-        $exits = $this->sells()->sum('quantity');  
+    return $this->hasMany(SellDetails::class, 'product_id');
+    }
 
-        return $entries - $exits;
+    public static function calculateStock($productId)
+    {
+        $product = self::findOrFail($productId);
+    
+        $entries = $product->purchases()->sum('quantity'); 
+        $exits = $product->sellDetails()->sum('quantity_sold');  
+    
+        $product->current_stock = $entries - $exits;
+        $product->save();
     }
 }

@@ -10,41 +10,32 @@
         </flux:breadcrumbs.item>
     </flux:breadcrumbs> 
 
-    <a href="{{route('invoices.create')}}" class="btn text-xs px-6 py-2 rounded-lg bg-[#fca311] text-black hover:bg-[#ff8c00]">
+    <a href="{{route('entries.create')}}" class="btn text-xs px-6 py-2 rounded-lg bg-[#b1f7cd] text-black hover:bg-[#b1f7cd]">
         Registrar Entrada
     </a> 
 </div>
 
 <div class="relative overflow-x-auto bg-[#f9f8f6] p-4 rounded-lg border border-[#e5d3b3]">
     <table class="w-full text-sm text-left rtl:text-right text-black">
-        <thead class="text-xs text-black uppercase bg-[#fca311]">
+        <thead class="text-xs text-black uppercase bg-[#b1f7cd]">
             <tr>
                 <th scope="col" class="px-6 py-3">
                     ID
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Cliente
+                    Producto
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Monto Total
+                    Proveedor
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Monto Pagado
+                    Precio
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Monto Descuento
+                    Cantidad
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Fecha de Venta
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Método de Pago
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Estado de Pago
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Sucursal
+                    Fecha
                 </th>
                 <th scope="col" class="px-6 py-3 text-center">
                     Acciones
@@ -52,42 +43,33 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($invoices as $invoice)
+            @foreach ($entries as $entry)
                 <tr class="bg-white border-b border-[#e5d3b3]">
                     <th scope="row" class="px-6 py-4 font-medium text-[#3e3b36] whitespace-nowrap">
-                        {{$invoice->id}}
+                        {{$entry->id}}
                     </th>
                     <td class="px-6 py-4">
-                        {{$invoice->customer->name}}
+                        {{$entry->product->product_name}}
                     </td>
                     <td class="px-6 py-4">
-                        {{$invoice->total_amount}} USD
+                        {{$entry->vendor->name}} 
                     </td>
                     <td class="px-6 py-4">
-                        {{$invoice->paid_amount}} USD
+                        {{$entry->price}} USD
                     </td>
                     <td class="px-6 py-4">
-                        {{$invoice->discount_amount}} USD
+                        {{$entry->quantity}}
                     </td>
                     <td class="px-6 py-4">
-                        {{$invoice->sell_date}}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{$invoice->payment_method}}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{$invoice->payment_status}}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{$invoice->branch->branch_name}}
-                    </td>     
+                        {{$entry->transaction_date}}
+                    </td>    
                     <td class="px-6 py-4">
                         <div class="flex space-x-2">
-                            <a href="{{route('invoices.edit', $invoice)}}" class="btn text-xs px-4 py-2 rounded-lg bg-[#fca311] text-black hover:bg-[#ff8c00]">
+                            <a href="{{route('entries.edit', $entry)}}" class="btn text-xs px-4 py-2 rounded-lg bg-[#b1f7cd] text-black hover:bg-[#c0f0d3]">
                                 Editar
                             </a>
 
-                            <form class="delete-form" action="{{route('invoices.destroy', $invoice)}}" method="POST">
+                            <form class="delete-form" action="{{route('entries.destroy', $entry)}}" method="POST">
                                 @csrf
                                 @method('DELETE')
 
@@ -104,7 +86,7 @@
 </div>
 
 <div class="mt-4">
-    {{ $invoices->links() }}
+    {{ $entries->links() }}
 </div>
 
 </x-layouts.app>

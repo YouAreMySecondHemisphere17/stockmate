@@ -46,7 +46,7 @@
             <div class="flex">
                 <div class="flex-1 mr-3">
                     <label for="sell_date" class="block text-sm font-medium text-gray-700">Fecha de Venta</label>
-                    <input type="date" id="sell_date" name="sell_date" value="{{ old('sell_date') }}" class="w-full border-gray-300 rounded-md">
+                    <input type="date" id="sell_date" name="sell_date" value="{{ old('sell_date', date('Y-m-d')) }}" class="w-full border-gray-300 rounded-md">
                 </div>
 
                 <div class="flex-1 mr-3">

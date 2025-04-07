@@ -17,4 +17,14 @@ class Purchase extends Model
         'quantity',      
         'transaction_date'
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class);
+    }
 }

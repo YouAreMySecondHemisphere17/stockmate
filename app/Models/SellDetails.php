@@ -19,10 +19,6 @@ class SellDetails extends Model
         'discount',
     ];
 
-    public function stock(){
-		return $this->belongsTo(Stock::class,'stock_id');
-	}
-
 	public function product(){
 		return $this->belongsTo(Product::class);
 	}
