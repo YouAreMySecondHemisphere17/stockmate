@@ -48,11 +48,6 @@
 
             <div class="flex">
                 <div class="flex-1 mr-3">
-                    <label for="transaction_date" class="block text-sm font-medium text-gray-700">Fecha de Compra</label>
-                    <input type="date" id="transaction_date" name="transaction_date" value="{{ old('transaction_date', $entry->transaction_date) }}" class="w-full border-gray-300 rounded-md">
-                </div>
-
-                <div class="flex-1 mr-3">
                     <label for="price" class="block text-sm font-medium text-gray-700">Precio de Compra</label>
                     <input type="number" id="price" name="price" value="{{ old('price',  $entry->price) }}" class="w-full border-gray-300 rounded-md" step="0.01" min="0.01" max="999999.99">
                 </div>

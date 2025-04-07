@@ -85,7 +85,6 @@ class EntryController extends Controller
             'vendor_id' => 'required|exists:vendors,id',
             'price' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:1',
-            'transaction_date' => 'required|date',
         ]);
 
         $entry->update($data);

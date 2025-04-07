@@ -21,8 +21,10 @@
     
                 <div class="flex">
                     <div class="flex-1 mr-3">
-                        <label for="date" class="block text-sm font-medium text-gray-700">Fecha del Pago</label>
-                        <input type="date" id="date" name="date" value="{{ old('date', date('Y-m-d')) }}" class="w-full border-gray-300 rounded-md">
+                        <div class="flex-1 mr-3">
+                            <label for="date" class="block text-sm font-medium text-gray-700">Fecha del Pago</label>
+                            <input type="date" id="date" name="date" value="{{ date('Y-m-d') }}" class="w-full border-gray-300 rounded-md" readonly>
+                        </div>
                     </div>
 
                     <div class="flex-1 mr-3">
