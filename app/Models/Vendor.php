@@ -21,4 +21,12 @@ class Vendor extends Model
     {
         return $this->hasMany(Purchase::class);
     }
+
+    public static function getTotalVendors()
+    {
+        $total = Vendor::count();
+    
+        return $total;
+    }
+    
 }

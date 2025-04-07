@@ -32,9 +32,9 @@ class DatabaseSeeder extends Seeder
 
         Category::factory()->count(5)->create();
         Vendor::factory()->count(10)->create();
-        Product::factory()->count(10)->create();
+        Product::factory()->count(14)->create();
         Customer::factory()->count(20)->create();
-        Branch::factory()->count(10)->create();
-        Company::factory()->count(10)->create();
+        Branch::factory()->count(9)->create();
+        Company::factory()->count(3)->create();
     }
 }
