@@ -18,12 +18,11 @@ class Sell extends Model
         'paid_amount',
         'sell_date',
         'discount_amount',
-        'payment_method',
         'payment_status',
     ];
     
     public function customer(){
-    	return $this->belongsTo(Category::class);
+    	return $this->belongsTo(Customer::class);
     }
 
     public function user(){

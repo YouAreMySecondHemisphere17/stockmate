@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
+            
             $table->enum('status', array_column(CustomerStatusEnum::cases(), 'value'))
             ->default(CustomerStatusEnum::ACTIVE->value); //Estado
             

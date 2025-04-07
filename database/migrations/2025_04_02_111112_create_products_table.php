@@ -15,7 +15,8 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('category_id'); //Categoría
+            $table->unsignedBigInteger('category_id')->nullable();
+       
             $table->string('product_name'); //Nombre
             $table->text('details')->nullable(); //Descripción
             $table->decimal('sold_price', 10, 2); //Precio de Venta
@@ -25,6 +26,8 @@ return new class extends Migration
             ->default(ProductStatusEnum::ACTIVE->value); //Estado
 
             $table->string('image_path')->nullable(); //Imagen
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
 
             $table->timestamps();
         });

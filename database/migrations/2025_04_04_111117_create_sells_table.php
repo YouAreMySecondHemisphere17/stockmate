@@ -16,20 +16,22 @@ return new class extends Migration
         Schema::create('sells', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('user_id'); //Usuario
-            $table->integer('customer_id'); //Cliente
-            $table->integer('branch_id')->default(1); //Sucursal
+            $table->unsignedBigInteger('customer_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('branch_id'); //Sucursal
+
             $table->double('total_amount'); //Monto total
             $table->double('paid_amount')->default(0); //Monto pagado
             $table->string('sell_date')->nullable(); //Fecha de la venta
             $table->double('discount_amount')->default(0); //Monto descuento
 
-            $table->enum('payment_method', array_column(PaymentMethodEnum::cases(), 'value'))
-            ->default(PaymentMethodEnum::CASH->value); //Método de pago
-
             $table->enum('payment_status', array_column(PaymentStatusEnum::cases(), 'value'))
             ->default(PaymentStatusEnum::PENDING->value); //Estado de pago
             
+            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('branch_id')->references('id')->on('branches');
+
             $table->timestamps();
         });
     }

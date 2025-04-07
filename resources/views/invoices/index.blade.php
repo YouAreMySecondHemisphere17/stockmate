@@ -29,16 +29,13 @@
                     Monto Total
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Monto Pagado
-                </th>
-                <th scope="col" class="px-6 py-3">
                     Monto Descuento
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Fecha de Venta
+                    Monto Pagado
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Método de Pago
+                    Fecha de Venta
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Estado de Pago
@@ -58,22 +55,19 @@
                         {{$invoice->id}}
                     </th>
                     <td class="px-6 py-4">
-                        {{$invoice->customer->name}}
+                        {{$invoice->customer->customer_name}}
                     </td>
                     <td class="px-6 py-4">
                         {{$invoice->total_amount}} USD
                     </td>
                     <td class="px-6 py-4">
-                        {{$invoice->paid_amount}} USD
-                    </td>
-                    <td class="px-6 py-4">
                         {{$invoice->discount_amount}} USD
                     </td>
                     <td class="px-6 py-4">
-                        {{$invoice->sell_date}}
+                        {{$invoice->paid_amount}} USD
                     </td>
                     <td class="px-6 py-4">
-                        {{$invoice->payment_method}}
+                        {{$invoice->sell_date}}
                     </td>
                     <td class="px-6 py-4">
                         {{$invoice->payment_status}}
@@ -83,15 +77,19 @@
                     </td>     
                     <td class="px-6 py-4">
                         <div class="flex space-x-2">
+                            <a href="{{ route('payments.create', $invoice) }}" class="btn text-xs px-4 py-2 rounded-lg bg-[#92df8f] text-black hover:bg-[#92df8f]">
+                                Abonar
+                            </a>
+
                             <a href="{{route('invoices.edit', $invoice)}}" class="btn text-xs px-4 py-2 rounded-lg bg-[#fca311] text-black hover:bg-[#ff8c00]">
-                                Editar
+                                Actualizar Estado
                             </a>
 
                             <form class="delete-form" action="{{route('invoices.destroy', $invoice)}}" method="POST">
                                 @csrf
                                 @method('DELETE')
 
-                                <button class="btn text-xs px-4 py-2 rounded-lg bg-[#d9534f] text-white hover:bg-[#c9302c]">
+                                <button class="btn text-xs py-2 rounded-lg bg-[#d9534f] text-white hover:bg-[#c9302c]">
                                     Eliminar
                                 </button>
                             </form>

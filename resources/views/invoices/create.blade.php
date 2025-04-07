@@ -46,7 +46,7 @@
             <div class="flex">
                 <div class="flex-1 mr-3">
                     <label for="sell_date" class="block text-sm font-medium text-gray-700">Fecha de Venta</label>
-                    <input type="date" id="sell_date" name="sell_date" value="{{ old('sell_date', date('Y-m-d')) }}" class="w-full border-gray-300 rounded-md">
+                    <input type="date" id="sell_date" name="sell_date" value="{{ date('Y-m-d') }}" class="w-full border-gray-300 rounded-md" readonly>
                 </div>
 
                 <div class="flex-1 mr-3">
@@ -54,21 +54,10 @@
                     <input type="text" id="chalan_no" name="chalan_no" value="{{ old('chalan_no') }}" placeholder="Chalan No." class="w-full border-gray-300 rounded-md">
                 </div>
 
-                <div class="flex-1 mr-3">
-                    <label for="payment_method" class="block text-sm font-medium text-gray-700">Método de Pago</label>
-                    <select name="payment_method" id="payment_method" class="w-full border-gray-300 rounded-md">
-                        @foreach($paymentMethods as $paymentMethod)
-                            <option value="{{ $paymentMethod->value }}">{{ $paymentMethod->value }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
                 <div class="flex-1">
                     <label for="payment_status" class="block text-sm font-medium text-gray-700">Estado de Pago</label>
                     <select name="payment_status" id="payment_status" class="w-full border-gray-300 rounded-md">
-                        @foreach($paymentStatuses as $paymentStatus)
-                            <option value="{{ $paymentStatus->value }}">{{ $paymentStatus->value }}</option>
-                        @endforeach
+                            <option value="Pendiente">{{ $status->value }}</option>
                     </select>
                 </div>
             </div>

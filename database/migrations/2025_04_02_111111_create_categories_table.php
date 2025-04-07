@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('name'); //Nombre
+            
             $table->enum('status', array_column(CategoryStatusEnum::cases(), 'value'))
                   ->default(CategoryStatusEnum::ACTIVE->value); //Estado
 

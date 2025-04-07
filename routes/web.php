@@ -10,6 +10,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EntryController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
@@ -56,6 +57,19 @@ Route::middleware(['auth'])->group(function () {
     Route::put('invoices/{invoice}', [InvoiceController::class, 'update'])->name('invoices.update');
 
     Route::delete('invoices/{invoice}', [InvoiceController::class, 'destroy'])->name('invoices.destroy');
+
+
+    //PAGOS
+
+    Route::get('payments', [PaymentController::class, 'index'])->name('payments.index');
+
+    Route::get('payments/create/{invoice}', [PaymentController::class, 'create'])->name('payments.create');
+    Route::post('payments', [PaymentController::class, 'store'])->name('payments.store');
+    
+    Route::get('payments/{payments}/edit', [PaymentController::class, 'edit'])->name('payments.edit');
+    Route::put('payments/{payments}', [PaymentController::class, 'update'])->name('payments.update');
+    
+    Route::delete('payments/{payments}', [PaymentController::class, 'destroy'])->name('payments.destroy');
 });
 
 require __DIR__.'/auth.php';

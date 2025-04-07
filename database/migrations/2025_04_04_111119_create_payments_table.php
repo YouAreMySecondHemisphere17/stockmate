@@ -1,7 +1,9 @@
 <?php
 
+use App\Enums\PaymentMethodEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -14,13 +16,19 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('sell_id');
-            $table->integer('customer_id');
-            $table->integer('user_id');
+            $table->unsignedBigInteger('sell_id');
+            $table->unsignedBigInteger('user_id');
+            
             $table->string('date');
-            $table->string('paid_in');
-            $table->text('bank_information')->nullable();
+
+            $table->enum('payment_method', array_column(PaymentMethodEnum::cases(), 'value'))
+            ->default(PaymentMethodEnum::CASH->value);
+
+            $table->text('details')->nullable();
             $table->double('amount');
+
+            $table->foreign('sell_id')->references('id')->on('sells')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users');
             
             $table->timestamps();
         });
