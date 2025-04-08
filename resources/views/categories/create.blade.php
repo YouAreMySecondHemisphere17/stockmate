@@ -23,6 +23,9 @@
                 <div class="flex-2 mr-3">
                     <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
                     <input type="text" name="name" value="{{ old('name') }}" placeholder="Escribe el nombre de la categoría." class="w-full border-gray-300 rounded-md">
+                    @error('name')
+                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                </div>  
 
                <div class="flex-2">

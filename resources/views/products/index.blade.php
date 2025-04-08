@@ -35,6 +35,9 @@
                         Stock
                     </th>
                     <th scope="col" class="px-6 py-3">
+                        Stock Mínimo (Crítico)
+                    </th>
+                    <th scope="col" class="px-6 py-3">
                         Precio de Venta
                     </th>
                     <th scope="col" class="px-6 py-3">
@@ -64,6 +67,9 @@
                         </td>
                         <td class="px-6 py-4">
                             {{$product->current_stock}}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{$product->minimum_stock}}
                         </td>
                         <td class="px-6 py-4">
                             {{$product->sold_price}}

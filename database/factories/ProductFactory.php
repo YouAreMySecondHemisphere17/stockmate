@@ -24,6 +24,7 @@ class ProductFactory extends Factory
             'details' => $this->faker->text(200),
             'sold_price' => $this->faker->randomFloat(2, 1, 100),
             'current_stock' => 0,
+            'minimum_stock' =>  $this->faker->numberBetween(10, 100),
             'status' => $this->faker->randomElement(ProductStatusEnum::cases())->value,
         ];
     }

@@ -54,7 +54,7 @@ class PaymentController extends Controller
             'text' => 'El pago se ha registrado correctamente',
         ]);
 
-        return redirect()->route('customers.index');
+        return redirect()->route('invoices.index');
     }
 
     /**

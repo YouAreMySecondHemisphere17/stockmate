@@ -46,30 +46,30 @@
                 @foreach ($customers as $customer)
                     <tr class="bg-white border-b border-[#e5d3b3]">
                         <th scope="row" class="px-6 py-4 font-medium text-[#3e3b36] whitespace-nowrap">
-                            {{$customer->id}}
+                            {{$customer['id']}} 
                         </th>
                         <td class="px-6 py-4">
-                            {{$customer->customer_name}}
+                            {{$customer['customer_name']}} 
                         </td>
                         <td class="px-6 py-4">
-                            {{$customer->email}}
+                            {{$customer['email']}} 
                         </td>
                         <td class="px-6 py-4">
-                            {{$customer->phone}}
+                            {{$customer['phone']}} 
                         </td>
                         <td class="px-6 py-4">
-                            {{$customer->address}}
+                            {{$customer['address']}} 
                         </td>
                         <td class="px-6 py-4">
-                            {{$customer->status}}
+                            {{$customer['status']}}
                         </td>  
                         <td class="px-6 py-4">
                             <div class="flex space-x-2">
-                                <a href="{{route('customers.edit', $customer)}}" class="btn text-xs px-4 py-2 rounded-lg bg-[#e1f761be] text-black hover:bg-[#e1f761be]">
+                                <a href="{{ route('customers.edit', ['customer' => $customer['id']]) }}" class="btn text-xs px-4 py-2 rounded-lg bg-[#e1f761be] text-black hover:bg-[#e1f761be]">
                                     Editar
                                 </a>
     
-                                <form class="delete-form" action="{{route('customers.destroy', $customer)}}" method="POST">
+                                <form class="delete-form" action="{{ route('customers.destroy', ['customer' => $customer['id']]) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
     
@@ -86,7 +86,7 @@
     </div>
 
     <div class="mt-4">
-        {{ $customers->links() }}
+        {{$customer['links']}}
     </div>
     
 </x-layouts.app>

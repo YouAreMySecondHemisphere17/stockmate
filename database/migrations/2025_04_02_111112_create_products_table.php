@@ -18,9 +18,11 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id')->nullable();
        
             $table->string('product_name'); //Nombre
+            $table->string('barcode')->nullable()->unique(); //Código de Barras
             $table->text('details')->nullable(); //Descripción
             $table->decimal('sold_price', 10, 2); //Precio de Venta
             $table->integer('current_stock')->default(0);
+            $table->integer('minimum_stock')->default(10); 
 
             $table->enum('status', array_column(ProductStatusEnum::cases(), 'value'))
             ->default(ProductStatusEnum::ACTIVE->value); //Estado

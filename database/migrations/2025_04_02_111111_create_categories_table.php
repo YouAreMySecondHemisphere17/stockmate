@@ -3,6 +3,7 @@
 use App\Enums\CategoryStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -15,10 +16,9 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name'); //Nombre
-            
-            $table->enum('status', array_column(CategoryStatusEnum::cases(), 'value'))
-                  ->default(CategoryStatusEnum::ACTIVE->value); //Estado
+            $table->string('name', 50)->unique();
+
+            $table->enum('status', array_column(CategoryStatusEnum::cases(), 'value'))->default('Activo');
 
             $table->timestamps();
         });

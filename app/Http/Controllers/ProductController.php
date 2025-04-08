@@ -48,6 +48,7 @@ class ProductController extends Controller
             'product_name' => 'required|string|min:3|max:255',
             'details' => 'nullable|string',
             'sold_price' => 'required|numeric|min:0',
+            'minimum_stock' => 'required|numeric|min:0',
             'status' => ['required', new Enum(ProductStatusEnum::class)],
             'image' => 'nullable|image|max:2048',
         ]);
@@ -98,6 +99,7 @@ class ProductController extends Controller
             'product_name' => 'required|string|min:3|max:255',
             'details' => 'nullable|string',
             'sold_price' => 'required|numeric|min:0',
+            'minimum_stock' => 'required|numeric|min:0',
             'status' => ['required', new Enum(ProductStatusEnum::class)],
             'image' => 'nullable|image|max:2048',
         ]);

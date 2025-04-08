@@ -6,6 +6,7 @@ use App\Enums\CategoryStatusEnum;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\Enum;
 
 
@@ -14,9 +15,18 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::orderBy('id', 'desc')->get();
+        $searchTerm = $request->get('search');
+
+        if ($searchTerm) {
+            $rawResults = DB::select('CALL filter_categories(?)', [$searchTerm]);
+            $categories = collect($rawResults)->map(function ($item) {
+                return (array) $item;
+            });
+        } else {
+            $categories = Category::orderBy('id', 'desc')->get();
+        }
 
         return view('categories.index', compact('categories'));
     }
@@ -35,9 +45,9 @@ class CategoryController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+    {        
         $data = $request->validate([
-            'name' => 'required|string|min:3|max:255',
+            'name' => 'required|string|min:3|max:50',
             'status' => ['required', new Enum(CategoryStatusEnum::class)],
         ]);
 
@@ -76,7 +86,7 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $data = $request->validate([
-            'name' => 'required|string|min:3|max:255',
+            'name' => 'required|string|min:3|max:50',
             'status' => ['required', new Enum(CategoryStatusEnum::class)],
         ]);
 

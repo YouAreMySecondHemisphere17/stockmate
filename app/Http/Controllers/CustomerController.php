@@ -6,6 +6,7 @@ use App\Enums\CustomerStatusEnum;
 use App\Models\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\Enum;
 
 class CustomerController extends Controller
@@ -13,9 +14,20 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $customers = Customer::orderBy('id', 'desc')->paginate();
+
+        $searchTerm = $request->get('search');
+        $filterType = $request->get('filter_type'); 
+
+        if ($searchTerm) {
+            $rawResults = DB::select('CALL filter_customers(?, ?)', [$searchTerm, $filterType]);
+            $customers = collect($rawResults)->map(function ($item) {
+                return (array) $item;
+            });
+        } else {
+            $customers = Customer::orderBy('id', 'desc')->get();
+        }
 
         return view('customers.index', compact('customers'));
     }
@@ -37,9 +49,9 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'customer_name' => 'required|string|min:3|max:255',
-            'email' => 'nullable|string|email|max:255',
-            'phone' => 'nullable|required|string|max:255',
+            'customer_name' => 'required|string|min:3|max:50|unique:customers,customer_name',
+            'email' => 'nullable|string|email|max:255|unique:customers,email',
+            'phone' => 'nullable|string|min:10|max:20|regex:/^[0-9]+$/',
             'address' => 'nullable|string',
             'status' => ['required', new Enum(CustomerStatusEnum::class)],
         ]);
@@ -79,9 +91,9 @@ class CustomerController extends Controller
     public function update(Request $request, Customer $customer)
     {
         $data = $request->validate([
-            'customer_name' => 'required|string|min:3|max:255',
-            'email' => 'nullable|string|email|max:255',
-            'phone' => 'nullable|required|string|max:255',
+            'customer_name' => 'required|string|min:3|max:50|unique:customers,customer_name',
+            'email' => 'nullable|string|email|max:255|unique:customers,email',
+            'phone' => 'nullable|string|min:10|max:20|regex:/^[0-9]+$/',
             'address' => 'nullable|string',
             'status' => ['required', new Enum(CustomerStatusEnum::class)],
         ]);

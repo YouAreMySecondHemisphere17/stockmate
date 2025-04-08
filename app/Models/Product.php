@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\ProductStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class Product extends Model
 {
@@ -17,6 +18,7 @@ class Product extends Model
         'details',
         'sold_price',
         'current_stock',
+        'minimum_stock',
         'status',
         'image_path',
     ];
