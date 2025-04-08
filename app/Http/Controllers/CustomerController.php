@@ -16,7 +16,6 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-
         $searchTerm = $request->get('search');
         $filterType = $request->get('filter_type'); 
 
@@ -49,9 +48,9 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'customer_name' => 'required|string|min:3|max:50|unique:customers,customer_name',
+            'name' => 'required|string|min:3|max:50|unique:customers,name',
             'email' => 'nullable|string|email|max:255|unique:customers,email',
-            'phone' => 'nullable|string|min:10|max:20|regex:/^[0-9]+$/',
+            'phone' => 'nullable|string|min:10|max:20|regex:/^(\+?[\d\s\-\(\)]{10,15})$/',
             'address' => 'nullable|string',
             'status' => ['required', new Enum(CustomerStatusEnum::class)],
         ]);
@@ -91,9 +90,9 @@ class CustomerController extends Controller
     public function update(Request $request, Customer $customer)
     {
         $data = $request->validate([
-            'customer_name' => 'required|string|min:3|max:50|unique:customers,customer_name',
-            'email' => 'nullable|string|email|max:255|unique:customers,email',
-            'phone' => 'nullable|string|min:10|max:20|regex:/^[0-9]+$/',
+            'name' => 'required|string|min:3|max:50|unique:customers,name,' . $customer->id,
+            'email' => 'nullable|string|email|max:255|unique:customers,email,' . $customer->id,
+            'phone' => 'nullable|string|min:10|max:20|regex:/^(\+?[\d\s\-\(\)]{10,15})$/',
             'address' => 'nullable|string',
             'status' => ['required', new Enum(CustomerStatusEnum::class)],
         ]);

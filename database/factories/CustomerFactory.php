@@ -18,7 +18,7 @@ class CustomerFactory extends Factory
     public function definition(): array
     {
         return [
-            'customer_name' => substr($this->faker->name, 0, rand(3, 50)),
+            'name' => substr($this->faker->name, 0, rand(3, 50)),
             'email' => $this->faker->unique()->safeEmail,
             'phone' => $this->faker->phoneNumber,
             'address' => $this->faker->address,

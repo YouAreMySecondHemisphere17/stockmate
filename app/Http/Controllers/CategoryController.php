@@ -47,7 +47,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {        
         $data = $request->validate([
-            'name' => 'required|string|min:3|max:50',
+            'name' => 'required|string|min:3|max:50|unique:categories,name',
             'status' => ['required', new Enum(CategoryStatusEnum::class)],
         ]);
 
@@ -86,7 +86,7 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $data = $request->validate([
-            'name' => 'required|string|min:3|max:50',
+            'name' => 'required|string|min:3|max:50|unique:categories,name,' . $category->id,
             'status' => ['required', new Enum(CategoryStatusEnum::class)],
         ]);
 

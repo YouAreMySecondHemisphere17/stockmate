@@ -178,7 +178,6 @@ return [
         'currency'                 => 'moneda',
         'current_password'         => 'contraseña actual',
         'customer'                 => 'cliente',
-        'customer_name'                  => 'nombre',
         'date'                     => 'fecha',
         'date_of_birth'            => 'fecha de nacimiento',
         'dates'                    => 'fechas',
