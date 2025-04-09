@@ -98,7 +98,7 @@ $groups = [
             width: 260px; 
             background-color: #ffffff; 
             color: #1f2937;
-            padding-top: 15px;
+            padding-top: 10px;
             overflow-y: auto;
             margin-left: 2px;
             margin-right: 2px;
@@ -158,8 +158,6 @@ $groups = [
             background-color: #ddd; 
         }
 
-
-
         .sidebar-settings {
             background-color: #ffffff; 
             font-size: 12px; 
@@ -183,39 +181,88 @@ $groups = [
         .bg-sales { background-color: #fca311; color: #000000; }
         .bg-users { background-color: #2f4ed6da; color: #ffffff; }
 
-        /* Estilos responsive */
         @media (max-width: 768px) {
             .sidebar {
-                width: 200px; /* Ajuste del ancho en pantallas pequeñas */
+                width: 200px; 
             }
 
             .main-content {
-                margin-left: 200px; /* Ajuste del margen en pantallas pequeñas */
+                margin-left: 200px;
             }
         }
     </style>
+
+<style>
+.custom-dropdown {
+    position: fixed;
+}
+
+.custom-dropdown-button {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #000000;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.user-initial {
+    background-color: #000000;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.user-name {
+    font-size: 16px;
+    color: #000000;
+}
+
+.custom-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #000000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-width: 160px;
+    z-index: 1;
+}
+
+.custom-dropdown-item {
+    padding: 8px 16px;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    color: #000000;
+}
+
+.custom-dropdown-item:hover {
+    background-color: #a7a7a7;
+}
+
+</style>
 </head>
 
 <body class="min-h-screen bg-white dark:bg-zinc-800">
     <div class="sidebar sticky stashable border-r border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
         <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse">
             <x-app-logo />
+            <div class="ms-1 grid flex-1 text-start text-sm bg-white">
+                <span class="mb-0.5 truncate leading-none font-semibold" style="font-size: 20px; background-color: white;">StockMate</span>
+            </div>
         </a>
 
-        <div class="sidebar-settings mt-4 p-2">
-            <div class="dropdown">
-                <button class="btn btn-link text-sm">{{ auth()->user()->name }}</button>
-                <div class="dropdown-menu">
-                    <a href="{{ route('settings.profile') }}" class="dropdown-item">Settings</a>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="dropdown-item">Log Out</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <nav class="sidebar-group space-y-2">
+        <nav class="sidebar-group space-y-2 mt-2">
             @foreach ($groups as $group => $links)
                 <div class="space-y-2">
                     <div class="sidebar-header">{{ $group }}</div> <!-- Subtítulo con borde y negrita -->
@@ -232,13 +279,60 @@ $groups = [
                 </div>
             @endforeach
         </nav>
-    </div>
 
+    <div class="sidebar-settings p-2">
+        <div class="custom-dropdown">
+            <button class="custom-dropdown-button" onclick="toggleDropdown()">
+                <span class="user-initial">{{ strtoupper(auth()->user()->name[0]) }}</span>
+                <span class="user-name">{{ auth()->user()->name }}</span>
+            </button>
+            <div class="custom-dropdown-menu">
+                <a href="{{ route('settings.profile') }}" class="custom-dropdown-item">
+                    <i class="fas fa-cogs"></i> Settings
+                </a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="custom-dropdown-item wi" style="width: 100%;">
+                        <i class="fas fa-sign-out-alt"></i> Log Out
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>  
     <div class="main-content">
         {{ $slot }}
     </div>
-
-    @fluxScripts
-
-    </body>
+</body>
 </html>
+
+<script>
+function toggleDropdown() {
+    const menu = document.querySelector('.custom-dropdown-menu');
+    const dropdownButton = document.querySelector('.custom-dropdown-button');
+    const rect = dropdownButton.getBoundingClientRect();
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const spaceAbove = rect.top;
+
+    if (spaceBelow >= menu.offsetHeight) {
+        menu.style.top = `${rect.bottom}px`;
+        menu.style.bottom = 'auto';  
+    } else if (spaceAbove >= menu.offsetHeight) {
+        menu.style.top = 'auto';
+        menu.style.bottom = `${window.innerHeight - rect.top}px`;
+    } else {
+        menu.style.display = 'none'; 
+    }
+
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
+
+document.addEventListener('click', function (e) {
+    const dropdown = document.querySelector('.custom-dropdown');
+    if (!dropdown.contains(e.target)) {
+        const menu = document.querySelector('.custom-dropdown-menu');
+        menu.style.display = 'none';
+    }
+});
+
+</script>
