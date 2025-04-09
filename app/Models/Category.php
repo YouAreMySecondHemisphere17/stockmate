@@ -24,12 +24,4 @@ class Category extends Model
     {
         return $this->hasMany(Product::class);
     }
-
-    public static function getTotalCategories()
-    {
-        $total = Category::count();
-    
-        return $total;
-    }
-
 }

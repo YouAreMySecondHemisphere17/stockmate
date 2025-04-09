@@ -14,6 +14,21 @@
             Nuevo Producto
         </a> 
     </div>
+
+    <div class="mb-4">
+        <form action="{{ route('products.index') }}" method="GET">
+            <input 
+                type="text" 
+                name="search" 
+                placeholder="Buscar por nombre..." 
+                class="text-s px-10 py-2 mr-3 rounded-lg border border-[#faefbddc]"
+                value="{{ request()->get('search') }}"
+            >
+            <button type="submit" class=" btn text-s px-4 py-2 rounded-lg bg-[#faefbddc] text-black hover:bg-[#faefbddc]">
+                Buscar
+            </button>
+        </form>
+    </div>
     
     <div class="relative overflow-x-auto bg-[#f9f8f6] p-4 rounded-lg border border-[#faefbddc]">
         <table class="w-full text-sm text-left rtl:text-right text-black">
@@ -51,41 +66,41 @@
             <tbody>
                 @foreach ($products as $product)
                     <tr class="bg-white border-b border-[#e5d3b3]">
-                        <th scope="row" class="px-6 py-4 font-medium text-[#3e3b36] whitespace-nowrap">
-                            {{$product->id}}
+                        <th scope="row" class="px-6 py-4 font-medium text-[#3e3b36] whitespace-nowrap">  
+                            {{$product['id']}}
                         </th>
                         <td class="px-6 py-4">
-                            {{$product->product_name}}
+                            {{$product['product_name']}}
                         </td>
                         <td class="px-6 py-4">
-                            {{$product->category->name}}
+                            {{$product['category']->name}}
                         </td>
                         <td class="px-6 py-4">
                             <div class="max-h-20 overflow-y-auto">
-                                {{$product->details}}
+                                {{$product['details']}}
                             </div>
                         </td>
                         <td class="px-6 py-4">
-                            {{$product->current_stock}}
+                            {{$product['current_stock']}}
                         </td>
                         <td class="px-6 py-4">
-                            {{$product->minimum_stock}}
+                            {{$product['minimum_stock']}}
                         </td>
                         <td class="px-6 py-4">
-                            {{$product->sold_price}}
+                            {{$product['sold_price']}}
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex space-x-2">
-                                {{$product->status}}
+                                {{$product['status']}}
                             </div>
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex space-x-2">
-                                <a href="{{route('products.edit', $product)}}" class="btn text-xs px-4 py-2 rounded-lg bg-[#faefbddc] text-black hover:bg-[#faefbddc]">
+                                <a href="{{ route('products.edit', ['product' => $product['id']]) }}" class="btn text-xs px-4 py-2 rounded-lg bg-[#faefbddc] text-black hover:bg-[#faefbddc]">
                                     Editar
                                 </a>
     
-                                <form class="delete-form" action="{{route('products.destroy', $product)}}" method="POST">
+                                <form class="delete-form" action="{{ route('products.destroy', ['product' => $product['id']]) }}"method="POST">
                                     @csrf
                                     @method('DELETE')
     

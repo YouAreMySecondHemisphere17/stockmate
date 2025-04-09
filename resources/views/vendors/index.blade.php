@@ -14,6 +14,29 @@
             Nuevo Proveedor
         </a> 
     </div>
+
+    <div class="mb-4">
+        <form action="{{ route('vendors.index') }}" method="GET">
+            <div class="flex items-center space-x-3">
+                <input 
+                    type="text" 
+                    name="search" 
+                    placeholder="Buscar..."
+                    class="text-s px-10 py-2 mr-3 rounded-lg border border-[#e5d3b3]"
+                    value="{{ request()->get('search') }}"
+                >
+                <select name="filter_type" class="text-s px-10 py-2 mr-3 rounded-lg border border-[#e5d3b3]">
+                    <option value="">Seleccionar filtro</option>
+                    <option value="name" {{ request()->get('filter_type') == 'name' ? 'selected' : '' }}>Nombre</option>
+                    <option value="email" {{ request()->get('filter_type') == 'email' ? 'selected' : '' }}>Email</option>
+                    <option value="phone" {{ request()->get('filter_type') == 'phone' ? 'selected' : '' }}>Teléfono</option>
+                </select>
+                <button type="submit" class="btn text-s px-4 py-2 rounded-lg bg-[#fddde6] text-black hover:bg-[#fddde6]">
+                    Buscar
+                </button>
+            </div>
+        </form>
+    </div>
     
     <div class="relative overflow-x-auto bg-[#f9f8f6] p-4 rounded-lg border border-[#e5d3b3]">
         <table class="w-full text-sm text-left rtl:text-right text-black">
@@ -43,27 +66,27 @@
                 @foreach ($vendors as $vendor)
                     <tr class="bg-white border-b border-[#e5d3b3]">
                         <th scope="row" class="px-6 py-4 font-medium text-[#3e3b36] whitespace-nowrap">
-                            {{$vendor->id}}
+                            {{$vendor['id']}} 
                         </th>
                         <td class="px-6 py-4">
-                            {{$vendor->name}}
+                            {{$vendor['name']}} 
                         </td>
                         <td class="px-6 py-4">
-                            {{$vendor->email}}
+                            {{$vendor['email']}} 
                         </td>
                         <td class="px-6 py-4">
-                            {{$vendor->phone}}
+                            {{$vendor['phone']}} 
                         </td>
                         <td class="px-6 py-4">
-                            {{$vendor->address}}
+                            {{$vendor['address']}} 
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex space-x-2">
-                                <a href="{{route('vendors.edit', $vendor)}}" class="btn text-xs px-4 py-2 rounded-lg bg-[#fddde6] text-black hover:bg-[#fddde6]">
+                                <a href="{{ route('vendors.edit', ['vendor' => $vendor['id']]) }}" class="btn text-xs px-4 py-2 rounded-lg bg-[#fddde6] text-black hover:bg-[#fddde6]">
                                     Editar
                                 </a>
     
-                                <form class="delete-form" action="{{route('vendors.destroy', $vendor)}}" method="POST">
+                                <form class="delete-form" action="{{ route('vendors.destroy', ['vendor' => $vendor['id']]) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
     
@@ -77,10 +100,6 @@
                 @endforeach
             </tbody>
         </table>
-    </div>
-
-    <div class="mt-4">
-        {{ $vendors->links() }}
     </div>
     
 </x-layouts.app>

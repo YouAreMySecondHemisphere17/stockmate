@@ -57,11 +57,4 @@ class User extends Authenticatable
             ->map(fn (string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
     }
-
-    public static function getTotalUsers()
-    {
-        $total = User::count();
-    
-        return $total;
-    }
 }

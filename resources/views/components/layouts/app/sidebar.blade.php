@@ -1,207 +1,244 @@
 @php
-    $groups = [
-        'General' => [
-            [
-                'name' => 'Dashboard',
-                'icon' => 'home',
-                'url' => route('dashboard'),
-                'current' => request()->routeIs('dashboard'),
-            ],
+$groups = [
+    'General' => [
+        [
+            'name' => 'Dashboard',
+            'icon' => 'home',
+            'url' => route('dashboard'),
+            'bg_color' => 'bg-dashboard',
+            'text_color' => 'text-black',
+            'font_class' => 'font-semibold text-lg',
+            'current' => request()->routeIs('dashboard'),
         ],
-        'Gestión de Productos' => [
-            [
-                'name' => 'Categorías',
-                'icon' => 'funnel',
-                'url' => route('categories.index'),
-                'current' => request()->routeIs('categories.*'),
-            ],
-            [
-                'name' => 'Productos',
-                'icon' => 'gift',
-                'url' => route('products.index'),
-                'current' => request()->routeIs('products.*'),
-            ],
-            [
-                'name' => 'Proveedores',
-                'icon' => 'truck',
-                'url' => route('vendors.index'),
-                'current' => request()->routeIs('vendors.*'),
-            ],
+    ],
+    'Gestión de Productos' => [
+        [
+            'name' => 'Categorías',
+            'icon' => 'funnel',
+            'url' => route('categories.index'),
+            'bg_color' => 'bg-categories',
+            'text_color' => 'text-black',
+            'font_class' => 'font-semibold text-lg',
+            'current' => request()->routeIs('categories.*'),
         ],
-        'Gestión de Clientes ' => [
-            [
-                'name' => 'Clientes',
-                'icon' => 'users',
-                'url' => route('customers.index'),
-                'current' => request()->routeIs('customers.*'),
-            ],
+        [
+            'name' => 'Productos',
+            'icon' => 'gift',
+            'bg_color' => 'bg-products',
+            'text_color' => 'text-black',
+            'font_class' => 'font-semibold text-lg',
+            'url' => route('products.index'),
+            'current' => request()->routeIs('products.*'),
         ],
-        'Gestión de Existencias ' => [
-            [
-                'name' => 'Entradas',
-                'icon' => 'arrow-down-circle',
-                'url' => route('entries.index'),
-                'current' => request()->routeIs('entries.*'),
-            ],
-            [
-                'name' => 'Salidas/Facturación',
-                'icon' => 'minus-circle',
-                'url' => route('invoices.index'),
-                'current' => request()->routeIs('invoices.*'),
-            ],
+        [
+            'name' => 'Proveedores',
+            'icon' => 'truck',
+            'bg_color' => 'bg-providers',
+            'text_color' => 'text-black',
+            'font_class' => 'font-semibold text-lg',
+            'url' => route('vendors.index'),
+            'current' => request()->routeIs('vendors.*'),
         ],
-        'Gestión de Usuarios' => [
-            [
-                'name' => 'Usuarios',
-                'icon' => 'user',
-                'url' => route('users.index'),
-                'current' => request()->routeIs('users.*'),
-            ],
+    ],
+    'Gestión de Clientes' => [
+        [
+            'name' => 'Clientes',
+            'icon' => 'users',
+            'bg_color' => 'bg-customers',
+            'text_color' => 'text-black',
+            'font_class' => 'font-semibold text-lg',
+            'url' => route('customers.index'),
+            'current' => request()->routeIs('customers.*'),
         ],
-    ];
+    ],
+    'Gestión de Existencias' => [
+        [
+            'name' => 'Entradas',
+            'icon' => 'arrow-down-circle',
+            'bg_color' => 'bg-units',
+            'text_color' => 'text-black',
+            'font_class' => 'font-semibold text-lg',
+            'url' => route('entries.index'),
+            'current' => request()->routeIs('entries.*'),
+        ],
+        [
+            'name' => 'Salidas/Facturación',
+            'icon' => 'minus-circle',
+            'bg_color' => 'bg-sales',
+            'text_color' => 'text-black',
+            'font_class' => 'font-semibold text-lg',
+            'url' => route('invoices.index'),
+            'current' => request()->routeIs('invoices.*'),
+        ],
+    ],
+    'Gestión de Usuarios' => [
+        [
+            'name' => 'Usuarios',
+            'icon' => 'user',
+            'bg_color' => 'bg-users',
+            'text_color' => 'text-black',
+            'font_class' => 'font-semibold text-lg',
+            'url' => route('users.index'),
+            'current' => request()->routeIs('users.*'),
+        ],
+    ],
+];
 @endphp
 
 <!DOCTYPE html>
-
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
-    <head>
-        @include('partials.head')
-    </head>
-    <body class="min-h-screen bg-white dark:bg-zinc-800">
-        <flux:sidebar sticky stashable class="border-r border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
-            <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
+<head>
+    @include('partials.head')
+    <style>
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 260px; 
+            background-color: #ffffff; 
+            color: #1f2937;
+            padding-top: 15px;
+            overflow-y: auto;
+            margin-left: 2px;
+            margin-right: 2px;
+        }
 
-            <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
-                <x-app-logo />
-            </a>
+        .main-content {
+            margin-left: 250px; 
+            padding: 20px;
+            min-height: 100vh;
+        }
 
-            <flux:navlist variant="outline">
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            padding: 8px; 
+            color: inherit;
+            text-decoration: none;
+            font-size: 14px;
+        }
 
-                @foreach ($groups as $group => $links)
-                    
-                    <flux:navlist.group :heading="$group" class="grid">
+        .sidebar .header {
+            font-size: 16px;
+            font-weight: 700; 
+            color: #1e3a8a;
+            text-transform: uppercase;
+            margin-top: 10px;
+            padding-left: 10px;
+            background-color: #f3f4f6; 
+            border-radius: 6px;
+            margin-bottom: 8px;
+            border: 2px solid #1e3a8a; 
+            padding: 10px 12px;
+            font-weight: 1000;
+        }
 
+        .sidebar .nav-item {
+            font-size: 12px; 
+            font-weight: 500;
+            border-radius: 18px;
+            margin-bottom: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar .nav-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .sidebar .nav-item.bg-gray-300 {
+            background-color: #e2e8f0; 
+        }
+
+        .sidebar .nav-item.text-black {
+            color: #1f2937;
+        }
+
+        .sidebar .nav-item a:hover {
+            background-color: #ddd; 
+        }
+
+
+
+        .sidebar-settings {
+            background-color: #ffffff; 
+            font-size: 12px; 
+            font-weight: 500;
+        }
+
+        .sidebar-group {
+            background-color: #ffffff; 
+            font-size: 16px; 
+            font-weight: 800;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        .bg-dashboard { background-color: #a80eb6f6; color: #ffffff; }
+        .bg-categories { background-color: #9c8353da; color: #ffffff; }
+        .bg-units { background-color: #38ca44da; color: #ffffff; }
+        .bg-products { background-color: #ffea8edc; color: #000000; }
+        .bg-providers { background-color: #ff68c0; color: #ffffff; }
+        .bg-customers { background-color: #f8f529be; color: #000000; }
+        .bg-sales { background-color: #fca311; color: #000000; }
+        .bg-users { background-color: #2f4ed6da; color: #ffffff; }
+
+        /* Estilos responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px; /* Ajuste del ancho en pantallas pequeñas */
+            }
+
+            .main-content {
+                margin-left: 200px; /* Ajuste del margen en pantallas pequeñas */
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-white dark:bg-zinc-800">
+    <div class="sidebar sticky stashable border-r border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+        <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse">
+            <x-app-logo />
+        </a>
+
+        <div class="sidebar-settings mt-4 p-2">
+            <div class="dropdown">
+                <button class="btn btn-link text-sm">{{ auth()->user()->name }}</button>
+                <div class="dropdown-menu">
+                    <a href="{{ route('settings.profile') }}" class="dropdown-item">Settings</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="dropdown-item">Log Out</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <nav class="sidebar-group space-y-2">
+            @foreach ($groups as $group => $links)
+                <div class="space-y-2">
+                    <div class="sidebar-header">{{ $group }}</div> <!-- Subtítulo con borde y negrita -->
                     @foreach ($links as $link)
-                        <flux:navlist.item :icon="$link['icon']" :href="$link['url']" :current="$link['current']" wire:navigate>{{ $link['name'] }}</flux:navlist.item>
+                        <div class="{{ $link['bg_color'] ?? '' }} rounded-md">
+                            <a href="{{ $link['url'] }}"
+                               class="{{ $link['text_color'] ?? 'text-black' }} {{ $link['font_class'] ?? '' }} 
+                               {{ $link['current'] ? 'bg-gray-300' : '' }} flex items-center space-x-2 p-2 rounded-md">
+                                <x-icon name="{{ $link['icon'] }}" />
+                                <span>{{ $link['name'] }}</span>
+                            </a>
+                        </div>
                     @endforeach
+                </div>
+            @endforeach
+        </nav>
+    </div>
 
-                    </flux:navlist.group>
-
-                 @endforeach
-            
-            </flux:navlist>
-
-            <flux:spacer />
-
-{{--        <flux:navlist variant="outline">
-                <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                {{ __('Repository') }}
-                </flux:navlist.item>
-
-                <flux:navlist.item icon="book-open-text" href="https://laravel.com/docs/starter-kits" target="_blank">
-                {{ __('Documentation') }}
-                </flux:navlist.item>
-            </flux:navlist> 
---}}
-
-            <!-- Desktop User Menu -->
-            <flux:dropdown position="bottom" align="start">
-                <flux:profile
-                    :name="auth()->user()->name"
-                    :initials="auth()->user()->initials()"
-                    icon-trailing="chevrons-up-down"
-                />
-
-                <flux:menu class="w-[220px]">
-                    <flux:menu.radio.group>
-                        <div class="p-0 text-sm font-normal">
-                            <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
-                                <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
-                                    <span
-                                        class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
-                                    >
-                                        {{ auth()->user()->initials() }}
-                                    </span>
-                                </span>
-
-                                <div class="grid flex-1 text-start text-sm leading-tight">
-                                    <span class="truncate font-semibold">{{ auth()->user()->name }}</span>
-                                    <span class="truncate text-xs">{{ auth()->user()->email }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </flux:menu.radio.group>
-
-                    <flux:menu.separator />
-
-                    <flux:menu.radio.group>
-                        <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>{{ __('Settings') }}</flux:menu.item>
-                    </flux:menu.radio.group>
-
-                    <flux:menu.separator />
-
-                    <form method="POST" action="{{ route('logout') }}" class="w-full">
-                        @csrf
-                        <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full">
-                            {{ __('Log Out') }}
-                        </flux:menu.item>
-                    </form>
-                </flux:menu>
-            </flux:dropdown>
-        </flux:sidebar>
-
-        <!-- Mobile User Menu -->
-        <flux:header class="lg:hidden">
-            <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
-
-            <flux:spacer />
-
-            <flux:dropdown position="top" align="end">
-                <flux:profile
-                    :initials="auth()->user()->initials()"
-                    icon-trailing="chevron-down"
-                />
-
-                <flux:menu>
-                    <flux:menu.radio.group>
-                        <div class="p-0 text-sm font-normal">
-                            <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
-                                <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
-                                    <span
-                                        class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
-                                    >
-                                        {{ auth()->user()->initials() }}
-                                    </span>
-                                </span>
-
-                                <div class="grid flex-1 text-start text-sm leading-tight">
-                                    <span class="truncate font-semibold">{{ auth()->user()->name }}</span>
-                                    <span class="truncate text-xs">{{ auth()->user()->email }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </flux:menu.radio.group>
-
-                    <flux:menu.separator />
-
-                    <flux:menu.radio.group>
-                        <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>{{ __('Settings') }}</flux:menu.item>
-                    </flux:menu.radio.group>
-
-                    <flux:menu.separator />
-
-                    <form method="POST" action="{{ route('logout') }}" class="w-full">
-                        @csrf
-                        <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full">
-                            {{ __('Log Out') }}
-                        </flux:menu.item>
-                    </form>
-                </flux:menu>
-            </flux:dropdown>
-        </flux:header>
-
+    <div class="main-content">
         {{ $slot }}
+    </div>
 
-        @fluxScripts
+    @fluxScripts
+
     </body>
 </html>

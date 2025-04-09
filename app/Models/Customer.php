@@ -22,11 +22,4 @@ class Customer extends Model
     protected $casts = [
         'status' => CustomerStatusEnum::class,
     ];
-
-    public static function getTotalCustomers()
-    {
-        $total = Customer::count();
-    
-        return $total;
-    }
 }

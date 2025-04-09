@@ -17,8 +17,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('category_id')->nullable();
        
-            $table->string('product_name'); //Nombre
-            $table->string('barcode')->nullable()->unique(); //Código de Barras
+            $table->string('product_name', 100)->unique();
             $table->text('details')->nullable(); //Descripción
             $table->decimal('sold_price', 10, 2); //Precio de Venta
             $table->integer('current_stock')->default(0);

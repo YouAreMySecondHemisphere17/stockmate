@@ -57,11 +57,4 @@ class Product extends Model
         $product->current_stock = $entries - $exits;
         $product->save();
     }
-
-    public static function getTotalProducts()
-    {
-        $total = Product::count();
-    
-        return $total;
-    }
 }

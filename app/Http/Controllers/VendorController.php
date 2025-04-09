@@ -5,15 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\Vendor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VendorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $vendors = Vendor::orderBy('id', 'desc')->paginate();
+        $searchTerm = $request->get('search');
+        $filterType = $request->get('filter_type'); 
+
+        if ($searchTerm) {
+            $rawResults = DB::select('CALL filter_vendors(?, ?)', [$searchTerm, $filterType]);
+            $vendors = collect($rawResults)->map(function ($item) {
+                return (array) $item;
+            });
+        } else {
+            $vendors = Vendor::orderBy('id', 'desc')->get();
+        }
 
         return view('vendors.index', compact('vendors'));
     }
@@ -32,9 +43,9 @@ class VendorController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|string|min:3|max:255',
-            'phone' => 'required|string|max:255',
-            'email' => 'nullable|string|email|max:255',
+            'name' => 'required|string|min:3|max:50|unique:vendors,name',
+            'email' => 'nullable|string|email|max:255|unique:vendors,email',
+            'phone' => 'nullable|string|min:10|max:20|regex:/^(\+?[\d\s\-\(\)]{10,15})$/',
             'address' => 'nullable|string',
         ]);
 
@@ -71,9 +82,9 @@ class VendorController extends Controller
     public function update(Request $request, Vendor $vendor)
     {
         $data = $request->validate([
-            'name' => 'required|string|min:3|max:255',
-            'phone' => 'required|string|max:255',
-            'email' => 'nullable|string|email|max:255',
+            'name' => 'required|string|min:3|max:50|unique:vendors,name,' . $vendor->id,
+            'email' => 'nullable|string|email|max:255|unique:vendors,email,' . $vendor->id,
+            'phone' => 'nullable|string|min:10|max:20|regex:/^(\+?[\d\s\-\(\)]{10,15})$/',
             'address' => 'nullable|string',
         ]);
 

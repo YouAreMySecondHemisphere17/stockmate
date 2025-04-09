@@ -3,38 +3,51 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Sell;
-use App\Models\User;
-use App\Models\Vendor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        // Obtención de datos
-        $totalCategories = Category::getTotalCategories();
-        $totalProducts = Product::getTotalProducts();
-        $totalVendors = Vendor::getTotalVendors();
-        $totalCustomers = Customer::getTotalCustomers();
-        $totalUsers = User::getTotalUsers();
-    
-        // Productos con stock crítico
-        $criticalStockProducts = Product::whereColumn('current_stock', '<=', 'minimum_stock')->paginate(10); // 10 productos por página
-        $totalCriticalStock = $criticalStockProducts->total(); // Total de productos con stock crítico para la paginación
-    
         // Ventas del mes
         $totalSales = Sell::whereMonth('sell_date', Carbon::now()->month)
             ->whereYear('sell_date', Carbon::now()->year)
             ->sum('paid_amount');  
     
         // Unidades en inventario
-        $totalUnits = Product::sum('current_stock');
-    
+        DB::select('CALL get_total_units(@total)');
+        $totalUnits = DB::select('SELECT @total AS total')[0]->total;
+
+        // Total de categorías
+        DB::select('CALL get_total_categories(@total)');
+        $totalCategories = DB::select('SELECT @total AS total')[0]->total;
+
+        // Total de productos
+        DB::select('CALL get_total_products(@total)');
+        $totalProducts = DB::select('SELECT @total AS total')[0]->total;
+
+        // Total de proveedores
+        DB::select('CALL get_total_vendors(@total)');
+        $totalVendors = DB::select('SELECT @total AS total')[0]->total;
+
+        // Total de clientes
+        DB::select('CALL get_total_customers(@total)');
+        $totalCustomers = DB::select('SELECT @total AS total')[0]->total;
+
+        // Total de usuarios
+        DB::select('CALL get_total_users(@total)');
+        $totalUsers = DB::select('SELECT @total AS total')[0]->total; 
+        
+        // Total de productos críticos
+        DB::select('CALL get_total_critical_stock(@total)');
+        $totalCriticalStock  = DB::select('SELECT @total AS total')[0]->total; 
+
+        $criticalStockProducts = DB::select('CALL get_critical_stock_products()');
+
         return view('dashboard', compact(
             'totalCategories', 
             'totalProducts', 
@@ -44,25 +57,22 @@ class DashboardController extends Controller
             'totalSales',
             'totalUnits',
             'totalCriticalStock',
-            'criticalStockProducts' // Paginación de productos críticos
+            'criticalStockProducts',
         ));
     }
     
     public function getCriticalStockProducts(Request $request)
     {
-        // Paginación de productos con stock crítico
-        $criticalStockProducts = Product::whereColumn('current_stock', '<=', 'minimum_stock')->paginate(10);
+        $criticalStockProducts = DB::select('CALL get_critical_stock_products()');
     
-        // Si la solicitud es AJAX, retornamos los productos y la paginación en formato JSON
         if ($request->ajax()) {
             return response()->json([
                 'products' => view('partials.critical_stock_products', compact('criticalStockProducts'))->render(),
-                'next_page_url' => $criticalStockProducts->nextPageUrl(),
+                'next_page_url' => null,
             ]);
         }
     
-        // Si no es AJAX, retornamos la vista completa
         return view('dashboard', compact('criticalStockProducts'));
-    }  
+    }
     
 }
