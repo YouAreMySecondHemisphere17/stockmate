@@ -2,13 +2,22 @@
 $groups = [
     'General' => [
         [
-            'name' => 'Dashboard',
+            'name' => 'Inicio',
             'icon' => 'home',
             'url' => route('dashboard'),
             'bg_color' => 'bg-dashboard',
             'text_color' => 'text-black',
             'font_class' => 'font-semibold text-lg',
             'current' => request()->routeIs('dashboard'),
+        ],
+        [
+            'name' => 'Usuarios',
+            'icon' => 'user',
+            'bg_color' => 'bg-users',
+            'text_color' => 'text-black',
+            'font_class' => 'font-semibold text-lg',
+            'url' => route('users.index'),
+            'current' => request()->routeIs('users.*'),
         ],
     ],
     'Gestión de Productos' => [
@@ -69,17 +78,6 @@ $groups = [
             'font_class' => 'font-semibold text-lg',
             'url' => route('invoices.index'),
             'current' => request()->routeIs('invoices.*'),
-        ],
-    ],
-    'Gestión de Usuarios' => [
-        [
-            'name' => 'Usuarios',
-            'icon' => 'user',
-            'bg_color' => 'bg-users',
-            'text_color' => 'text-black',
-            'font_class' => 'font-semibold text-lg',
-            'url' => route('users.index'),
-            'current' => request()->routeIs('users.*'),
         ],
     ],
 ];
@@ -202,7 +200,6 @@ $groups = [
     align-items: center;
     background: none;
     border: none;
-    font-size: 16px;
     color: #000000;
     cursor: pointer;
     padding: 8px;
@@ -240,6 +237,7 @@ $groups = [
 
 .custom-dropdown-item {
     padding: 8px 16px;
+    font-size: 16px;
     text-decoration: none;
     text-align: center;
     display: block;
@@ -262,18 +260,21 @@ $groups = [
             </div>
         </a>
 
-        <nav class="sidebar-group space-y-2 mt-2">
+        <nav class="sidebar-group space-y-2 mt-5">
             @foreach ($groups as $group => $links)
                 <div class="space-y-2">
-                    <div class="sidebar-header">{{ $group }}</div> <!-- Subtítulo con borde y negrita -->
+                    <div class="sidebar-header">{{ $group }}</div>
                     @foreach ($links as $link)
                         <div class="{{ $link['bg_color'] ?? '' }} rounded-md">
                             <a href="{{ $link['url'] }}"
-                               class="{{ $link['text_color'] ?? 'text-black' }} {{ $link['font_class'] ?? '' }} 
-                               {{ $link['current'] ? 'bg-gray-300' : '' }} flex items-center space-x-2 p-2 rounded-md">
-                                <x-icon name="{{ $link['icon'] }}" />
-                                <span>{{ $link['name'] }}</span>
-                            </a>
+                            class="flex items-center space-x-2 p-2 rounded-md 
+                                   {{ $link['text_color'] ?? 'text-black' }} 
+                                   {{ $link['font_class'] ?? '' }} 
+                                   {{ $link['current'] ? 'border-3 border-black bg-gray-300' : '' }}">
+                         
+                                    <x-icon name="{{ $link['icon'] }}" />
+                                    <span>{{ $link['name'] }}</span>
+                                </a>
                         </div>
                     @endforeach
                 </div>
@@ -287,15 +288,21 @@ $groups = [
                 <span class="user-name">{{ auth()->user()->name }}</span>
             </button>
             <div class="custom-dropdown-menu">
-                <a href="{{ route('settings.profile') }}" class="custom-dropdown-item">
-                    <i class="fas fa-cogs"></i> Settings
-                </a>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="custom-dropdown-item wi" style="width: 100%;">
-                        <i class="fas fa-sign-out-alt"></i> Log Out
-                    </button>
-                </form>
+                <div style="text-align: center;">
+                    <a href="{{ route('settings.profile') }}" class="custom-dropdown-item"
+                    style="width: 100%; text-align-last: left; font-size: 14px; ">
+                        <i class="fas fa-cogs mr-3"></i> Configuración
+                    </a>
+                </div>
+
+                <div style="text-align: center;">
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                            <button type="submit" class="custom-dropdown-item wi" style="width: 100%; text-align-last: left; font-size: 14px;">
+                                <i class="fas fa-sign-out-alt mr-3"></i> Cerrar Sesión
+                            </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -307,32 +314,44 @@ $groups = [
 </html>
 
 <script>
-function toggleDropdown() {
-    const menu = document.querySelector('.custom-dropdown-menu');
-    const dropdownButton = document.querySelector('.custom-dropdown-button');
-    const rect = dropdownButton.getBoundingClientRect();
-    const spaceBelow = window.innerHeight - rect.bottom;
-    const spaceAbove = rect.top;
-
-    if (spaceBelow >= menu.offsetHeight) {
-        menu.style.top = `${rect.bottom}px`;
-        menu.style.bottom = 'auto';  
-    } else if (spaceAbove >= menu.offsetHeight) {
-        menu.style.top = 'auto';
-        menu.style.bottom = `${window.innerHeight - rect.top}px`;
-    } else {
-        menu.style.display = 'none'; 
-    }
-
-    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-}
-
-document.addEventListener('click', function (e) {
-    const dropdown = document.querySelector('.custom-dropdown');
-    if (!dropdown.contains(e.target)) {
+    function toggleDropdown() {
         const menu = document.querySelector('.custom-dropdown-menu');
-        menu.style.display = 'none';
+        const dropdownButton = document.querySelector('.custom-dropdown-button');
+        const rect = dropdownButton.getBoundingClientRect();
+    
+        menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    
+        if (menu.style.display === 'block') {
+            menu.style.top = 'auto';
+            menu.style.bottom = `${window.innerHeight - rect.top}px`;
+            menu.style.left = `${rect.left}px`;
+            menu.style.position = 'fixed'; // 
+        }
     }
-});
+    
+    document.addEventListener('click', function (e) {
+        const dropdown = document.querySelector('.custom-dropdown');
+        if (!dropdown.contains(e.target)) {
+            const menu = document.querySelector('.custom-dropdown-menu');
+            menu.style.display = 'none';
+        }
+    });
+    </script>
+
+<script>
+module.exports = {
+    content: [
+      './resources/**/*.blade.php',
+      './resources/**/*.js',
+      './resources/**/*.vue',
+    ],
+    safelist: [
+      'border-2',
+      'border-4',
+      'border-8',
+      'border-black',
+      'bg-gray-300',
+    ],
+  }
 
 </script>
