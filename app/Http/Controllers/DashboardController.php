@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
-use App\Models\Sell;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,11 +10,6 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Ventas del mes
-        $totalSales = Sell::whereMonth('sell_date', Carbon::now()->month)
-            ->whereYear('sell_date', Carbon::now()->year)
-            ->sum('paid_amount');  
-    
         // Unidades en inventario
         DB::select('CALL get_total_units(@total)');
         $totalUnits = DB::select('SELECT @total AS total')[0]->total;
@@ -48,6 +40,16 @@ class DashboardController extends Controller
 
         $criticalStockProducts = DB::select('CALL get_critical_stock_products()');
 
+        $totalSales= 0;
+      
+        //Ingresos
+        DB::select('CALL get_total_income(@total)');
+        $totalIncome = DB::select('SELECT @total AS total')[0]->total;
+
+        //Ingreso Neto
+        DB::select('CALL get_net_income(@total)');
+        $totalNetIncome = DB::select('SELECT @total AS total')[0]->total;
+
         return view('dashboard', compact(
             'totalCategories', 
             'totalProducts', 
@@ -55,6 +57,8 @@ class DashboardController extends Controller
             'totalCustomers',
             'totalUsers',
             'totalSales',
+            'totalIncome',
+            'totalNetIncome',
             'totalUnits',
             'totalCriticalStock',
             'criticalStockProducts',

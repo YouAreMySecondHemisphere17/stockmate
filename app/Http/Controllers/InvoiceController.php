@@ -47,7 +47,10 @@ class InvoiceController extends Controller
             'products.*.sold_quantity' => 'required|numeric|min:1',
             'products.*.sold_price' => 'required|numeric|min:0',
             'products.*.discount' => 'nullable|numeric|min:0',
+            'is_partial_payment' => 'required|boolean',
         ]);
+
+        $isPartialPayment = (bool) $validated['is_partial_payment']; 
 
         $totalAmount = 0;
         $totalDiscount = 0;
@@ -68,6 +71,7 @@ class InvoiceController extends Controller
             'discount_amount' => $totalDiscount,
             'payment_method' => $request->payment_method,
             'payment_status' => $request->payment_status,
+            'is_partial_payment' => $request->is_partial_payment,
         ]);
 
         foreach ($request->products as $productData) {

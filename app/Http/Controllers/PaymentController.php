@@ -31,31 +31,43 @@ class PaymentController extends Controller
         return view('payments.create', compact('invoice', 'methods'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request, Sell $invoice)
     {
-        $data = $request->validate([
-            'sell_id' => 'required|exists:sells,id',
-            'date' => 'required|date',
-            'payment_method' => ['required', new Enum(PaymentMethodEnum::class)],
-            'details' => 'nullable|string',
-            'amount' => 'required|numeric|min:0',
-        ]);
+    $data = $request->validate([
+        'sell_id' => 'required|exists:sells,id',
+        'date' => 'required|date',
+        'payment_method' => ['required', new Enum(PaymentMethodEnum::class)],
+        'details' => 'nullable|string',
+        'amount' => 'required|numeric|min:0',
+    ]);
 
-        $data['user_id'] = auth()->id();
+    $data['user_id'] = auth()->id();
 
-        Payment::create($data);
+    $paidAmount = $request->input('paid_amount');
 
-        session()->flash('swal', [
-            'icon' => 'success',
-            'title' => '¡Bien hecho!',
-            'text' => 'El pago se ha registrado correctamente',
-        ]);
-
-        return redirect()->route('invoices.index');
+    if ($invoice->is_partial_payment) {
+        if ($invoice->paid_amount + $paidAmount > $invoice->total_amount) {
+            return redirect()->back()->with('error', 'El monto pagado no puede superar el monto total de la factura.');
+        }
+    } else {
+        if ($invoice->paid_amount >= $invoice->total_amount) {
+            return redirect()->back()->with('error', 'Esta factura ya está pagada en su totalidad.');
+        }
     }
+
+    $invoice->paid_amount += $paidAmount;
+    $invoice->save();
+
+    Payment::create($data);
+
+    session()->flash('swal', [
+        'icon' => 'success',
+        'title' => '¡Bien hecho!',
+        'text' => 'El pago se ha registrado correctamente',
+    ]);
+
+    return redirect()->route('invoices.index');
+}
 
     /**
      * Display the specified resource.

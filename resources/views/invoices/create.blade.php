@@ -23,7 +23,7 @@
                 <div class="relative">
                     <select name="customer_id" id="customer_id" class="w-full border-gray-300 rounded-md">
                         @foreach($customers as $customer)
-                            <option value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
+                            <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -52,6 +52,14 @@
                 <div class="flex-1 mr-3">
                     <label for="chalan_no" class="block text-sm font-medium text-gray-700">Número de Chalan</label>
                     <input type="text" id="chalan_no" name="chalan_no" value="{{ old('chalan_no') }}" placeholder="Chalan No." class="w-full border-gray-300 rounded-md">
+                </div>
+
+                <div class="flex-1 mr-3">
+                    <label for="is_partial_payment" class="block text-sm font-medium text-gray-700">¿Permite Pago Parcial?</label>
+                    <select name="is_partial_payment" id="is_partial_payment" class="w-full border-gray-300 rounded-md">
+                        <option value="0">No</option>
+                        <option value="1">Sí</option>
+                    </select>
                 </div>
 
                 <div class="flex-1">

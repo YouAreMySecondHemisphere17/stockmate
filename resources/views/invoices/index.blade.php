@@ -38,6 +38,9 @@
                     Fecha de Venta
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    Pago Parcial
+                </th>
+                <th scope="col" class="px-6 py-3">
                     Estado de Pago
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -55,7 +58,7 @@
                         {{$invoice->id}}
                     </th>
                     <td class="px-6 py-4">
-                        {{$invoice->customer->customer_name}}
+                        {{$invoice->customer->name}}
                     </td>
                     <td class="px-6 py-4">
                         {{$invoice->total_amount}} USD
@@ -70,6 +73,9 @@
                         {{$invoice->sell_date}}
                     </td>
                     <td class="px-6 py-4">
+                        {{$invoice->is_partial_payment ? 'Sí' : 'No'}}
+                    </td>
+                    <td class="px-6 py-4">
                         {{$invoice->payment_status}}
                     </td>
                     <td class="px-6 py-4">
@@ -77,18 +83,31 @@
                     </td>     
                     <td class="px-6 py-4">
                         <div class="flex space-x-2">
-                            <a href="{{ route('payments.create', $invoice) }}" class="btn text-xs px-4 py-2 rounded-lg bg-[#92df8f] text-black hover:bg-[#92df8f]">
-                                Abonar
-                            </a>
-
+                            @if ($invoice->is_partial_payment)
+                                <!-- Si es un pago parcial, permitir múltiples pagos -->
+                                <a href="{{ route('payments.create', $invoice) }}" class="btn text-xs px-4 py-2 rounded-lg bg-[#92df8f] text-black hover:bg-[#92df8f]">
+                                    Abonar
+                                </a>
+                            @else
+                                <!-- Si no es un pago parcial, solo permitir un pago -->
+                                @if ($invoice->paid_amount < $invoice->total_amount)
+                                    <a href="{{ route('payments.create', $invoice) }}" class="btn text-xs px-4 py-2 rounded-lg bg-[#92df8f] text-black hover:bg-[#92df8f]">
+                                        Abonar
+                                    </a>
+                                @else
+                                    <!-- Mostrar mensaje de que no se pueden hacer más pagos -->
+                                    <span class="text-gray-500">Pago completo</span>
+                                @endif
+                            @endif
+                    
                             <a href="{{route('invoices.edit', $invoice)}}" class="btn text-xs px-4 py-2 rounded-lg bg-[#fca311] text-black hover:bg-[#ff8c00]">
                                 Actualizar Estado
                             </a>
-
+                    
                             <form class="delete-form" action="{{route('invoices.destroy', $invoice)}}" method="POST">
                                 @csrf
                                 @method('DELETE')
-
+                    
                                 <button class="btn text-xs py-2 rounded-lg bg-[#d9534f] text-white hover:bg-[#c9302c]">
                                     Eliminar
                                 </button>

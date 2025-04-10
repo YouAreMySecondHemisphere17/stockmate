@@ -19,6 +19,11 @@ class Sell extends Model
         'sell_date',
         'discount_amount',
         'payment_status',
+        'is_partial_payment'
+    ];
+    
+    protected $casts = [
+        'is_partial_payment' => 'boolean',
     ];
     
     public function customer(){

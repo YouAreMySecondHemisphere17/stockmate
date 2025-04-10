@@ -22,12 +22,14 @@ return new class extends Migration
 
             $table->double('total_amount'); //Monto total
             $table->double('paid_amount')->default(0); //Monto pagado
-            $table->string('sell_date')->nullable(); //Fecha de la venta
-            $table->double('discount_amount')->default(0); //Monto descuento
+            $table->string('sell_date')->nullable(); 
+            $table->double('discount_amount')->default(0); 
 
             $table->enum('payment_status', array_column(PaymentStatusEnum::cases(), 'value'))
-            ->default(PaymentStatusEnum::PENDING->value); //Estado de pago
+            ->default(PaymentStatusEnum::PENDING->value);
             
+            $table->boolean('is_partial_payment')->default(false);  
+
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('branch_id')->references('id')->on('branches');

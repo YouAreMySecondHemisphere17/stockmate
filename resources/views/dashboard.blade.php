@@ -19,14 +19,31 @@
             </div>
         </div>    
 
-        <!-- Unidades en inventario -->
+        <!-- Existencia total -->
         <div class="flex items-center gap-4 bg-[#38ca44da] text-white p-6 rounded-xl shadow-md cursor-pointer">
             <i class="fas fa-cube text-4xl text-white"></i>
            <div>
                 <div class="text-lg font-semibold">Unidades</div>
                 <div class="text-3xl font-bold">{{ $totalUnits }}</div>
             </div>
-        </div>   
+        </div>           
+        
+        beneficio bruto 
+        beneficio neto 
+        importe vendido
+        facturas
+        existencia vendidas
+        importe restante
+        importe pagado
+        
+        <!-- Existencias actuales -->
+        <div class="flex items-center gap-4 bg-[#38ca44da] text-white p-6 rounded-xl shadow-md cursor-pointer">
+            <i class="fas fa-cube text-4xl text-white"></i>
+           <div>
+                <div class="text-lg font-semibold">Unidades</div>
+                <div class="text-3xl font-bold">{{ $totalUnits }}</div>
+            </div>
+        </div>  
   
         <!-- Productos -->
         <div class="flex items-center gap-4 bg-[#ffea8edc] text-black p-6 rounded-xl shadow-md cursor-pointer">
@@ -69,10 +86,19 @@
             <i class="fas fa-dollar-sign text-4xl text-white"></i>
            <div>
                 <div class="text-lg font-semibold">Ingresos</div>
-                <div class="text-3xl font-bold">{{ 7 }}</div>
+                <div class="text-3xl font-bold">{{ $totalIncome }}</div>
             </div>
-        </div>                    
-        
+        </div>                  
+           
+        <!-- Ingresos Netos -->
+        <div class="flex items-center gap-4 bg-[#a5fa08] text-white p-6 rounded-xl shadow-md cursor-pointer">
+            <i class="fas fa-money-bill-wave text-4xl text-white"></i>
+           <div>
+                <div class="text-lg font-semibold">Ingresos Netos</div>
+                <div class="text-3xl font-bold">{{ $totalNetIncome }}</div>
+            </div>
+        </div>       
+         
         <!-- Usuarios -->
         <div class="flex items-center gap-4 bg-[#2f4ed6da] text-white p-6 rounded-xl shadow-md cursor-pointer">
             <i class="fas fa-user text-4xl text-white"></i>
@@ -80,7 +106,7 @@
                 <div class="text-lg font-semibold">Usuarios</div>
                 <div class="text-3xl font-bold">{{ $totalUsers }}</div>
             </div>
-        </div>      
+        </div>  
     </div>
 
     <div id="criticalStockModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
