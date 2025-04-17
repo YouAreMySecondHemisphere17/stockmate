@@ -13,6 +13,7 @@ class Sell extends Model
     protected $fillable = [
         'user_id',
         'customer_id',
+        'number',
         'total_amount',
         'sell_date',
         'discount_amount',
@@ -30,8 +31,14 @@ class Sell extends Model
         ]);
     }
 
-    public function branch(){
-        return $this->belongsTo(Branch::class);
+    public function sell_details()
+    {
+        return $this->hasMany(SellDetails::class, 'sell_id');
     }
 
+    public function payment()
+    {
+        return $this->hasOne(Payment::class, 'sell_id');
+    }
+    
 }

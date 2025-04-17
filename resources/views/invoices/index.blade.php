@@ -20,7 +20,7 @@
         <thead class="text-xs text-black uppercase bg-[#fca311]">
             <tr>
                 <th scope="col" class="px-6 py-3">
-                    ID
+                    Número
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Cliente
@@ -32,16 +32,16 @@
                     Monto Descuento
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Fecha de Venta
+                    Fecha
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Estado de Pago
+                    Estado
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Método de Pago ///
+                    Método de Pago
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Detalles ///
+                    Detalles
                 </th>
                 <th scope="col" class="px-6 py-3 text-center">
                     Acciones
@@ -52,7 +52,7 @@
             @foreach ($invoices as $invoice)
                 <tr class="bg-white border-b border-[#e5d3b3]">
                     <th scope="row" class="px-6 py-4 font-medium text-[#3e3b36] whitespace-nowrap">
-                        {{$invoice->id}}
+                        {{$invoice->number}}
                     </th>
                     <td class="px-6 py-4">
                         {{$invoice->customer->name}}
@@ -68,9 +68,18 @@
                     </td>
                     <td class="px-6 py-4">
                         {{$invoice->payment_status}}
-                    </td>   
+                    </td> 
                     <td class="px-6 py-4">
-                        <div class="flex space-x-2">              
+                        {{$invoice->payment->payment_method}}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{$invoice->payment->details}}
+                    </td>  
+                    <td class="px-6 py-4">
+                        <div class="flex space-x-2">
+                            <a href="{{route('invoices.show', $invoice)}}" class="btn text-xs px-4 py-2 rounded-lg bg-[#58ce7f] text-black hover:bg-[#168039]">
+                                Ver
+                            </a>              
                             <a href="{{route('invoices.edit', $invoice)}}" class="btn text-xs px-4 py-2 rounded-lg bg-[#fca311] text-black hover:bg-[#ff8c00]">
                                 Editar
                             </a>

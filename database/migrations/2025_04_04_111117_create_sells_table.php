@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('user_id');
 
+            $table->string('number'); //Monto total
             $table->double('total_amount'); //Monto total
             $table->string('sell_date')->nullable(); 
             $table->double('discount_amount')->default(0); 

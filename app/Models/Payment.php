@@ -24,4 +24,8 @@ class Payment extends Model
     protected $casts = [
         'status' => PaymentMethodEnum::class,
     ];
+
+    public function sell(){
+    	return $this->belongsTo(Sell::class);
+    }
 }

@@ -33,4 +33,9 @@ class SellDetails extends Model
 			'name' => 'Unknown User'
 		  ]);
 	}
+
+	public function sell()
+    {
+        return $this->belongsTo(Sell::class);
+    }
 }

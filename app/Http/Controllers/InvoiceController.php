@@ -37,10 +37,10 @@ class InvoiceController extends Controller
       
       $lastInvoice = Sell::latest()->first();
       $nextNumber = $lastInvoice ? $lastInvoice->id + 1 : 1;
-      $chalanNo = 'CH-' . str_pad($nextNumber, 6, '0', STR_PAD_LEFT);
+      $number = 'INV-' . str_pad($nextNumber, 8, '0', STR_PAD_LEFT);
 
       return view('invoices.create', compact('customers', 
-      'products', 'status', 'methods', 'chalanNo'));
+      'products', 'status', 'methods', 'number'));
    }
 
    public function store(Request $request)
@@ -61,6 +61,7 @@ class InvoiceController extends Controller
    
        $sell = Sell::create([
            'user_id' => auth()->id(),
+           'number' => $request->number,
            'customer_id' => $request->customer_id,
            'total_amount' => $request->total_amount,
            'sell_date' => $request->sell_date,
@@ -105,7 +106,6 @@ class InvoiceController extends Controller
 
     public function show(Sell $invoice)
     {
-        $invoice->load('sellDetails.product'); 
         return view('invoices.show', compact('invoice'));
     }
 

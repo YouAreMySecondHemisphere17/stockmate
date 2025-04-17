@@ -47,29 +47,7 @@ Route::middleware(['auth'])->group(function () {
  
     Route::resource('users', UserController::class)->names('users');
 
-    //FACTURAS
-    Route::get('invoices', [InvoiceController::class, 'index'])->name('invoices.index');
-
-    Route::get('invoices/create', [InvoiceController::class, 'create'])->name('invoices.create');
-    Route::post('invoices', [InvoiceController::class, 'store'])->name('invoices.store');
-
-    Route::get('invoices/{invoice}/edit', [InvoiceController::class, 'edit'])->name('invoices.edit');
-    Route::put('invoices/{invoice}', [InvoiceController::class, 'update'])->name('invoices.update');
-
-    Route::delete('invoices/{invoice}', [InvoiceController::class, 'destroy'])->name('invoices.destroy');
-
-
-    //PAGOS
-
-    Route::get('payments', [PaymentController::class, 'index'])->name('payments.index');
-
-    Route::get('payments/create/{invoice}', [PaymentController::class, 'create'])->name('payments.create');
-    Route::post('payments', [PaymentController::class, 'store'])->name('payments.store');
-    
-    Route::get('payments/{payments}/edit', [PaymentController::class, 'edit'])->name('payments.edit');
-    Route::put('payments/{payments}', [PaymentController::class, 'update'])->name('payments.update');
-    
-    Route::delete('payments/{payments}', [PaymentController::class, 'destroy'])->name('payments.destroy');
+    Route::resource('invoices', InvoiceController::class)->names('invoices');
 });
 
 require __DIR__.'/auth.php';

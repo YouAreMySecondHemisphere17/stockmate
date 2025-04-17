@@ -28,8 +28,8 @@
                         </select>
                     </div>
                     <div>
-                        <label class="invoice-label">N° Chalan:</label>
-                        <input type="text" name="chalan_no"  value="{{ $chalanNo }}" class="w-full border-gray-300 rounded-md" readonly/>
+                        <label class="invoice-label">N°:</label>
+                        <input type="text" name="number"  value="{{ $number }}" class="w-full border-gray-300 rounded-md" readonly/>
                     </div>
                     <div>
                         <label class="invoice-label">Fecha:</label>
@@ -107,8 +107,8 @@
                     </div>
                 </div>
 
-                <div class="invoice-section bg-green-600">
-                    <button type="submit" class="px-6 py-2 bg-green-600 text-black rounded-md shadow">Guardar Factura</button>
+                <div class="invoice-section">
+                    <button type="submit" class="px-6 py-2 bg-[#fca311] text-black rounded-md shadow">Guardar Facturan y Pago</button>
                 </div>
             </div>
         </form>
@@ -207,13 +207,11 @@
 
 </script>
 
-
-
 <style>
     .invoice-container {
         max-width: 800px; /* Aproximadamente A4 */
         margin: auto;
-        background-color: #fff;
+        background-color: #fffefeee;
         padding: 40px;
         border: 1px solid #ccc;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
