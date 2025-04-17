@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\CategoryStatusEnum;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -36,9 +35,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $statuses = CategoryStatusEnum::cases();
-
-        return view('categories.create', compact('statuses'));
+        return view('categories.create');
     }
 
     /**
@@ -48,7 +45,6 @@ class CategoryController extends Controller
     {        
         $data = $request->validate([
             'name' => 'required|string|min:3|max:50|unique:categories,name',
-            'status' => ['required', new Enum(CategoryStatusEnum::class)],
         ]);
 
         Category::create($data);
@@ -75,9 +71,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $statuses = CategoryStatusEnum::cases();
-
-        return view('categories.edit', compact('category', 'statuses'));
+        return view('categories.edit', compact('category'));
     }
 
     /**
@@ -87,7 +81,6 @@ class CategoryController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|min:3|max:50|unique:categories,name,' . $category->id,
-            'status' => ['required', new Enum(CategoryStatusEnum::class)],
         ]);
 
         $category->update($data);

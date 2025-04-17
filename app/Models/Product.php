@@ -19,12 +19,7 @@ class Product extends Model
         'sold_price',
         'current_stock',
         'minimum_stock',
-        'status',
         'image_path',
-    ];
-
-    protected $casts = [
-        'status' => ProductStatusEnum::class,
     ];
 
     public function category()

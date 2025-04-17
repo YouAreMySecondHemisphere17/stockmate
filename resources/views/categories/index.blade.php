@@ -40,9 +40,6 @@
                     <th scope="col" class="px-6 py-3">
                         Nombre
                     </th>
-                    <th scope="col" class="px-6 py-3">
-                        Estado
-                    </th>
                     <th scope="col" class="px-6 py-3 text-center" width="10px">
                         Acciones
                     </th>
@@ -56,10 +53,7 @@
                         </th>
                         <td class="px-6 py-4">
                             {{$category['name']}}                        
-                        </td>  
-                        <td class="px-6 py-4">
-                            {{$category['status']}} 
-                        </td>    
+                        </td>     
                         <td class="px-6 py-4">
                             <div class="flex space-x-2">
                                 <a href="{{ route('categories.edit', ['category' => $category['id']]) }}" class="btn text-xs px-4 py-2 rounded-lg bg-[#9c8353da] text-amber-950 hover:bg-[#9c8353da]">

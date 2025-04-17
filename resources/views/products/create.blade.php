@@ -41,16 +41,7 @@
                 <div class="flex-1 mr-3">
                     <label for="minimum_stock" class="block text-sm font-medium text-gray-700">Stock Mínimo</label>
                     <input type="number" id="minimum_stock" name="minimum_stock" value="{{ old('minimum_stock', "10") }}" class="w-full price-input border-gray-300 rounded-md" step="1" min="10" max="999999">
-                </div> 
-
-               <div class="flex-1">
-                    <label for="status" class="block text-sm font-medium text-gray-700">Estado</label>
-                    <select name="status" class="w-full border-gray-300 rounded-md">
-                        @foreach($statuses as $status)
-                            <option value="{{ $status->value }}">{{ $status->value }}</option>
-                        @endforeach
-                    </select>
-                </div>                  
+                </div>                
             </div>  
 
             <div class="flex">            

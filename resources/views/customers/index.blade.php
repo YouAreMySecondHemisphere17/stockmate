@@ -106,6 +106,5 @@
                 @endforeach
             </tbody>
         </table>
-    </div>
-
+    </div>   
 </x-layouts.app>

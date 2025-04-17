@@ -28,18 +28,6 @@
                         <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div> 
-
-                <div class="flex-2">
-                    <label for="status" class="block text-sm font-medium text-gray-700">Estado</label>
-                    <select name="status" class="w-full border-gray-300 rounded-md">
-                        @foreach($statuses as $status)
-                        <option value="{{ $status->value }}"
-                            {{ (old('status', $category->status->value ?? '') == $status->value) ? 'selected' : '' }}>
-                            {{ $status->value }}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
             </div>  
 
             <div class="flex justify-end">

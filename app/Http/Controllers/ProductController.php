@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\ProductStatusEnum;
 use App\Models\Product;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules\Enum;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -33,9 +31,7 @@ class ProductController extends Controller
         $categories = Category::all();
         $vendors = Vendor::all();
 
-        $statuses = ProductStatusEnum::cases();
-
-        return view('products.create', compact('categories', 'vendors', 'statuses'));
+        return view('products.create', compact('categories', 'vendors'));
     }
 
     /**
@@ -45,11 +41,10 @@ class ProductController extends Controller
     {
         $data = $request->validate([
             'category_id' => 'required|integer|exists:categories,id',
-            'product_name' => 'required|string|min:3|max:50|unique:products,name',
+            'product_name' => 'required|string|min:3|max:50|unique:products,product_name',
             'details' => 'nullable|string',
             'sold_price' => 'required|numeric|min:0',
             'minimum_stock' => 'required|numeric|min:0',
-            'status' => ['required', new Enum(ProductStatusEnum::class)],
             'image' => 'nullable|image|max:2048',
         ]);
         
@@ -84,9 +79,7 @@ class ProductController extends Controller
         $categories = Category::all();
         $vendors = Vendor::all();
 
-        $statuses = ProductStatusEnum::cases();
-
-        return view('products.edit', compact('product', 'categories', 'vendors', 'statuses'));
+        return view('products.edit', compact('product', 'categories', 'vendors'));
     }
 
     /**
@@ -96,11 +89,10 @@ class ProductController extends Controller
     {
         $data = $request->validate([
             'category_id' => 'required|integer|exists:categories,id',
-            'product_name' => 'required|string|min:3|max:50|unique:products,name,' . $product->id,
+            'product_name' => 'required|string|min:3|max:50|unique:products,product_name,' . $product->id,
             'details' => 'nullable|string',
             'sold_price' => 'required|numeric|min:0',
             'minimum_stock' => 'required|numeric|min:0',
-            'status' => ['required', new Enum(ProductStatusEnum::class)],
             'image' => 'nullable|image|max:2048',
         ]);
 

@@ -23,9 +23,6 @@ return new class extends Migration
             $table->integer('current_stock')->default(0);
             $table->integer('minimum_stock')->default(10); 
 
-            $table->enum('status', array_column(ProductStatusEnum::cases(), 'value'))
-            ->default(ProductStatusEnum::ACTIVE->value); //Estado
-
             $table->string('image_path')->nullable(); //Imagen
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');

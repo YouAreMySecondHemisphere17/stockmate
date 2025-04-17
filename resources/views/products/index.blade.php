@@ -54,10 +54,7 @@
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Precio de Venta
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Estado
-                    </th>   
+                    </th>  
                     <th scope="col" class="px-6 py-3 text-center" width="10px">
                         Acciones
                     </th>
@@ -88,11 +85,6 @@
                         </td>
                         <td class="px-6 py-4">
                             {{$product['sold_price']}}
-                        </td>
-                        <td class="px-6 py-4">
-                            <div class="flex space-x-2">
-                                {{$product['status']}}
-                            </div>
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex space-x-2">

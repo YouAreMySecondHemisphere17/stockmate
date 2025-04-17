@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Enums\CategoryStatusEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +19,6 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => substr($this->faker->word, 0, rand(3, 50)),
-            'status' => $this->faker->randomElement(CategoryStatusEnum::cases())->value,
         ];
     }
 }
