@@ -38,7 +38,10 @@
                     Estado de Pago
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Sucursal
+                    Método de Pago ///
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Detalles ///
                 </th>
                 <th scope="col" class="px-6 py-3 text-center">
                     Acciones
@@ -65,14 +68,11 @@
                     </td>
                     <td class="px-6 py-4">
                         {{$invoice->payment_status}}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{$invoice->branch->branch_name}}
-                    </td>     
+                    </td>   
                     <td class="px-6 py-4">
                         <div class="flex space-x-2">              
                             <a href="{{route('invoices.edit', $invoice)}}" class="btn text-xs px-4 py-2 rounded-lg bg-[#fca311] text-black hover:bg-[#ff8c00]">
-                                Actualizar Estado
+                                Editar
                             </a>
                     
                             <form class="delete-form" action="{{route('invoices.destroy', $invoice)}}" method="POST">

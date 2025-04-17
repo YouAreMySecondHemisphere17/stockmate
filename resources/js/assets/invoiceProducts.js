@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const newProductHTML = `
                 <div class="product-item flex space-x-4 mb-4" data-index="${productCount}">
-                    <div class="flex-2">
+                    <div class="flex-1">
                         <label for="product_id_${productCount}" class="block text-sm font-medium text-gray-700">Producto ${productCount + 1}</label>
                         <select name="products[${productCount}][product_id]" id="product_id_${productCount}" class="w-full product-select border-gray-300 rounded-md">
                             ${selectTemplate}

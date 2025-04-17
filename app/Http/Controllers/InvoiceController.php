@@ -32,44 +32,34 @@ class InvoiceController extends Controller
    {
       $customers = Customer::all();
       $products = Product::all();
-      $branches = Branch::all();
       $status = PaymentStatusEnum::CANCELLED;
       $methods = PaymentMethodEnum::cases();
 
-      return view('invoices.create', compact('customers', 'branches', 'products', 'status', 'methods'));
+      return view('invoices.create', compact('customers', 'products', 'status', 'methods'));
    }
 
    public function store(Request $request)
    {
        $validated = $request->validate([
            'customer_id' => 'required|exists:customers,id',
-           'payment_status' => ['required', new Enum(PaymentStatusEnum::class)],
            'sell_date' => 'required|date',
            'discount_amount' => 'nullable|numeric|min:0',
            'products' => 'required|array',
            'products.*.product_id' => 'required|exists:products,id',
            'products.*.sold_quantity' => 'required|numeric|min:1',
            'products.*.sold_price' => 'required|numeric|min:0',
+           'products.*.total_sold_price' => 'required|numeric|min:0',
            'products.*.discount' => 'nullable|numeric|min:0',
            'payment_method' => ['required', new Enum(PaymentMethodEnum::class)],
            'details' => 'nullable|string|max:255',
        ]);
    
-       $totalAmount = 0;
-       $totalDiscount = 0;
-   
-       foreach ($request->products as $productData) {
-           $totalAmount += $productData['sold_quantity'] * $productData['sold_price'];
-           $totalDiscount += $productData['discount'] ?? 0;
-       }
-   
        $sell = Sell::create([
            'user_id' => auth()->id(),
            'customer_id' => $request->customer_id,
-           'branch_id' => $request->branch_id ?? 1,
-           'total_amount' => $totalAmount,
+           'total_amount' => $request->total_amount,
            'sell_date' => $request->sell_date,
-           'discount_amount' => $totalDiscount,
+           'discount_amount' => $request->discount_amount,
            'payment_method' => $request->payment_method,
            'payment_status' => PaymentStatusEnum::PAID, // Como es pago único
        ]);
@@ -84,16 +74,16 @@ class InvoiceController extends Controller
                'sold_price' => $productData['sold_price'],
                'total_sold_price' => $totalSoldPrice,
                'discount' => $productData['discount'] ?? 0,
-               'discount_amount' => $productData['discount'] ?? 0,
            ]);
        }
    
        Payment::create([
-            'sell_id' => 'required|exists:sells,id',
-            'date' => 'required|date',
-            'payment_method' => ['required', new Enum(PaymentMethodEnum::class)],
-            'details' => 'nullable|string',
-            'amount' => 'required|numeric|min:0',
+            'sell_id' => $sell->id,
+            'user_id' => auth()->id(),
+            'date' => $sell->sell_date,
+            'payment_method' => $request->payment_method,
+            'details' => $request->details,
+            'amount' => $request->total_amount,
        ]);
    
        Product::calcularStockDeTodosLosProductos();

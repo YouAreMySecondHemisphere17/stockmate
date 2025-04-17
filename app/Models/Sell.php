@@ -13,7 +13,6 @@ class Sell extends Model
     protected $fillable = [
         'user_id',
         'customer_id',
-        'branch_id',
         'total_amount',
         'sell_date',
         'discount_amount',

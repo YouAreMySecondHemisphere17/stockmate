@@ -18,7 +18,6 @@ return new class extends Migration
 
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('branch_id'); //Sucursal
 
             $table->double('total_amount'); //Monto total
             $table->string('sell_date')->nullable(); 
@@ -29,7 +28,6 @@ return new class extends Migration
             
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('branch_id')->references('id')->on('branches');
 
             $table->timestamps();
         });
