@@ -23,7 +23,6 @@ class SellFactory extends Factory
             'customer_id' => 1, 
             'branch_id' => 1, 
             'total_amount' => $this->faker->randomFloat(2, 20, 500),
-            'paid_amount' => $this->faker->randomFloat(2, 0, 500),
             'sell_date' => $this->faker->date('Y-m-d'),
             'discount_amount' => $this->faker->randomFloat(2, 0, 50),
             'payment_method' => $this->faker->randomElement(PaymentMethodEnum::cases())->value,

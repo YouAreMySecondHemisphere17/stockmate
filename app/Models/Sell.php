@@ -15,17 +15,11 @@ class Sell extends Model
         'customer_id',
         'branch_id',
         'total_amount',
-        'paid_amount',
         'sell_date',
         'discount_amount',
         'payment_status',
-        'is_partial_payment'
     ];
-    
-    protected $casts = [
-        'is_partial_payment' => 'boolean',
-    ];
-    
+
     public function customer(){
     	return $this->belongsTo(Customer::class);
     }

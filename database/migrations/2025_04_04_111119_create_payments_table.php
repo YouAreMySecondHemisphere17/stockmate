@@ -3,7 +3,6 @@
 use App\Enums\PaymentMethodEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -18,18 +17,18 @@ return new class extends Migration
 
             $table->unsignedBigInteger('sell_id');
             $table->unsignedBigInteger('user_id');
-            
-            $table->string('date');
+
+            $table->date('date'); // Fecha del pago
 
             $table->enum('payment_method', array_column(PaymentMethodEnum::cases(), 'value'))
-            ->default(PaymentMethodEnum::CASH->value);
+                ->default(PaymentMethodEnum::CASH->value);
 
-            $table->text('details')->nullable();
             $table->double('amount');
+            $table->text('details')->nullable();
 
             $table->foreign('sell_id')->references('id')->on('sells')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users');
-            
+
             $table->timestamps();
         });
     }

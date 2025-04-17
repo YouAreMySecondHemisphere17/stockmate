@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Branch;
 use App\Models\Category;
-use App\Models\Company;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Sell;
@@ -36,7 +35,6 @@ class DatabaseSeeder extends Seeder
         Product::factory()->count(14)->create();
         Customer::factory()->count(20)->create();
         Branch::factory()->count(9)->create();
-        Company::factory()->count(3)->create();
-        Purchase::factory()->count(100)->create();
+        Purchase::factory()->count(50)->create();
     }
 }

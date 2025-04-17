@@ -15,61 +15,35 @@
         <h2 class="text-2xl font-semibold mb-6 text-gray-800">Registrar Nueva Factura</h2>
 
         <form action="{{ route('invoices.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
-
             @csrf
 
-            <div class="flex-1 mr-3">
-                <label for="customer_id" class="block text-sm font-medium text-gray-700">Cliente</label>
-                <div class="relative">
+            <!-- Cliente y Chalan -->
+            <div class="flex">
+                <div class="flex-1 mr-3">
+                    <label for="customer_id" class="block text-sm font-medium text-gray-700">Cliente</label>
                     <select name="customer_id" id="customer_id" class="w-full border-gray-300 rounded-md">
                         @foreach($customers as $customer)
                             <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                         @endforeach
                     </select>
-                </div>
+                </div> 
+
+                <div class="flex-1">
+                    <label for="chalan_no" class="block text-sm font-medium text-gray-700">Número de Chalan</label>
+                    <input type="text" id="chalan_no" name="chalan_no" value="{{ old('chalan_no') }}" placeholder="Chalan No." class="w-full border-gray-300 rounded-md">
+                </div> 
             </div>
 
-            <div id="new-customer-form" class="hidden mt-4">
-                <h3 class="text-lg font-medium text-gray-700">Nuevo Cliente</h3>
-                <div class="flex space-x-4">
-                    <div class="flex-1">
-                        <label for="new_customer_name" class="block text-sm font-medium text-gray-700">Nombre del Cliente</label>
-                        <input type="text" id="new_customer_name" name="new_customer_name" class="w-full border-gray-300 rounded-md">
-                    </div>
-                    <div class="flex-1">
-                        <label for="new_customer_email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
-                        <input type="email" id="new_customer_email" name="new_customer_email" class="w-full border-gray-300 rounded-md">
-                    </div>
-                </div>
-            </div>
-
+            <!-- Fecha -->
             <div class="flex">
                 <div class="flex-1 mr-3">
                     <label for="sell_date" class="block text-sm font-medium text-gray-700">Fecha de Venta</label>
                     <input type="date" id="sell_date" name="sell_date" value="{{ date('Y-m-d') }}" class="w-full border-gray-300 rounded-md" readonly>
                 </div>
-
-                <div class="flex-1 mr-3">
-                    <label for="chalan_no" class="block text-sm font-medium text-gray-700">Número de Chalan</label>
-                    <input type="text" id="chalan_no" name="chalan_no" value="{{ old('chalan_no') }}" placeholder="Chalan No." class="w-full border-gray-300 rounded-md">
-                </div>
-
-                <div class="flex-1 mr-3">
-                    <label for="is_partial_payment" class="block text-sm font-medium text-gray-700">¿Permite Pago Parcial?</label>
-                    <select name="is_partial_payment" id="is_partial_payment" class="w-full border-gray-300 rounded-md">
-                        <option value="0">No</option>
-                        <option value="1">Sí</option>
-                    </select>
-                </div>
-
-                <div class="flex-1">
-                    <label for="payment_status" class="block text-sm font-medium text-gray-700">Estado de Pago</label>
-                    <select name="payment_status" id="payment_status" class="w-full border-gray-300 rounded-md">
-                            <option value="Pendiente">{{ $status->value }}</option>
-                    </select>
-                </div>
             </div>
 
+            <!-- Productos -->
+       
             <h3 class="text-lg font-medium text-gray-700 mt-6 mb-2">Productos</h3>
 
             <div id="product-list">
@@ -119,14 +93,32 @@
                     <label for="discount_amount" class="block text-sm font-medium text-gray-700">Descuento Total</label>
                     <input type="text" id="discount_amount" name="discount_amount" class="w-full border-gray-300 rounded-md" readonly>
                 </div>
+            </div>                        
+            
+            <!-- Pago -->
+            <h3 class="text-lg font-semibold mt-6 text-gray-800">Pago</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                    <label for="payment_method" class="block text-sm font-medium text-gray-700">Método de Pago</label>
+                    <select name="payment_method" id="payment_method" class="w-full border-gray-300 rounded-md">
+                        @foreach($methods as $method)
+                            <option value="{{ $method->value }}">{{ $method->value }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label for="details" class="block text-sm font-medium text-gray-700">Detalles del Pago (opcional)</label>
+                    <textarea name="details" id="details" class="w-full border-gray-300 rounded-md">{{ old('details') }}</textarea>
+                </div>
             </div>
 
-            <div class="flex justify-end">
-                <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md">Guardar Factura</button>
+            <div class="flex justify-end mt-6">
+                <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md">Guardar Factura y Registrar Pago</button>
             </div>
         </form>
     </div>
 </x-layouts.app>
+
 
 <script>
     // Cuando se cambia el producto, actualiza precio y stock

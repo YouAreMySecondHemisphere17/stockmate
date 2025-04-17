@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Enums\PaymentStatusEnum;
+use App\Enums\PaymentMethodEnum;
+
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
 use Illuminate\Http\Request;
 
 use App\Models\Customer;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Sell;
 use App\Models\SellDetails;
@@ -30,75 +33,80 @@ class InvoiceController extends Controller
       $customers = Customer::all();
       $products = Product::all();
       $branches = Branch::all();
-      $status = PaymentStatusEnum::PENDING;
+      $status = PaymentStatusEnum::CANCELLED;
+      $methods = PaymentMethodEnum::cases();
 
-      return view('invoices.create', compact('customers', 'branches', 'products', 'status'));
+      return view('invoices.create', compact('customers', 'branches', 'products', 'status', 'methods'));
    }
 
    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'customer_id' => 'required|exists:customers,id',
-            'payment_status' => ['required', new Enum(PaymentStatusEnum::class)],
-            'sell_date' => 'required|date',
-            'discount_amount' => 'nullable|numeric|min:0',
-            'products' => 'required|array',
-            'products.*.product_id' => 'required|exists:products,id',
-            'products.*.sold_quantity' => 'required|numeric|min:1',
-            'products.*.sold_price' => 'required|numeric|min:0',
-            'products.*.discount' => 'nullable|numeric|min:0',
-            'is_partial_payment' => 'required|boolean',
-        ]);
-
-        $isPartialPayment = (bool) $validated['is_partial_payment']; 
-
-        $totalAmount = 0;
-        $totalDiscount = 0;
-
-        foreach ($request->products as $productData) {
-            $product = Product::find($productData['product_id']);
-            $totalAmount += $productData['sold_quantity'] * $productData['sold_price'];
-            $totalDiscount += $productData['discount'];
-        }
-
-        $sell = Sell::create([
-            'user_id' => auth()->id(),
-            'customer_id' => $request->customer_id,
-            'branch_id' => $request->branch_id ?? 1,
-            'total_amount' => $totalAmount,
-            'paid_amount' => 0, 
-            'sell_date' => $request->sell_date,
-            'discount_amount' => $totalDiscount,
-            'payment_method' => $request->payment_method,
-            'payment_status' => $request->payment_status,
-            'is_partial_payment' => $request->is_partial_payment,
-        ]);
-
-        foreach ($request->products as $productData) {
-            $product = Product::find($productData['product_id']);
-            $totalSoldPrice = $productData['sold_quantity'] * $productData['sold_price'];
-
-            SellDetails::create([
-                'sell_id' => $sell->id,
-                'product_id' => $productData['product_id'],
-                'quantity_sold' => $productData['sold_quantity'],
-                'sold_price' => $productData['sold_price'],
-                'total_sold_price' => $totalSoldPrice,
-                'discount' => $productData['discount'] ?? 0,
-                'discount_amount' => $productData['discount'] ?? 0,
-            ]);
-        }
-
-        Product::calcularStockDeTodosLosProductos();
-
-        session()->flash('swal', [
-            'icon' => 'success',
-            'title' => '¡Bien hecho!',
-            'text' => 'La factura se ha creado correctamente',
-        ]);
-
-        return redirect()->route('invoices.index');
-    }
+   {
+       $validated = $request->validate([
+           'customer_id' => 'required|exists:customers,id',
+           'payment_status' => ['required', new Enum(PaymentStatusEnum::class)],
+           'sell_date' => 'required|date',
+           'discount_amount' => 'nullable|numeric|min:0',
+           'products' => 'required|array',
+           'products.*.product_id' => 'required|exists:products,id',
+           'products.*.sold_quantity' => 'required|numeric|min:1',
+           'products.*.sold_price' => 'required|numeric|min:0',
+           'products.*.discount' => 'nullable|numeric|min:0',
+           'payment_method' => ['required', new Enum(PaymentMethodEnum::class)],
+           'details' => 'nullable|string|max:255',
+       ]);
+   
+       $totalAmount = 0;
+       $totalDiscount = 0;
+   
+       foreach ($request->products as $productData) {
+           $totalAmount += $productData['sold_quantity'] * $productData['sold_price'];
+           $totalDiscount += $productData['discount'] ?? 0;
+       }
+   
+       $sell = Sell::create([
+           'user_id' => auth()->id(),
+           'customer_id' => $request->customer_id,
+           'branch_id' => $request->branch_id ?? 1,
+           'total_amount' => $totalAmount,
+           'sell_date' => $request->sell_date,
+           'discount_amount' => $totalDiscount,
+           'payment_method' => $request->payment_method,
+           'payment_status' => PaymentStatusEnum::PAID, // Como es pago único
+       ]);
+   
+       foreach ($request->products as $productData) {
+           $totalSoldPrice = $productData['sold_quantity'] * $productData['sold_price'];
+   
+           SellDetails::create([
+               'sell_id' => $sell->id,
+               'product_id' => $productData['product_id'],
+               'quantity_sold' => $productData['sold_quantity'],
+               'sold_price' => $productData['sold_price'],
+               'total_sold_price' => $totalSoldPrice,
+               'discount' => $productData['discount'] ?? 0,
+               'discount_amount' => $productData['discount'] ?? 0,
+           ]);
+       }
+   
+       Payment::create([
+            'sell_id' => 'required|exists:sells,id',
+            'date' => 'required|date',
+            'payment_method' => ['required', new Enum(PaymentMethodEnum::class)],
+            'details' => 'nullable|string',
+            'amount' => 'required|numeric|min:0',
+       ]);
+   
+       Product::calcularStockDeTodosLosProductos();
+   
+       session()->flash('swal', [
+           'icon' => 'success',
+           'title' => '¡Bien hecho!',
+           'text' => 'La factura y el pago se han registrado correctamente',
+       ]);
+   
+       return redirect()->route('invoices.index');
+   }
+   
 
     public function show(Sell $invoice)
     {
