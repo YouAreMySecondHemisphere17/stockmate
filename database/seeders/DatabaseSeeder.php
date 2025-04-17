@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\Sell;
 use App\Models\User;
 use App\Models\Vendor;
+use App\Models\Purchase;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -36,5 +37,6 @@ class DatabaseSeeder extends Seeder
         Customer::factory()->count(20)->create();
         Branch::factory()->count(9)->create();
         Company::factory()->count(3)->create();
+        Purchase::factory()->count(100)->create();
     }
 }

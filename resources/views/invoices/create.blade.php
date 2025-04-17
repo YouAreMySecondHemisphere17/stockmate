@@ -78,14 +78,17 @@
                         <label for="product_id_0" class="block text-sm font-medium text-gray-700">Producto</label>
                         <select name="products[0][product_id]" id="product_id_0" class="w-full product-select border-gray-300 rounded-md" onchange="updatePrice(0)">
                             @foreach ($products as $product)
-                                <option value="{{ $product->id }}" data-price="{{ $product->sold_price }}">{{ $product->product_name }}</option>
+                            <option value="{{ $product->id }}" data-price="{{       $product->sold_price }}" data-stock="{{ $product->current_stock }}">
+                                {{ $product->product_name }}
+                            </option>
                             @endforeach
                         </select>
                     </div>
-
+                    
                     <div class="flex-1">
                         <label for="sold_quantity_0" class="block text-sm font-medium text-gray-700">Cantidad</label>
-                        <input type="number" id="sold_quantity_0" name="products[0][sold_quantity]" value="1" min="1" class="w-full border-gray-300 rounded-md sold-quantity">
+                        <input type="number" id="sold_quantity_0" name="products[0][sold_quantity]" value="1" min="1" max="products[0][current_stock]"
+                        class="w-full border-gray-300 rounded-md sold-quantity">
                     </div>
 
                     <div class="flex-1">
@@ -124,3 +127,43 @@
         </form>
     </div>
 </x-layouts.app>
+
+<script>
+    // Cuando se cambia el producto, actualiza precio y stock
+    function updatePrice(index) {
+        const productSelect = document.getElementById(`product_id_${index}`);
+        const selectedOption = productSelect.options[productSelect.selectedIndex];
+
+        const price = selectedOption.dataset.price;
+        const stock = selectedOption.dataset.stock;
+
+        // Actualiza precio
+        const priceInput = document.getElementById(`sold_price_${index}`);
+        priceInput.value = price;
+
+        // Actualiza stock en el input de cantidad
+        const qtyInput = document.getElementById(`sold_quantity_${index}`);
+        qtyInput.setAttribute('data-stock', stock);
+        qtyInput.setAttribute('max', stock); // opcional
+
+        // Forzamos validación por si hay una cantidad anterior inválida
+        if (parseInt(qtyInput.value) > parseInt(stock)) {
+            alert(`La cantidad no puede ser mayor al stock disponible (${stock})`);
+            qtyInput.value = stock;
+        }
+    }
+
+    // Validar stock al escribir en el campo cantidad
+    document.addEventListener('input', function (e) {
+        if (e.target.classList.contains('sold-quantity')) {
+            const input = e.target;
+            const stock = parseInt(input.dataset.stock);
+            const value = parseInt(input.value);
+
+            if (value > stock) {
+                alert(`La cantidad no puede ser mayor al stock disponible (${stock})`);
+                input.value = stock;
+            }
+        }
+    });
+</script>

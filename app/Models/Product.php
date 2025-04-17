@@ -47,14 +47,16 @@ class Product extends Model
     return $this->hasMany(SellDetails::class, 'product_id');
     }
 
-    public static function calculateStock($productId)
+    public static function calcularStockDeTodosLosProductos()
     {
-        $product = self::findOrFail($productId);
-    
-        $entries = $product->purchases()->sum('quantity'); 
-        $exits = $product->sellDetails()->sum('quantity_sold');  
-    
-        $product->current_stock = $entries - $exits;
-        $product->save();
+        $productos = Product::with(['purchases', 'sellDetails'])->get();
+
+        foreach ($productos as $producto) {
+            $entradas = $producto->purchases()->sum('quantity');
+            $salidas = $producto->sellDetails()->sum('quantity_sold');
+
+            $producto->current_stock = $entradas - $salidas;
+            $producto->save();
+        }
     }
 }

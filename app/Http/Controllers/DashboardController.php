@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Product;
 
 class DashboardController extends Controller
 {
@@ -49,6 +50,8 @@ class DashboardController extends Controller
         //Ingreso Neto
         DB::select('CALL get_net_income(@total)');
         $totalNetIncome = DB::select('SELECT @total AS total')[0]->total;
+
+        Product::calcularStockDeTodosLosProductos();
 
         return view('dashboard', compact(
             'totalCategories', 

@@ -89,6 +89,8 @@ class InvoiceController extends Controller
             ]);
         }
 
+        Product::calcularStockDeTodosLosProductos();
+
         session()->flash('swal', [
             'icon' => 'success',
             'title' => '¡Bien hecho!',
@@ -96,6 +98,12 @@ class InvoiceController extends Controller
         ]);
 
         return redirect()->route('invoices.index');
+    }
+
+    public function show(Sell $invoice)
+    {
+        $invoice->load('sellDetails.product'); 
+        return view('invoices.show', compact('invoice'));
     }
 
     public function edit(Sell $invoice)

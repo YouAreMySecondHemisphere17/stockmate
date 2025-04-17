@@ -45,7 +45,7 @@ class EntryController extends Controller
         ]);
 
         $entry = Purchase::create($data);
-        Product::calculateStock($entry->product->id);
+        Product::calcularStockDeTodosLosProductos();
 
         session()->flash('swal', [
             'icon' => 'success',
@@ -89,7 +89,7 @@ class EntryController extends Controller
 
         $entry->update($data);
 
-        Product::calculateStock($entry->product->id);
+        Product::calcularStockDeTodosLosProductos();
 
         session()->flash('swal', [
             'icon' => 'success',
@@ -107,7 +107,7 @@ class EntryController extends Controller
     {
         $entry->delete();
 
-        Product::calculateStock($entry->product->id);
+        Product::calcularStockDeTodosLosProductos();
         
         session()->flash('swal', [
             'icon' => 'success',
