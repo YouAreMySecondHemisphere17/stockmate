@@ -34,8 +34,13 @@ class InvoiceController extends Controller
       $products = Product::all();
       $status = PaymentStatusEnum::CANCELLED;
       $methods = PaymentMethodEnum::cases();
+      
+      $lastInvoice = Sell::latest()->first();
+      $nextNumber = $lastInvoice ? $lastInvoice->id + 1 : 1;
+      $chalanNo = 'CH-' . str_pad($nextNumber, 6, '0', STR_PAD_LEFT);
 
-      return view('invoices.create', compact('customers', 'products', 'status', 'methods'));
+      return view('invoices.create', compact('customers', 
+      'products', 'status', 'methods', 'chalanNo'));
    }
 
    public function store(Request $request)
