@@ -43,7 +43,7 @@
         </form>
     </div>    
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
         @foreach ($products as $product)
             <div 
                 x-data="{ open: false, imageUrl: '', showDetails: false }" 
@@ -78,59 +78,60 @@
                 
                 <!-- Info del producto -->
                 <div class="p-4 text-black">
-                    <h3 class="text-lg font-semibold mb-1">{{ $product['product_name'] }}</h3>
-                    <p class="text-sm text-yellow-900 mb-2 font-medium">
+                    <h3 class="text-lg font-semibold mb-1 break-words">{{ $product['product_name'] }}</h3>
+                    <p class="text-sm text-yellow-900 font-medium">
                         Categoría: {{ $product['category_name'] ?? 'Sin categoría' }}
                     </p>
-                    <p class="text-sm text-green-600 mb-1 font-medium">Stock actual: {{ $product['current_stock'] }}</p>
+                    <p class="text-sm text-green-600 font-medium">Stock actual: {{ $product['current_stock'] }}</p>
                     <p class="text-sm text-red-600 mb-1 font-medium">Stock mínimo: {{ $product['minimum_stock'] }}</p>
                     <p class="text-sm font-bold text-black">Precio: ${{ $product['sold_price'] }}</p>
-                </div>
-                
-                <!-- Detalles del producto (toggle) -->
-                <div class="mb-2 border-t border-gray-200 pt-2">
+                </div> <!-- Detalles + Botones en la misma fila -->
+                <div class="mb-2 border-t border-gray-200 pt-2 px-4 flex items-center justify-between gap-2">
+                    
+                    <!-- Ver detalles toggle -->
                     <button 
                         @click="showDetails = !showDetails"
-                        class="ml-3 text-xs text-blue-600 font-medium hover:underline transition duration-200"
+                        class="text-xs text-blue-600 font-medium hover:underline transition duration-200"
                     >
                         <span x-show="!showDetails">➕ Ver detalles</span>
                         <span x-show="showDetails">➖ Ocultar detalles</span>
                     </button>
-    
-                    <div 
-                        x-show="showDetails" 
-                        x-collapse 
-                        x-transition 
-                        class="text-sm text-gray-800 bg-gray-50 p-2 rounded-md border border-gray-100 mt-2"
-                    >
-                        {{ $product['details'] ?? 'Sin detalles disponibles.' }}
+                
+                    <!-- Botones Editar y Eliminar -->
+                    <div class="flex items-center gap-2">
+                        <a 
+                            href="{{ route('products.edit', ['product' => $product['id']]) }}" 
+                            class="btn text-xs px-4 py-2 rounded-lg bg-[#faefbddc] text-black hover:bg-[#faefbd]"
+                        >
+                            Editar
+                        </a>
+                
+                        <form 
+                            action="{{ route('products.destroy', ['product' => $product['id']]) }}" 
+                            method="POST" 
+                            class="delete-form"
+                        >
+                            @csrf
+                            @method('DELETE')
+                            <button 
+                                type="submit" 
+                                class="btn text-xs px-4 py-2 rounded-lg bg-[#d9534f] text-white hover:bg-[#c9302c]"
+                            >
+                                Eliminar
+                            </button>
+                        </form>
                     </div>
                 </div>
                 
-                <!-- Botones -->
-                <div class="px-4 pb-4 flex justify-center items-center gap-2">
-                    <a 
-                        href="{{ route('products.edit', ['product' => $product['id']]) }}" 
-                        class="btn text-xs px-4 py-2 rounded-lg bg-[#faefbddc] text-black hover:bg-[#faefbd]"
-                    >
-                        Editar
-                    </a>
-    
-                    <form 
-                        action="{{ route('products.destroy', ['product' => $product['id']]) }}" 
-                        method="POST" 
-                        class="delete-form"
-                    >
-                        @csrf
-                        @method('DELETE')
-                        <button 
-                            type="submit" 
-                            class="btn text-xs px-4 py-2 rounded-lg bg-[#d9534f] text-white hover:bg-[#c9302c]"
-                        >
-                            Eliminar
-                        </button>
-                    </form>
-                </div>
+                <!-- Contenido de los detalles -->
+                <div 
+                    x-show="showDetails" 
+                    x-collapse 
+                    x-transition 
+                    class="text-sm text-gray-800 bg-gray-50 p-2 rounded-md border border-gray-100 mx-4 mb-4"
+                >
+                    {{ $product['details'] ?? 'Sin detalles disponibles.' }}
+                </div>                
     
                 <!-- Modal de imagen -->
                 <div 

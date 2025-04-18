@@ -22,6 +22,9 @@
                 <div class="flex-4 mr-3">
                     <label for="product_name" class="block text-sm font-medium text-gray-700">Nombre</label>
                     <input type="text" name="product_name" value="{{ old('product_name') }}" placeholder="Escribe el nombre del producto." class="w-full border-gray-300 rounded-md">
+                    @error('product_name')
+                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                </div>
 
                <div class="flex-2 mr-3">

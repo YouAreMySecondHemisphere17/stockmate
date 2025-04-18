@@ -230,6 +230,7 @@ return [
         'preview'                  => 'vista preliminar',
         'price'                    => 'precio',
         'product_id'               => 'ID del producto',
+        'product_name'               => 'nombre',
         'product_uid'              => 'UID del producto',
         'product_uuid'             => 'UUID del producto',
         'promo_code'               => 'código promocional',
