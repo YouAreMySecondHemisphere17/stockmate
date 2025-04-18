@@ -40,9 +40,6 @@
                 <th scope="col" class="px-6 py-3">
                     Método de Pago
                 </th>
-                <th scope="col" class="px-6 py-3">
-                    Detalles
-                </th>
                 <th scope="col" class="px-6 py-3 text-center">
                     Acciones
                 </th>
@@ -72,9 +69,6 @@
                     <td class="px-6 py-4">
                         {{$invoice->payment->payment_method}}
                     </td>
-                    <td class="px-6 py-4">
-                        {{$invoice->payment->details}}
-                    </td>  
                     <td class="px-6 py-4">
                         <div class="flex space-x-2">
                             <a href="{{route('invoices.show', $invoice)}}" class="btn text-xs px-4 py-2 rounded-lg bg-[#58ce7f] text-black hover:bg-[#168039]">

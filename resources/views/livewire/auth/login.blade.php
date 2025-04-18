@@ -1,66 +1,78 @@
-<div class="flex flex-col gap-6 max-w-lg mx-auto bg-white p-8 shadow-lg rounded-lg">
-    <!-- Header -->
-    <x-auth-header :title="__('Inicia sesión en tu cuenta de StockMate')" :description="__('Ingresa tu correo y contraseña para acceder al sistema de inventarios de tu papelería')" />
+<body class="min-h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('{{ asset('images/bg.jpg') }}'); background-size: cover; background-position: center;">
+    <div class="w-full max-w-sm bg-white backdrop-blur-md rounded-3xl shadow-xl border border-yellow-300 p-6 sm:p-8">
+    
+    <!-- Logo e introducción -->
+    <div class="text-center mb-4">
+        <div class="flex items-center justify-between">
+            <img src="{{ asset('images/app_logo.png') }}" alt="StockMate" class="w-12 rounded-md shadow-sm">
+        
+            <h2 class="text-lg sm:text-xl font-extrabold text-gray-800">¡Bienvenido a StockMate!</h2>
+        </div>
 
-    <!-- Session Status -->
-    <x-auth-session-status class="text-center" :status="session('status')" />
+        <p class="text-center text-sm text-gray-600 mt-2">Gestiona tu papelería con estilo 🖍️</p>
+    </div>
 
-    <!-- Login Form -->
-    <form wire:submit="login" class="flex flex-col gap-6">
-        <!-- Email Address -->
-        <flux:input
-            wire:model="email"
-            :label="__('Correo Electrónico')"
-            type="email"
-            required
-            autofocus
-            autocomplete="email"
-            placeholder="email@papeleria.com"
-            class="border border-gray-300 rounded-lg p-3 shadow-sm focus:ring-2 focus:ring-green-400"
-        />
+    <!-- Estado de sesión -->
+    <x-auth-session-status class="text-center text-green-600 mb-4" :status="session('status')" />
 
-        <!-- Password -->
+    <!-- Formulario -->
+    <form wire:submit.prevent="login" class="flex flex-col gap-5"><!-- Email -->
+        <div>
+            <label for="email" class="block text-gray-700 font-medium mb-1">{{ __('Correo electrónico') }}</label>
+            <input
+                id="email"
+                type="email"
+                wire:model="email"
+                required
+                autofocus
+                autocomplete="email"
+                placeholder="ejemplo@papeleria.com"
+                class="w-full rounded-lg bg-white border-2 border-yellow-300 px-4 py-2 shadow-md focus:ring-2 focus:ring-yellow-400 transition duration-200 ease-in-out"
+            />
+        </div>
+        
+        <!-- Contraseña -->
         <div class="relative">
-            <flux:input
-                wire:model="password"
-                :label="__('Contraseña')"
+            <label for="password" class="block text-gray-700 font-medium mb-1">{{ __('Contraseña') }}</label>
+            <input
+                id="password"
                 type="password"
+                wire:model="password"
                 required
                 autocomplete="current-password"
-                :placeholder="__('Contraseña')"
-                class="border border-gray-300 rounded-lg p-3 shadow-sm focus:ring-2 focus:ring-green-400"
+                placeholder="Tu contraseña secreta"
+                class="w-full rounded-lg bg-white border-2 border-yellow-300 px-4 py-2 shadow-md focus:ring-2 focus:ring-yellow-400 transition duration-200 ease-in-out"
             />
+{{--        @if (Route::has('password.request'))
+            <a href="{{ route('password.request') }}" class="absolute end-38 top-18 text-sm text-yellow-500 hover:text-yellow-600 mt-1 whitespace-nowrap">
+                {{ __('¿Olvidaste tu contraseña?') }}
+            </a>            
+            @endif --}}
+        </div>        
 
-            @if (Route::has('password.request'))
-                <flux:link class="absolute end-0 top-0 text-sm text-green-500 hover:text-green-700" :href="route('password.request')" wire:navigate>
-                    {{ __('¿Olvidaste tu contraseña?') }}
-                </flux:link>
-            @endif
+        <!-- Recuérdame con margen -->
+        <div class="flex items-center gap-4 text-gray-600 mt-4">
+            <input type="checkbox" wire:model="remember" id="remember" class="h-5 w-5">
+            <label for="remember">{{ __('Recuérdame') }}</label>
         </div>
 
-        <!-- Remember Me -->
-        <flux:checkbox wire:model="remember" :label="__('Recuérdame')" />
-
-        <!-- Submit Button -->
-        <div class="flex items-center justify-end">
-            <flux:button variant="primary" type="submit" class="w-full bg-green-500 text-white p-3 rounded-lg hover:bg-green-600">
-                {{ __('Iniciar Sesión') }}
-            </flux:button>
-        </div>
+        <!-- Botón -->
+        <button
+            type="submit"
+            class="w-full bg-yellow-400 text-white font-bold py-3 rounded-lg transition hover:bg-yellow-500 shadow-md"
+        >
+            {{ __('Iniciar Sesión') }}
+        </button>
     </form>
 
-    <!-- Register Link -->
+    <!-- Enlace de registro -->
     @if (Route::has('register'))
-        <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-zinc-600 dark:text-zinc-400">
+        <div class="mt-4 text-center text-sm text-gray-600">
             {{ __("¿No tienes cuenta?") }}
-            <flux:link :href="route('register')" wire:navigate class="text-green-500 hover:text-green-700">{{ __('Registrarse') }}</flux:link>
+            <a href="{{ route('register') }}" class="text-yellow-500 font-semibold hover:text-yellow-600">
+                {{ __('Regístrate aquí') }}
+            </a>
         </div>
     @endif
-
-    <div class="text-center mb-6">
-        <!--  <img src="{{ asset('images/stockmate-logo.png') }}" alt="StockMate" class="mx-auto w-28"> -->
-    </div>
 </div>
-
-
-
+</body>
