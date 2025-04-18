@@ -28,7 +28,7 @@
                     <label for="category_id" class="block text-sm font-medium text-gray-700">Categoría</label>
                     <select name="category_id" id="customer_id" class="w-full border-gray-300 rounded-md">
                         @foreach($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                         @endforeach
                     </select>
                 </div>         

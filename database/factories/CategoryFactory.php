@@ -18,7 +18,7 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => substr($this->faker->word, 0, rand(3, 50)),
+            'category_name' => substr($this->faker->word, 0, rand(3, 50)),
         ];
     }
 }

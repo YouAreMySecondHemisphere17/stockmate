@@ -52,7 +52,7 @@
                             {{$category['id']}}
                         </th>
                         <td class="px-6 py-4">
-                            {{$category['name']}}                        
+                            {{$category['category_name']}}                        
                         </td>     
                         <td class="px-6 py-4">
                             <div class="flex space-x-2">

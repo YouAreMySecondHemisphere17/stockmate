@@ -6,8 +6,6 @@ use App\Models\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rules\Enum;
-
 
 class CategoryController extends Controller
 {
@@ -44,7 +42,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {        
         $data = $request->validate([
-            'name' => 'required|string|min:3|max:50|unique:categories,name',
+            'category_name' => 'required|string|min:3|max:50|unique:categories,category_name',
         ]);
 
         Category::create($data);
@@ -80,7 +78,7 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $data = $request->validate([
-            'name' => 'required|string|min:3|max:50|unique:categories,name,' . $category->id,
+            'category_name' => 'required|string|min:3|max:50|unique:categories,category_name,' . $category->id,
         ]);
 
         $category->update($data);

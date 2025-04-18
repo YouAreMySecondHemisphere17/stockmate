@@ -8,18 +8,45 @@ use App\Models\Category;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::orderBy('id', 'desc')->paginate();
         $categories = Category::all();
         $vendors = Vendor::all();
 
+        $searchTerm = $request->get('search');
+        $filterType = $request->get('filter_type'); 
+
+        if ($searchTerm) {
+            $rawResults = DB::select('CALL filter_products(?, ?)', [$searchTerm, $filterType]);
+            $products = collect($rawResults)->map(function ($item) {
+                return (array) $item;
+            });
+        } else {
+            $products = Product::with('category')->orderBy('id', 'desc')->paginate(12);
+
+            $products->getCollection()->transform(function ($product) {
+                return [
+                    'id' => $product->id,
+                    'product_name' => $product->product_name,
+                    'category_id' => $product->category->id ?? null,
+                    'category_name' => $product->category->category_name ?? null,
+                    'image_path' => $product->image_path,
+                    'current_stock' => $product->current_stock,
+                    'minimum_stock' => $product->minimum_stock,
+                    'sold_price' => $product->sold_price,
+                    'details' => $product->details,
+                ];
+            });
+            
+        }
+        
         return view('products.index', compact('products', 'categories', 'vendors'));
     }
 

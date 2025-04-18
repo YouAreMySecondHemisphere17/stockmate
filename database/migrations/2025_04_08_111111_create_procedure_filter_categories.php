@@ -14,7 +14,7 @@ return new class extends Migration
         CREATE PROCEDURE IF NOT EXISTS filter_categories(IN search_param VARCHAR(50))
         BEGIN
             SELECT * FROM categories
-            WHERE name LIKE CONCAT('%', search_param, '%');
+            WHERE category_name LIKE CONCAT('%', search_param, '%');
         END
     ");
     }

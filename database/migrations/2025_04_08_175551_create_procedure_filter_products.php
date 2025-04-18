@@ -11,12 +11,32 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared("
-        CREATE PROCEDURE IF NOT EXISTS filter_products(IN search_param VARCHAR(100))
+        CREATE PROCEDURE IF NOT EXISTS filter_products(
+            IN search_param VARCHAR(100),
+            IN filter_type VARCHAR(20)
+        )
         BEGIN
-            SELECT * FROM products
-            WHERE product_name LIKE CONCAT('%', search_param, '%');
+            IF filter_type = 'product_name' THEN
+                SELECT p.*, c.*
+                FROM products p
+                LEFT JOIN categories c ON p.category_id = c.id
+                WHERE p.product_name LIKE CONCAT('%', search_param, '%');
+            
+            ELSEIF filter_type = 'category_id' THEN
+                SELECT p.*, c.*
+                FROM products p
+                LEFT JOIN categories c ON p.category_id = c.id
+                WHERE c.category_name LIKE CONCAT('%', search_param, '%');
+            
+            ELSE
+                SELECT p.*, c.*
+                FROM products p
+                LEFT JOIN categories c ON p.category_id = c.id
+                WHERE p.product_name LIKE CONCAT('%', search_param, '%')
+                   OR c.category_name LIKE CONCAT('%', search_param, '%');
+            END IF;
         END
-    ");
+    ");    
     }
 
     /**
