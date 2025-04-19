@@ -143,7 +143,7 @@ class InvoiceController extends Controller
             'text' => 'La factura se ha eliminado correctamente',
         ]);
 
-        return redirect()->route('invoices.destroy', $invoice);
+        return redirect()->route('invoices.index');
     }
 
 }

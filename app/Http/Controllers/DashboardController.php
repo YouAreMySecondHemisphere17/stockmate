@@ -55,6 +55,10 @@ class DashboardController extends Controller
         DB::select('CALL get_total_sold_products(@total)');
         $totalSoldProducts = DB::select('SELECT @total AS total')[0]->total;
 
+        //Beneficio Bruto
+        DB::select('CALL get_gross_profit(@grossProfit)');
+        $grossProfit = DB::select('SELECT @grossProfit AS grossProfit')[0]->grossProfit;
+
         Product::calcularStockDeTodosLosProductos();
 
         return view('dashboard', compact(
@@ -70,6 +74,7 @@ class DashboardController extends Controller
             'totalUnits',
             'totalCriticalStock',
             'criticalStockProducts',
+            'grossProfit',
         ));
     }
     
