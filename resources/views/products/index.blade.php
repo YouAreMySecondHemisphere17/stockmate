@@ -25,6 +25,8 @@
                         <option value="">Seleccionar filtro</option>
                         <option value="product_name" {{ request()->get('filter_type') == 'product_name' ? 'selected' : '' }}>Nombre</option>
                         <option value="category_id" {{ request()->get('filter_type') == 'category_id' ? 'selected' : '' }}>Categoría</option>
+                        <option value="vendor_id" {{ request()->get('filter_type') == 'vendor_id' ? 'selected' : '' }}>Proveedor</option>
+                        <option value="details" {{ request()->get('filter_type') == 'details' ? 'selected' : '' }}>Detalles</option>
                     </select>
                     <button type="submit" class="btn text-s px-4 py-2 rounded-lg bg-[#faefbddc] text-black hover:bg-[#faefbddc]">
                         Buscar
@@ -79,6 +81,9 @@
                     <h3 class="text-lg font-semibold mb-1 break-words">{{ $product['product_name'] }}</h3>
                     <p class="text-sm text-yellow-900 font-medium">
                         Categoría: {{ $product['category_name'] ?? 'Sin categoría' }}
+                    </p>
+                    <p class="text-sm text-pink-700 font-medium">
+                        Proveedor: {{ $product['vendor_name'] }}
                     </p>
                     <p class="text-sm text-green-600 font-medium">Stock actual: {{ $product['current_stock'] }}</p>
                     <p class="text-sm text-red-600 mb-1 font-medium">Stock mínimo: {{ $product['minimum_stock'] }}</p>

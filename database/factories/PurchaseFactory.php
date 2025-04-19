@@ -18,12 +18,16 @@ class PurchaseFactory extends Factory
      */
     public function definition(): array
     {
+        $product = Product::all()->random();
+        $quantity = $this->faker->numberBetween(1, 100);
+        $total_amount = $product->purchase_price * $quantity;
+
         return [
-            'product_id' => Product::all()->random()->id,
+            'product_id' => $product->id,
             'vendor_id' => Vendor::all()->random()->id,
-            'price' => $this->faker->randomFloat(2, 1, 30),
-            'quantity' => $this->faker->numberBetween(1, 100),
-            'transaction_date' => $this->faker->date('Y-m-d'), 
+            'total_amount' => $total_amount,
+            'quantity' => $quantity,
+            'transaction_date' => $this->faker->dateTimeThisYear()->format('Y-m-d H:i:s'),
         ];
     }
 }

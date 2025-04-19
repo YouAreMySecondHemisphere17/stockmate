@@ -29,7 +29,7 @@
                     Proveedor
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Precio
+                    Monto Total
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Cantidad
@@ -55,7 +55,7 @@
                         {{$entry->vendor->name}} 
                     </td>
                     <td class="px-6 py-4">
-                        {{$entry->price}} USD
+                        {{$entry->total_amount}} USD
                     </td>
                     <td class="px-6 py-4">
                         {{$entry->quantity}}

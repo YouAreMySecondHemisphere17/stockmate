@@ -16,9 +16,10 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('vendor_id')->nullable();
        
             $table->string('product_name', 100)->unique();
-            $table->text('details')->nullable(); //Descripción
+            $table->text('details'); //Descripción
             $table->decimal('purchase_price', 10, 2); //Precio de Compra
             $table->decimal('sold_price', 10, 2); //Precio de Venta
             $table->integer('current_stock')->default(0);
@@ -27,6 +28,7 @@ return new class extends Migration
             $table->string('image_path')->nullable(); //Imagen
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
+            $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('set null');
 
             $table->timestamps();
         });

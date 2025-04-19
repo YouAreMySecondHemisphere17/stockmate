@@ -40,7 +40,20 @@
                             </option>
                         @endforeach
                     </select>
-                </div>
+                </div>                
+                
+                <!-- Proveedor -->
+                <div class="flex-2 min-w-[200px]">
+                    <label for="vendor_id" class="block text-sm font-medium text-gray-700">Proveedor</label>
+                    <select name="vendor_id" id="vendor_id" class="w-full border-gray-300 rounded-md">
+                        @foreach($vendors as $vendor)
+                        <option value="{{ $vendor->id }}" 
+                            {{ old('vendor_id', $product->vendor->id) == $vendor->id ? 'selected' : '' }} >
+                            {{ $vendor->name }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>   
             </div>
 
             <div class="flex flex-wrap gap-4">
@@ -74,6 +87,9 @@
                 <div class="flex-6 w-full md:w-3/4">
                     <label for="details" class="block text-sm font-medium text-gray-700">Detalles</label>
                     <textarea name="details" id="details" rows="4" class="w-full border-gray-300 rounded-md p-2" placeholder="Escribe los detalles del producto.">{{ old('details', $product->details) }}</textarea>
+                    @error('details')
+                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Imagen -->

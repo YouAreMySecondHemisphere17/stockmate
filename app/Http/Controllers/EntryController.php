@@ -39,7 +39,7 @@ class EntryController extends Controller
         $data = $request->validate([
             'product_id' => 'required|exists:products,id',
             'vendor_id' => 'required|exists:vendors,id',
-            'price' => 'required|numeric|min:0',
+            'total_amount' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:1',
             'transaction_date' => 'required|date',
         ]);
@@ -83,7 +83,7 @@ class EntryController extends Controller
         $data = $request->validate([
             'product_id' => 'required|exists:products,id',
             'vendor_id' => 'required|exists:vendors,id',
-            'price' => 'required|numeric|min:0',
+            'total_amount' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:1',
         ]);
 

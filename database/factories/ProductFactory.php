@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Category;
+use App\Models\Vendor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,6 +20,7 @@ class ProductFactory extends Factory
     {
         return [
             'category_id' => Category::all()->random()->id,
+            'vendor_id' => Vendor::all()->random()->id,
             'product_name' => substr($this->faker->unique()->word, 0, rand(3, 100)),
             'details' => $this->faker->text(200),
             'purchase_price' => $this->faker->randomFloat(2, 1, 100),

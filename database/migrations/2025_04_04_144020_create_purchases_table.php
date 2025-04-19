@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('vendor_id');
 
-            $table->decimal('price', 10, 2);
+            $table->decimal('total_amount', 10, 2);
             $table->unsignedInteger('quantity');
             $table->string('transaction_date'); 
 

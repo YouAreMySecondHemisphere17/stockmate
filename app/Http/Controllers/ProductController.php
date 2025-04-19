@@ -37,6 +37,8 @@ class ProductController extends Controller
                     'product_name' => $product->product_name,
                     'category_id' => $product->category->id ?? null,
                     'category_name' => $product->category->category_name ?? null,
+                    'vendor_id' => $product->vendor->id ?? null,
+                    'vendor_name' => $product->vendor->name ?? null,
                     'image_path' => $product->image_path,
                     'current_stock' => $product->current_stock,
                     'minimum_stock' => $product->minimum_stock,
@@ -69,8 +71,9 @@ class ProductController extends Controller
     {
         $data = $request->validate([
             'category_id' => 'required|integer|exists:categories,id',
+            'vendor_id' => 'required|integer|exists:vendors,id',
             'product_name' => 'required|string|min:3|max:50|unique:products,product_name',
-            'details' => 'nullable|string',
+            'details' => 'required|string',
             'purchase_price' => 'required|numeric|min:0',
             'sold_price' => 'required|numeric|min:0',
             'minimum_stock' => 'required|numeric|min:0',
@@ -118,8 +121,9 @@ class ProductController extends Controller
     {
         $data = $request->validate([
             'category_id' => 'required|integer|exists:categories,id',
+            'vendor_id' => 'required|integer|exists:vendors,id',
             'product_name' => 'required|string|min:3|max:50|unique:products,product_name,' . $product->id,
-            'details' => 'nullable|string',
+            'details' => 'required|string',
             'purchase_price' => 'required|numeric|min:0',
             'sold_price' => 'required|numeric|min:0',
             'minimum_stock' => 'required|numeric|min:0',

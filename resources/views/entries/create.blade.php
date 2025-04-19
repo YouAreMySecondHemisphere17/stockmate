@@ -23,7 +23,9 @@
                     <label for="product_id" class="block text-sm font-medium text-gray-700">Productos</label>
                     <select name="product_id" id="product_id" class="w-full border-gray-300 rounded-md">
                         @foreach($products as $product)
-                            <option value="{{ $product->id }}">{{ $product->product_name }}</option>
+                        <option value="{{ $product->id }}" data-price="{{ $product->price }}">
+                            {{ $product->product_name }}
+                        </option>
                         @endforeach
                     </select>
                 </div>
@@ -46,8 +48,11 @@
                 </div>
 
                 <div class="flex-1 mr-3">
-                    <label for="price" class="block text-sm font-medium text-gray-700">Precio de Compra</label>
-                    <input type="number" id="price" name="price" value="{{ old('price', "1.99") }}" class="w-full border-gray-300 rounded-md" step="0.01" min="0.01" max="999999.99">
+                    <label for="total_amount" class="block text-sm font-medium text-gray-700">Monto Total</label>
+                    <input type="number" id="total_amount" name="total_amount"
+                    value="{{ old('total_amount', '0.00') }}"
+                    class="w-full border-gray-300 rounded-md bg-gray-100"
+                    step="0.01" readonly>
                 </div>
 
                 <div class="flex-1 mr-3">
@@ -62,3 +67,24 @@
         </form>
     </div>
 </x-layouts.app>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const productSelect = document.getElementById('product_id');
+        const quantityInput = document.getElementById('quantity');
+        const totalAmountInput = document.getElementById('total_amount');
+
+        function calculateTotal() {
+            const selectedOption = productSelect.options[productSelect.selectedIndex];
+            const price = parseFloat(selectedOption.dataset.price || 0);
+            const quantity = parseInt(quantityInput.value || 1);
+            const total = (price * quantity).toFixed(2);
+            totalAmountInput.value = total;
+        }
+
+        productSelect.addEventListener('change', calculateTotal);
+        quantityInput.addEventListener('input', calculateTotal);
+
+        calculateTotal();
+    });
+</script>

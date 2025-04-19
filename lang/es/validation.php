@@ -185,6 +185,7 @@ return [
         'day'                      => 'día',
         'deleted_at'               => 'eliminado el',
         'description'              => 'descripción',
+        'details'                  => 'detalles',
         'display_type'             => 'tipo de visualización',
         'district'                 => 'distrito',
         'duration'                 => 'duración',
