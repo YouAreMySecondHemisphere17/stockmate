@@ -10,7 +10,7 @@
         </flux:breadcrumbs.item>
     </flux:breadcrumbs> 
 
-    <a href="{{route('entries.create')}}" class="btn text-xs px-6 py-2 rounded-lg bg-[#b1f7cd] text-black hover:bg-[#b1f7cd]">
+    <a href="{{route('entries.create')}}" class="btn text-s px-6 py-2 rounded-lg bg-[#b1f7cd] text-black hover:bg-[#b1f7cd]">
         Registrar Entrada
     </a> 
 </div>

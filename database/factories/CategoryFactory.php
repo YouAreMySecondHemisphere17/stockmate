@@ -18,7 +18,13 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'category_name' => substr($this->faker->word, 0, rand(3, 50)),
+            'category_name' => ucfirst(
+                substr(
+                    str_replace('.', '', str_replace(' ', '', $this->faker->unique()->sentence(rand(1, 5)))),
+                    0,
+                    rand(3, 50)
+                )
+            ),
         ];
     }
 }

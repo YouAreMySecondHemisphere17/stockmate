@@ -28,20 +28,21 @@
             </div>
         </div>           
         
-        beneficio bruto 
-        beneficio neto 
-        importe vendido
-        facturas
-        existencia vendidas
-        importe restante
-        importe pagado
-        
-        <!-- Existencias actuales -->
-        <div class="flex items-center gap-4 bg-[#38ca44da] text-white p-6 rounded-xl shadow-md cursor-pointer">
-            <i class="fas fa-cube text-4xl text-white"></i>
+        <!-- Facturas -->
+        <div class="flex items-center gap-4 bg-[#f1f1f1] text-black p-6 rounded-xl shadow-md cursor-pointer">
+            <i class="fas fa-file-invoice-dollar text-4xl text-black"></i>
            <div>
-                <div class="text-lg font-semibold">Unidades</div>
-                <div class="text-3xl font-bold">{{ $totalUnits }}</div>
+                <div class="text-lg font-semibold">Facturas</div>
+                <div class="text-3xl font-bold">{{ $totalInvoices }}</div>
+            </div>
+        </div> 
+        
+        <!-- Existencia vendida -->
+        <div class="flex items-center gap-4 bg-[#d847f5da] text-white p-6 rounded-xl shadow-md cursor-pointer">
+            <i class="fas fa-box-open text-4xl text-white"></i>
+           <div>
+                <div class="text-lg font-semibold">Existencia Vendida</div>
+                <div class="text-3xl font-bold">{{ $totalSoldProducts }}</div>
             </div>
         </div>  
   
@@ -81,12 +82,12 @@
             </div>
         </div>        
         
-        <!-- Ingresos -->
+        <!-- Importe Vendido -->
         <div class="flex items-center gap-4 bg-[#208639] text-white p-6 rounded-xl shadow-md cursor-pointer">
             <i class="fas fa-dollar-sign text-4xl text-white"></i>
            <div>
-                <div class="text-lg font-semibold">Ingresos</div>
-                <div class="text-3xl font-bold">{{ $totalIncome }}</div>
+                <div class="text-lg font-semibold">Importe Vendido</div>
+                <div class="text-3xl font-bold">{{ $totalAmount}}</div>
             </div>
         </div>                  
            

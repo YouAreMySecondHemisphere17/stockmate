@@ -43,9 +43,17 @@ class DashboardController extends Controller
 
         $totalSales= 0;
       
-        //Ingresos
-        DB::select('CALL get_total_income(@total)');
-        $totalIncome = DB::select('SELECT @total AS total')[0]->total;
+        // Facturas
+        DB::select('CALL get_total_invoices(@total)');
+        $totalInvoices = DB::select('SELECT @total AS total')[0]->total;
+
+        //Importe Vendido
+        DB::select('CALL get_total_sales_amount(@totalAmount)');
+        $totalAmount = DB::select('SELECT @totalAmount AS totalAmount')[0]->totalAmount;
+
+        //Existencias Vendidas
+        DB::select('CALL get_total_sold_products(@total)');
+        $totalSoldProducts = DB::select('SELECT @total AS total')[0]->total;
 
         //Ingreso Neto
         DB::select('CALL get_net_income(@total)');
@@ -58,9 +66,11 @@ class DashboardController extends Controller
             'totalProducts', 
             'totalVendors',
             'totalCustomers',
+            'totalInvoices',
+            'totalSoldProducts',
             'totalUsers',
             'totalSales',
-            'totalIncome',
+            'totalAmount',
             'totalNetIncome',
             'totalUnits',
             'totalCriticalStock',

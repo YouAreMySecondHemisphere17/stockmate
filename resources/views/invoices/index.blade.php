@@ -10,7 +10,7 @@
         </flux:breadcrumbs.item>
     </flux:breadcrumbs> 
 
-    <a href="{{route('invoices.create')}}" class="btn text-xs px-6 py-2 rounded-lg bg-[#fca311] text-black hover:bg-[#ff8c00]">
+    <a href="{{route('invoices.create')}}" class="btn text-s px-6 py-2 rounded-lg bg-[#fca311] text-black hover:bg-[#ff8c00]">
         Nueva Factura
     </a> 
 </div>

@@ -9,14 +9,10 @@
                 Categorías
             </flux:breadcrumbs.item>
         </flux:breadcrumbs> 
-    
-        <a href="{{ route('categories.create') }}" class="btn text-xs px-6 py-2 rounded-lg bg-[#9c8353da] text-amber-950 hover:bg-[#9c8353da]">
-            Nueva Categoría
-        </a>
     </div>
 
-    <div class="mb-4">
-        <form action="{{ route('categories.index') }}" method="GET">
+    <div class="mb-4 flex justify-between items-center">
+        <form action="{{ route('categories.index') }}" method="GET" class="flex items-center">
             <input 
                 type="text" 
                 name="search" 
@@ -24,11 +20,16 @@
                 class="text-s px-10 py-2 mr-3 rounded-lg border border-[#e5d3b3]"
                 value="{{ request()->get('search') }}"
             >
-            <button type="submit" class=" btn text-s px-4 py-2 rounded-lg bg-[#9c8353da] text-amber-950 hover:bg-[#9c8353da]">
+            <button type="submit" class="btn text-s px-4 py-2 rounded-lg bg-[#9c8353da] text-amber-950 hover:bg-[#9c8353da]">
                 Buscar
             </button>
         </form>
+    
+        <a href="{{ route('categories.create') }}" class="btn text-s px-6 py-2 rounded-lg bg-[#9c8353da] text-amber-950 hover:bg-[#9c8353da]">
+            Nueva Categoría
+        </a>
     </div>
+    
     
     <div class="relative overflow-x-auto bg-[#f9f8f6] p-4 rounded-lg border border-[#e5d3b3]">
         <table class="w-full text-sm text-left rtl:text-right text-amber-950">

@@ -8,16 +8,15 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared("
-        CREATE PROCEDURE IF NOT EXISTS get_total_income(OUT total DECIMAL(10,2))
-        BEGIN
-            SELECT SUM(amount) INTO total
-            FROM payments;
-        END
+            CREATE PROCEDURE IF NOT EXISTS get_total_invoices(OUT total INT)
+            BEGIN
+                SELECT COUNT(*) INTO total FROM sells;
+            END
         ");
     }
 
     public function down(): void
     {
-        DB::unprepared("DROP PROCEDURE IF EXISTS get_total_income");
+        DB::unprepared("DROP PROCEDURE IF EXISTS get_total_invoices(");
     }
 };

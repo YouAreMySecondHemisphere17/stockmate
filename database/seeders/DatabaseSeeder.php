@@ -2,11 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Branch;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Product;
-use App\Models\Sell;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Models\Purchase;
@@ -30,9 +28,9 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        Category::factory()->count(5)->create();
-        Vendor::factory()->count(10)->create();
-        Product::factory()->count(14)->create();
+        Category::factory()->count(20)->create();
+        Vendor::factory()->count(20)->create();
+        Product::factory()->count(20)->create();
         Customer::factory()->count(20)->create();
         Purchase::factory()->count(50)->create();
     }
