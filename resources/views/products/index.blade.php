@@ -82,7 +82,8 @@
                     </p>
                     <p class="text-sm text-green-600 font-medium">Stock actual: {{ $product['current_stock'] }}</p>
                     <p class="text-sm text-red-600 mb-1 font-medium">Stock mínimo: {{ $product['minimum_stock'] }}</p>
-                    <p class="text-sm font-bold text-black">Precio: ${{ $product['sold_price'] }}</p>
+                    <p class="text-sm font-bold text-gray-700">Precio de Compra: ${{ $product['purchase_price'] }}</p>
+                    <p class="text-sm font-bold text-black">Precio de Venta: ${{ $product['sold_price'] }}</p>
                 </div> <!-- Detalles + Botones en la misma fila -->
                 <div class="mb-2 border-t border-gray-200 pt-2 px-4 flex items-center justify-between gap-2">
                     
@@ -162,34 +163,10 @@
         <div class="mt-4">
             {{ $products->links() }}
         </div>
-    @endif
-
+    @endif     
     
-@push('js')
-<script>
-    forms = document.querySelectorAll('.delete-form');
-
-    forms.forEach(form => {
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            Swal.fire({
-                title: "¿Estás seguro?",
-                text: "¡No podrás revertir esto!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Sí, eliminarlo",
-                cancelButtonText: "Cancelar",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }
-            });
-        })
-    });
-</script>
-@endpush
+    @push('js')
+        <script src="{{ mix('js/deleteConfirmation.js') }}"></script> 
+    @endpush
 
 </x-layouts.app>

@@ -100,5 +100,9 @@
             </tbody>
         </table>
     </div>
+
+    @push('js')
+        <script src="{{ mix('js/deleteConfirmation.js') }}"></script> 
+    @endpush
     
 </x-layouts.app>

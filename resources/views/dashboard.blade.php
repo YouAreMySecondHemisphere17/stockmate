@@ -1,8 +1,12 @@
+@php
+    $cardBase = "flex items-center justify-start gap-4 p-6 rounded-xl shadow-md cursor-pointer h-[150px]";
+@endphp
+
 <x-layouts.app :title="__('Dashboard')">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
         <!-- Stock Crítico -->
-        <div id="openCriticalStockModal" class="flex items-center gap-4 bg-red-500 text-white p-6 rounded-xl shadow-md cursor-pointer">
+        <div id="openCriticalStockModal" class="{{ $cardBase }} bg-red-500 text-white">
             <i class="fas fa-exclamation-triangle text-4xl text-white"></i>
             <div>
                 <div class="text-lg font-semibold">Stock Crítico</div>
@@ -11,7 +15,7 @@
         </div>
 
         <!-- Categorías -->
-        <div class="flex items-center gap-4 bg-[#9c8353da] text-white p-6 rounded-xl shadow-md cursor-pointer">
+        <div class="{{ $cardBase }} bg-[#9c8353da] text-white">
             <i class="fas fa-tags text-4xl text-white"></i>
            <div>
                 <div class="text-lg font-semibold">Categorías</div>
@@ -19,17 +23,17 @@
             </div>
         </div>    
 
-        <!-- Existencia total -->
-        <div class="flex items-center gap-4 bg-[#38ca44da] text-white p-6 rounded-xl shadow-md cursor-pointer">
+        <!-- Existencia actual-->
+        <div class="{{ $cardBase }} bg-[#38ca44da] text-white">
             <i class="fas fa-cube text-4xl text-white"></i>
            <div>
-                <div class="text-lg font-semibold">Unidades</div>
+                <div class="text-lg font-semibold">Existencia Actual</div>
                 <div class="text-3xl font-bold">{{ $totalUnits }}</div>
             </div>
         </div>           
         
         <!-- Facturas -->
-        <div class="flex items-center gap-4 bg-[#f1f1f1] text-black p-6 rounded-xl shadow-md cursor-pointer">
+        <div class="{{ $cardBase }} bg-[#f1f1f1] text-black">
             <i class="fas fa-file-invoice-dollar text-4xl text-black"></i>
            <div>
                 <div class="text-lg font-semibold">Facturas</div>
@@ -38,16 +42,16 @@
         </div> 
         
         <!-- Existencia vendida -->
-        <div class="flex items-center gap-4 bg-[#d847f5da] text-white p-6 rounded-xl shadow-md cursor-pointer">
+        <div class="{{ $cardBase }} bg-[#d847f5da] text-white">
             <i class="fas fa-box-open text-4xl text-white"></i>
            <div>
                 <div class="text-lg font-semibold">Existencia Vendida</div>
                 <div class="text-3xl font-bold">{{ $totalSoldProducts }}</div>
             </div>
         </div>  
-  
+
         <!-- Productos -->
-        <div class="flex items-center gap-4 bg-[#ffea8edc] text-black p-6 rounded-xl shadow-md cursor-pointer">
+        <div class="{{ $cardBase }} bg-[#ffea8edc] text-black">
             <i class="fas fa-boxes text-4xl text-black"></i>
            <div>
                 <div class="text-lg font-semibold">Productos</div>
@@ -56,7 +60,7 @@
         </div>           
         
         <!-- Proveedores -->
-        <div class="flex items-center gap-4 bg-[#ff68c0] text-white p-6 rounded-xl shadow-md cursor-pointer">
+        <div class="{{ $cardBase }} bg-[#ff68c0] text-white">
             <i class="fas fa-truck text-4xl text-white"></i>
            <div>
                 <div class="text-lg font-semibold">Proveedores</div>
@@ -65,7 +69,7 @@
         </div>         
         
         <!-- Clientes -->
-        <div class="flex items-center gap-4 bg-[#f8f529be] text-black p-6 rounded-xl shadow-md cursor-pointer">
+        <div class="{{ $cardBase }} bg-[#f8f529be] text-black">
             <i class="fas fa-users text-4xl text-black"></i>
            <div>
                 <div class="text-lg font-semibold">Clientes</div>
@@ -74,7 +78,7 @@
         </div>        
         
         <!-- Ventas -->
-        <div class="flex items-center gap-4 bg-[#fca311] text-white p-6 rounded-xl shadow-md cursor-pointer">
+        <div class="{{ $cardBase }} bg-[#fca311] text-white">
             <i class="fas fa-chart-line text-4xl text-white"></i>
            <div>
                 <div class="text-lg font-semibold">Ventas del mes</div>
@@ -83,25 +87,16 @@
         </div>        
         
         <!-- Importe Vendido -->
-        <div class="flex items-center gap-4 bg-[#208639] text-white p-6 rounded-xl shadow-md cursor-pointer">
+        <div class="{{ $cardBase }} bg-[#208639] text-white">
             <i class="fas fa-dollar-sign text-4xl text-white"></i>
            <div>
                 <div class="text-lg font-semibold">Importe Vendido</div>
                 <div class="text-3xl font-bold">{{ $totalAmount}}</div>
             </div>
         </div>                  
-           
-        <!-- Ingresos Netos -->
-        <div class="flex items-center gap-4 bg-[#a5fa08] text-white p-6 rounded-xl shadow-md cursor-pointer">
-            <i class="fas fa-money-bill-wave text-4xl text-white"></i>
-           <div>
-                <div class="text-lg font-semibold">Ingresos Netos</div>
-                <div class="text-3xl font-bold">{{ $totalNetIncome }}</div>
-            </div>
-        </div>       
          
         <!-- Usuarios -->
-        <div class="flex items-center gap-4 bg-[#2f4ed6da] text-white p-6 rounded-xl shadow-md cursor-pointer">
+        <div class="{{ $cardBase }} bg-[#2f4ed6da] text-white">
             <i class="fas fa-user text-4xl text-white"></i>
            <div>
                 <div class="text-lg font-semibold">Usuarios</div>
@@ -136,9 +131,8 @@
             </div>
         </div>
     </div>
-    
-    
 </x-layouts.app>
+
 <script>
     document.getElementById('openCriticalStockModal').addEventListener('click', function () {
         const modal = document.getElementById('criticalStockModal');

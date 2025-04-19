@@ -19,6 +19,7 @@ return new class extends Migration
        
             $table->string('product_name', 100)->unique();
             $table->text('details')->nullable(); //Descripción
+            $table->decimal('purchase_price', 10, 2); //Precio de Compra
             $table->decimal('sold_price', 10, 2); //Precio de Venta
             $table->integer('current_stock')->default(0);
             $table->integer('minimum_stock')->default(10); 

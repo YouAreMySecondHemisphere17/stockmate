@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     let productCount = 1;
 
-    // Function to add a new product row to the table
     function addProduct() {
         const productList = document.querySelector("#product-list");
         const selectTemplate = document.querySelector(".product-select").innerHTML;
@@ -65,14 +64,13 @@ document.addEventListener("DOMContentLoaded", function () {
         updateTotal();
     }
 
-    // Function to apply discount based on quantity
     function applyDiscount(index) {
         const quantityInput = document.getElementById(`sold_quantity_${index}`);
         const quantity = parseFloat(quantityInput.value) || 0;
         let discountRate = 0;
 
         if (quantity >= 12) {
-            discountRate = 0.10; // 10% discount for 12 or more items
+            discountRate = 0.10; 
         }
 
         const priceInput = document.getElementById(`sold_price_${index}`);
@@ -131,10 +129,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Initialize the first product
     updatePrice(0);
 
-    // Event listener to add a new product when the button is clicked
     document.getElementById("invoiceProducts").addEventListener("click", function() {
         addProduct();
     });

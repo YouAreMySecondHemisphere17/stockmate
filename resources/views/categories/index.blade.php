@@ -59,12 +59,11 @@
                             <div class="flex space-x-2">
                                 <a href="{{ route('categories.edit', ['category' => $category['id']]) }}" class="btn text-xs px-4 py-2 rounded-lg bg-[#9c8353da] text-amber-950 hover:bg-[#9c8353da]">
                                     Editar
-                                </a>
-    
-                                <form class="delete-form" action="{{ route('categories.destroy', ['category' => $category['id']]) }}" method="POST">
+                                </a> 
+                                
+                                <form id="delete-form" class="delete-form" action="{{ route('categories.destroy', ['category' => $category['id']]) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-    
                                     <button class="btn text-xs px-4 py-2 rounded-lg bg-[#d9534f] text-white hover:bg-[#c9302c]">
                                         Eliminar
                                     </button>
@@ -76,5 +75,9 @@
             </tbody>
         </table>
     </div>
+
+    @push('js')
+        <script src="{{ mix('js/deleteConfirmation.js') }}"></script> 
+    @endpush
     
 </x-layouts.app>

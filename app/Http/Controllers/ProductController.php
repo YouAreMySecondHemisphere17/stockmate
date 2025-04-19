@@ -40,6 +40,7 @@ class ProductController extends Controller
                     'image_path' => $product->image_path,
                     'current_stock' => $product->current_stock,
                     'minimum_stock' => $product->minimum_stock,
+                    'purchase_price' => $product->purchase_price,
                     'sold_price' => $product->sold_price,
                     'details' => $product->details,
                 ];
@@ -70,6 +71,7 @@ class ProductController extends Controller
             'category_id' => 'required|integer|exists:categories,id',
             'product_name' => 'required|string|min:3|max:50|unique:products,product_name',
             'details' => 'nullable|string',
+            'purchase_price' => 'required|numeric|min:0',
             'sold_price' => 'required|numeric|min:0',
             'minimum_stock' => 'required|numeric|min:0',
             'image' => 'nullable|image|max:2048',
@@ -118,6 +120,7 @@ class ProductController extends Controller
             'category_id' => 'required|integer|exists:categories,id',
             'product_name' => 'required|string|min:3|max:50|unique:products,product_name,' . $product->id,
             'details' => 'nullable|string',
+            'purchase_price' => 'required|numeric|min:0',
             'sold_price' => 'required|numeric|min:0',
             'minimum_stock' => 'required|numeric|min:0',
             'image' => 'nullable|image|max:2048',

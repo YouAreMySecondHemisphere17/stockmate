@@ -55,10 +55,6 @@ class DashboardController extends Controller
         DB::select('CALL get_total_sold_products(@total)');
         $totalSoldProducts = DB::select('SELECT @total AS total')[0]->total;
 
-        //Ingreso Neto
-        DB::select('CALL get_net_income(@total)');
-        $totalNetIncome = DB::select('SELECT @total AS total')[0]->total;
-
         Product::calcularStockDeTodosLosProductos();
 
         return view('dashboard', compact(
@@ -71,7 +67,6 @@ class DashboardController extends Controller
             'totalUsers',
             'totalSales',
             'totalAmount',
-            'totalNetIncome',
             'totalUnits',
             'totalCriticalStock',
             'criticalStockProducts',

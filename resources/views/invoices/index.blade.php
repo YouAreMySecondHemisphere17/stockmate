@@ -94,8 +94,12 @@
     </table>
 </div>
 
-<div class="mt-4">
-    {{ $invoices->links() }}
-</div>
+    <div class="mt-4">
+        {{ $invoices->links() }}
+    </div>
+
+    @push('js')
+        <script src="{{ mix('js/deleteConfirmation.js') }}"></script> 
+    @endpush
 
 </x-layouts.app>
