@@ -30,13 +30,19 @@
                 <!-- Categoría -->
                 <div class="flex-2 min-w-[200px]">
                     <label for="category_id" class="block text-sm font-medium text-gray-700">Categoría</label>
-                    <select name="category_id" id="category_id" class="w-full border-gray-300 rounded-md">
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>
-                        @endforeach
+                    <select class="w-full border-gray-300 rounded-md" id="category-select" name="category_id" placeholder="Selecciona una categoría...">
+                        @if(old('category_id'))
+                            <option value="{{ old('category_id') }}" selected>
+                                {{ Category::find(old('category_id'))->name }}
+                            </option>
+                        @endif
                     </select>
-                </div>                
-                
+                    
+                    @error('category_id')
+                        <p class="text-red-600 text-xs mt-1">No has seleccionado ninguna categoría</p>
+                    @enderror
+                </div>
+                                
                 <!-- Proveedor -->
                 <div class="flex-2 min-w-[200px]">
                     <label for="vendor_id" class="block text-sm font-medium text-gray-700">Proveedor</label>
@@ -105,7 +111,8 @@
                 <button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md">Guardar Producto</button>
             </div>
         </form>
-    </div>
+    </div> 
+
 </x-layouts.app>
 
 <script>
@@ -150,3 +157,34 @@
         }
     }
 </script>
+  
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new TomSelect('#category-select', {
+            valueField: 'id',
+            labelField: 'text',
+            searchField: 'text',
+            load: function(query, callback) {
+                if (!query.length) return callback();
+
+                fetch("{{ route('categories.search') }}?q=" + encodeURIComponent(query))
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.items) {
+                            callback(data.items);
+                        } else {
+                            callback();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error loading categories:', error);
+                        callback(); 
+                    });
+            },
+            placeholder: 'Buscar categoría...',
+            allowEmptyOption: true,
+            maxOptions: 10
+        });
+    });
+</script>
+

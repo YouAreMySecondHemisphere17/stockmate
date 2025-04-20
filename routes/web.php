@@ -45,6 +45,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('invoices', InvoiceController::class)->names('invoices');
 
+    Route::get('/api/categories/search', [CategoryController::class, 'search'])->name('categories.search');
+
+
     Route::get('/product-search', function (\Illuminate\Http\Request $request) {
         $search = $request->get('q'); 
     
@@ -61,8 +64,9 @@ Route::middleware(['auth'])->group(function () {
                 'stock' => $product->current_stock,
             ];
         }));
-    })->name('product-search');
+    })->name('product-search');  
 });
+
 
 
 require __DIR__.'/auth.php';

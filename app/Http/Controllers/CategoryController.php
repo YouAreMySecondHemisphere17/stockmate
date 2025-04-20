@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Log;
+
+
 class CategoryController extends Controller
 {
     /**
@@ -106,5 +109,21 @@ class CategoryController extends Controller
         ]);
 
         return redirect()->route('categories.index');
+    } 
+
+    public function search(Request $request)
+    {
+        $search = $request->input('q');
+    
+        $categories = Category::query()
+            ->whereLike('category_name', "%{$search}%") 
+            ->select('id', 'category_name as text')
+            ->limit(10)
+            ->get();
+    
+        return response()->json([
+            'items' => $categories
+        ]);
     }
+    
 }
