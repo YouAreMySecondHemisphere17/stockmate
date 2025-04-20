@@ -20,41 +20,16 @@
             @method('PUT')
 
             <div class="flex">
-                <div class="flex-2 mr-3">
-                    <label for="product_id" class="block text-sm font-medium text-gray-700">Productos</label>
-                    <select name="product_id" id="product_id" class="w-full border-gray-300 rounded-md">
-                        @foreach($products as $product)
-                            <option value="{{ $product->id }}" 
-                                {{ old('product->id', $entry->product->id) == $product->id ? 'selected' : '' }}>
-                                {{ $product->product_name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="flex-2">
-                    <label for="vendor_id" class="block text-sm font-medium text-gray-700">Proveedor</label>
-                    <select name="vendor_id" id="vendor_id" class="w-full border-gray-300 rounded-md">
-                        @foreach($vendors as $vendor)
-                            <option value="{{ $vendor->id }}" 
-                                {{ old('vendor->id', $entry->vendor->id) == $vendor->id ? 'selected' : '' }}>
-                                {{ $vendor->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-
-
-            <div class="flex">
                 <div class="flex-1 mr-3">
-                    <label for="price" class="block text-sm font-medium text-gray-700">Precio de Compra</label>
-                    <input type="number" id="price" name="price" value="{{ old('price',  $entry->price) }}" class="w-full border-gray-300 rounded-md" step="0.01" min="0.01" max="999999.99">
-                </div>
-
-                <div class="flex-1 mr-3">
-                    <label for="quantity" class="block text-sm font-medium text-gray-700">Cantidad del Producto</label>
-                    <input type="number" id="quantity" name="quantity" value="{{ old('quantity', $entry->quantity) }}" class="w-full border-gray-300 rounded-md" step="1" min="1" max="999999">
+                    <label for="transaction_date" class="block text-sm font-medium text-gray-700">Fecha de Entrada</label>
+                    <input 
+                        type="datetime-local" 
+                        id="transaction_date" 
+                        name="transaction_date" 
+                        value="{{ old('transaction_date', now()->format('Y-m-d\TH:i')) }}" 
+                        step="60"
+                        class="w-full border-gray-300 rounded-md"
+                    />
                 </div>
             </div>
 

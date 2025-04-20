@@ -10,7 +10,6 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EntryController;
 use App\Http\Controllers\InvoiceController;
-use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
@@ -45,6 +44,25 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class)->names('users');
 
     Route::resource('invoices', InvoiceController::class)->names('invoices');
+
+    Route::get('/product-search', function (\Illuminate\Http\Request $request) {
+        $search = $request->get('q'); 
+    
+        $products = Product::where('product_name', 'like', '%' . $search . '%')
+            ->select('id', 'product_name', 'sold_price', 'current_stock')
+            ->limit(10)
+            ->get();
+    
+        return response()->json($products->map(function ($product) {
+            return [
+                'id' => $product->id,
+                'text' => $product->product_name,
+                'price' => $product->sold_price,
+                'stock' => $product->current_stock,
+            ];
+        }));
+    })->name('product-search');
 });
+
 
 require __DIR__.'/auth.php';

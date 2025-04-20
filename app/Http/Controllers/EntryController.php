@@ -38,13 +38,13 @@ class EntryController extends Controller
     {
         $data = $request->validate([
             'product_id' => 'required|exists:products,id',
-            'vendor_id' => 'required|exists:vendors,id',
             'total_amount' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:1',
             'transaction_date' => 'required|date',
         ]);
 
-        $entry = Purchase::create($data);
+        Purchase::create($data);
+
         Product::calcularStockDeTodosLosProductos();
 
         session()->flash('swal', [
@@ -81,10 +81,7 @@ class EntryController extends Controller
     public function update(Request $request, Purchase $entry)
     {
         $data = $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'vendor_id' => 'required|exists:vendors,id',
-            'total_amount' => 'required|numeric|min:0',
-            'quantity' => 'required|integer|min:1',
+            'transaction_date' => 'required|date',
         ]);
 
         $entry->update($data);
@@ -94,7 +91,7 @@ class EntryController extends Controller
         session()->flash('swal', [
             'icon' => 'success',
             'title' => '¡Bien hecho!',
-            'text' => 'El proveedor se ha actualizado correctamente',
+            'text' => 'La entrada se ha actualizado correctamente',
         ]);
 
         return redirect()->route('entries.edit', $entry);
@@ -112,7 +109,7 @@ class EntryController extends Controller
         session()->flash('swal', [
             'icon' => 'success',
             'title' => '¡Bien hecho!',
-            'text' => 'El proveedor se ha eliminado correctamente',
+            'text' => 'La entrada se ha eliminado correctamente',
         ]);
 
         return redirect()->route('entries.index');

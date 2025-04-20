@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Product;
-use App\Models\Vendor;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Purchase>
@@ -24,7 +23,6 @@ class PurchaseFactory extends Factory
 
         return [
             'product_id' => $product->id,
-            'vendor_id' => Vendor::all()->random()->id,
             'total_amount' => $total_amount,
             'quantity' => $quantity,
             'transaction_date' => $this->faker->dateTimeThisYear()->format('Y-m-d H:i:s'),

@@ -29,7 +29,7 @@
                     Monto Total
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Monto Descuento
+                    Descuento
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Fecha

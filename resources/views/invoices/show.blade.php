@@ -85,10 +85,9 @@
     </div>
 </x-layouts.app>
 
-
 <style>
     .invoice-container {
-        max-width: 800px; /* Aproximadamente A4 */
+        max-width: 1000px; /* Aumentado de 800px a 1000px */
         margin: auto;
         background-color: #fffefeee;
         padding: 40px;

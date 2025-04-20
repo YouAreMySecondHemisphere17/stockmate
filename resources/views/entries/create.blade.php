@@ -23,18 +23,9 @@
                     <label for="product_id" class="block text-sm font-medium text-gray-700">Productos</label>
                     <select name="product_id" id="product_id" class="w-full border-gray-300 rounded-md">
                         @foreach($products as $product)
-                        <option value="{{ $product->id }}" data-price="{{ $product->price }}">
+                        <option value="{{ $product->id }}" data-price="{{ $product->purchase_price }}">
                             {{ $product->product_name }}
                         </option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="flex-2">
-                    <label for="vendor_id" class="block text-sm font-medium text-gray-700">Proveedor</label>
-                    <select name="vendor_id" id="vendor_id" class="w-full border-gray-300 rounded-md">
-                        @foreach($vendors as $vendor)
-                            <option value="{{ $vendor->id }}">{{ $vendor->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -43,8 +34,15 @@
 
             <div class="flex">
                 <div class="flex-1 mr-3">
-                    <label for="transaction_date" class="block text-sm font-medium text-gray-700">Fecha de Compra</label>
-                    <input type="date" id="transaction_date" name="transaction_date" value="{{ date('Y-m-d') }}" class="w-full border-gray-300 rounded-md" readonly>
+                    <label for="transaction_date" class="block text-sm font-medium text-gray-700">Fecha de Entrada</label>
+                    <input 
+                        type="datetime-local" 
+                        id="transaction_date" 
+                        name="transaction_date" 
+                        value="{{ old('transaction_date', now()->format('Y-m-d\TH:i')) }}" 
+                        step="60"
+                        class="w-full border-gray-300 rounded-md"
+                    />
                 </div>
 
                 <div class="flex-1 mr-3">

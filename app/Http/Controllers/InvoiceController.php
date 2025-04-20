@@ -67,7 +67,7 @@ class InvoiceController extends Controller
            'sell_date' => $request->sell_date,
            'discount_amount' => $request->discount_amount,
            'payment_method' => $request->payment_method,
-           'payment_status' => PaymentStatusEnum::PAID, // Como es pago único
+           'payment_status' => PaymentStatusEnum::PAID, 
        ]);
    
        foreach ($request->products as $productData) {
@@ -79,7 +79,6 @@ class InvoiceController extends Controller
                'quantity_sold' => $productData['sold_quantity'],
                'sold_price' => $productData['sold_price'],
                'total_sold_price' => $totalSoldPrice,
-               'discount' => $productData['discount'] ?? 0,
            ]);
        }
    

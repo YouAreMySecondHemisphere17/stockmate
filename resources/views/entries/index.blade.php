@@ -29,10 +29,13 @@
                     Proveedor
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Monto Total
+                    Cantidad
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Cantidad
+                    Precio Unitario
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Monto Total
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Fecha
@@ -52,13 +55,16 @@
                         {{$entry->product->product_name}}
                     </td>
                     <td class="px-6 py-4">
-                        {{$entry->vendor->name}} 
-                    </td>
-                    <td class="px-6 py-4">
-                        {{$entry->total_amount}} USD
+                        {{$entry->product->vendor->name}} 
                     </td>
                     <td class="px-6 py-4">
                         {{$entry->quantity}}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{$entry->product->purchase_price}} USD
+                    </td>
+                    <td class="px-6 py-4">
+                        {{$entry->total_amount}} USD
                     </td>
                     <td class="px-6 py-4">
                         {{$entry->transaction_date}}

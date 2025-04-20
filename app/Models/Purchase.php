@@ -11,20 +11,18 @@ class Purchase extends Model
     use HasFactory;
 
     protected $fillable = [
-        'product_id',      
-        'vendor_id',     
+        'product_id',         
         'total_amount',           
         'quantity',      
         'transaction_date'
+    ];
+    
+    protected $casts = [
+        'transaction_date' => 'datetime',
     ];
 
     public function product()
     {
         return $this->belongsTo(Product::class);
-    }
-
-    public function vendor()
-    {
-        return $this->belongsTo(Vendor::class);
     }
 }

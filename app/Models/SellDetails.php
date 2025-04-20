@@ -16,7 +16,6 @@ class SellDetails extends Model
         'quantity_sold',
         'sold_price',
         'total_sold_price',
-        'discount',
     ];
 
 	public function product(){
