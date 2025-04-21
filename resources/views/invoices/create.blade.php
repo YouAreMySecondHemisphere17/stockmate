@@ -75,65 +75,67 @@
                 </table>                  
             </div>
 
-            <div class="invoice-section mt-6">
-                <div class="flex items-start">
-                    <button type="button" id="add-product" class="mt-2 p-2 bg-blue-500 text-white rounded-md">
-                        Agregar Productos
-                    </button>
-                <table class="invoice-table-totals">
-                    <tbody>
-                        <tr>
-                            <td class="text-left font-bold">Monto Total:</td>
-                            <td>
-                                <input type="number" id="total_amount" name="total_amount" value="0.00" min="0.00" step="0.01" class="w-full border-gray-300 rounded-md" readonly>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-left font-bold">Descuento:</td>
-                            <td>
-                                <input type="number" id="discount" name="discount_amount" value="0" min="0" class="w-full border-gray-300 rounded-md">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-left font-bold">IVA (15%):</td>
-                            <td>
-                                <input type="text" id="iva_amount" name="iva_amount" class="w-full border-gray-300 rounded-md" readonly>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-left font-bold">Total con IVA:</td>
-                            <td>
-                                <input type="text" id="total_with_iva" name="total_with_iva" value="0.00" min="0.00" step="0.01" class="w-full border-gray-300 rounded-md" readonly>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            </div>
-
-            <div class="invoice-section mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="flex items-center gap-2 w-1/2"> <div class="invoice-section grid grid-rows-1 flex-1">
+                <button type="button" id="add-product" class="mt-2 p-2 bg-blue-500 text-white rounded-md">
+                    Agregar Productos
+                </button>
                 <div>
-                    <label class="invoice-label" for="payment_method">Método de Pago:</label>
-                    <select name="payment_method" id="payment_method" class="w-full border-gray-300 rounded-md">
-                        <option value="">Seleccionar método de pago</option>
-                        @foreach($methods as $method)
-                            <option value="{{ $method->value }}">{{ $method->name }}</option>
-                        @endforeach
-                    </select>
-                    @error('payment_method')
-                        <p class="text-red-600 text-xs mt-1">Debes seleccionar un método de pago</p>
-                    @enderror
+                    <div class="invoice-section mt-6 grid grid-rows-1 gap-4 flex-1">
+                        <div>
+                            <label class="invoice-label" for="payment_method">Método de Pago:</label>
+                            <select name="payment_method" id="payment_method" class="w-full border-gray-300 rounded-md">
+                                <option value="">Seleccionar método de pago</option>
+                                @foreach($methods as $method)
+                                    <option value="{{ $method->value }}">{{ $method->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('payment_method')
+                                <p class="text-red-600 text-xs mt-1">Debes seleccionar un método de pago</p>
+                            @enderror
+                        </div>
+        
+                        <div>
+                            <label class="invoice-label" for="details">Detalles del Pago:</label>
+                            <textarea name="details" id="details"
+                                class="w-full border border-gray-300 bg-gray-50 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                rows="2" placeholder="Información adicional del pago..."></textarea>
+                            @error('details')
+                                <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
                 </div>
-                
-                <div>
-                    <label class="invoice-label" for="details">Detalles del Pago:</label>
-                    <textarea name="details" id="details"
-                    class="w-full border border-gray-300 bg-gray-50 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                    rows="2" placeholder="Información adicional del pago..."></textarea>                
-                    @error('details')
-                        <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
-                    @enderror
+           
+                    <div class="flex items-center gap-2">  
+                        <table class="invoice-table-totals">
+                        <tbody>
+                            <tr>
+                                <td class="text-left font-bold">Monto Total:</td>
+                                <td>
+                                    <input type="number" id="total_amount" name="total_amount" value="0.00" min="0.00" step="0.01" class="w-full border-gray-300 rounded-md" readonly>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left font-bold">Descuento:</td>
+                                <td>
+                                    <input type="number" id="discount" name="discount_amount" value="0" min="0" class="w-full border-gray-300 rounded-md">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left font-bold">IVA (15%):</td>
+                                <td>
+                                    <input type="text" id="iva_amount" name="iva_amount" class="w-full border-gray-300 rounded-md" readonly>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left font-bold">Total con IVA:</td>
+                                <td>
+                                    <input type="text" id="total_with_iva" name="total_with_iva" value="0.00" min="0.00" step="0.01" class="w-full border-gray-300 rounded-md" readonly>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
                 </div>
             </div>
 
@@ -346,7 +348,7 @@
     .invoice-table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 20px;
+        margin-top: 1px;
         background-color: #fff;
     }
 
