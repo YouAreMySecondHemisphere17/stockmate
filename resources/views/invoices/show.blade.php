@@ -39,8 +39,7 @@
                         <th>Producto</th>
                         <th>Cantidad</th>
                         <th>Precio Unitario</th>
-                        <th>Descuento</th>
-                        <th>Total</th>
+                        <th>SubTotal</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,30 +47,38 @@
                         <tr>
                             <td>{{ $item->product->product_name }}</td>
                             <td>{{ $item->quantity_sold }}</td>
-                            <td>{{ $item->sold_price }}</td>
-                            <td>{{ $item->discount }}</td>
-                            <td>{{ $item->total_sold_price }}</td>
+                            <td>{{ number_format($item->sold_price, 2) }}</td>
+                            <td>{{ number_format($item->total_sold_price, 2) }}</td>
                         </tr>
                     @endforeach
+                    @php
+                        $ivaRate = 0.15;
+                        $ivaAmount = $invoice->total_amount * $ivaRate;
+                        $totalWithIva = $invoice->total_amount + $ivaAmount;
+                    @endphp
+                    <tr class="font-bold">
+                        <td colspan="3" class="text-right">Monto Total:</td>
+                        <td rowspan="4" class="text-right align-top">{{ number_format($invoice->total_amount, 2) }}<br>
+                            {{ number_format($invoice->discount_amount, 2) }}<br>
+                            {{ number_format($ivaAmount, 2) }}<br>
+                            {{ number_format($totalWithIva, 2) }}
+                        </td>
+                    </tr>
+                    <tr class="font-bold">
+                        <td colspan="3" class="text-right">Descuento:</td>
+                    </tr>
+                    <tr class="font-bold">
+                        <td colspan="3" class="text-right">IVA (15%):</td>
+                    </tr>
+                    <tr class="font-bold">
+                        <td colspan="3" class="text-right">Total con IVA:</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
 
         <div class="invoice-section">
-            <div class="flex space-x-4">
-                <div class="flex-1">
-                    <label class="invoice-label">Monto Total:</label>
-                    <p>{{ $invoice->total_amount }}</p>
-                </div>
-                <div class="flex-1">
-                    <label class="invoice-label">Descuento Total:</label>
-                    <p>{{ $invoice->discount_amount }}</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="invoice-section">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label class="invoice-label">Método de Pago:</label>
                     <p>{{ $invoice->payment->payment_method }}</p>
@@ -86,53 +93,82 @@
 </x-layouts.app>
 
 <style>
+    body {
+        font-family: 'Georgia', 'Times New Roman', serif;
+        background-color: #f7f5f2;
+        color: #3d3d3d;
+        margin: 40px;
+    }
+
     .invoice-container {
-        max-width: 1000px; /* Aumentado de 800px a 1000px */
-        margin: auto;
-        background-color: #fffefeee;
+        background-color: #fff;
         padding: 40px;
-        border: 1px solid #ccc;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-        font-family: 'Courier New', Courier, monospace;
+        border: 1px solid #bbb;
+        max-width: 1000px;
+        margin: auto;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
     }
 
     .invoice-header {
         text-align: center;
-        font-size: 28px;
+        font-size: 26px;
         font-weight: bold;
         margin-bottom: 30px;
         text-transform: uppercase;
-        border-bottom: 2px solid #eee;
+        color: #2f2f2f;
+        border-bottom: 2px solid #d6d6d6;
         padding-bottom: 10px;
+        letter-spacing: 1px;
     }
 
     .invoice-section {
         margin-bottom: 20px;
-        border-bottom: 1px dashed #ccc;
-        padding-bottom: 10px;
     }
 
     .invoice-label {
         font-weight: bold;
-        color: #333;
+        color: #444;
+        display: block;
+        margin-bottom: 5px;
     }
 
-    .invoice-table th,
-    .invoice-table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
+    .invoice-section p {
+        color: #333;
+        margin-bottom: 10px;
     }
 
     .invoice-table {
         width: 100%;
         border-collapse: collapse;
         margin-top: 10px;
+        background-color: #fff;
     }
 
-    .total-section {
+    .invoice-table th {
+        border: 1px solid #bbb;
+        padding: 8px;
+        text-align: left;
+        background-color: #e6e6e6;
+        color: #2d2d2d;
+        font-weight: 600;
+    }
+
+    .invoice-table td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        background-color: #fdfdfd;
+        color: #333;
+    }
+
+    .invoice-table tr.font-bold td {
         font-weight: bold;
-        font-size: 16px;
+    }
+
+    .invoice-table tr.text-lg td {
+        font-size: 1.2em;
+    }
+
+    .invoice-table td.text-right {
         text-align: right;
     }
 </style>
