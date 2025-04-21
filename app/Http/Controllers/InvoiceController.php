@@ -6,7 +6,6 @@ use App\Enums\PaymentStatusEnum;
 use App\Enums\PaymentMethodEnum;
 
 use App\Http\Controllers\Controller;
-use App\Models\Branch;
 use Illuminate\Http\Request;
 
 use App\Models\Customer;
@@ -66,6 +65,7 @@ class InvoiceController extends Controller
            'total_amount' => $request->total_amount,
            'sell_date' => $request->sell_date,
            'discount_amount' => $request->discount_amount,
+           'total_with_iva' => $request->total_with_iva,
            'payment_method' => $request->payment_method,
            'payment_status' => PaymentStatusEnum::PAID, 
        ]);

@@ -17,6 +17,7 @@ class Sell extends Model
         'total_amount',
         'sell_date',
         'discount_amount',
+        'total_with_iva',
         'payment_status',
     ];
 

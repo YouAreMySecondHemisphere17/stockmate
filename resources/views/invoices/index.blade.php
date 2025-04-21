@@ -32,6 +32,9 @@
                     Descuento
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    Monto Con IVA
+                </th>
+                <th scope="col" class="px-6 py-3">
                     Fecha
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -59,6 +62,9 @@
                     </td>
                     <td class="px-6 py-4">
                         {{$invoice->discount_amount}} USD
+                    </td>
+                    <td class="px-6 py-4">
+                        {{$invoice->total_with_iva}} USD
                     </td>
                     <td class="px-6 py-4">
                         {{$invoice->sell_date}}

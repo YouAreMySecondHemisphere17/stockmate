@@ -180,4 +180,21 @@ class ProductController extends Controller
             'items' => $products
         ]);
     }
+
+    public function search2(Request $request)
+    {      
+        $search = $request->input('q');
+
+        $products = Product::query()
+            ->whereLike('product_name', "%{$search}%") 
+            ->select('id', 'product_name as text', 'sold_price')
+            ->limit(10)
+            ->get(); 
+
+        return response()->json([
+            'items' => $products
+        ]);
+    }
+    
+    
 }

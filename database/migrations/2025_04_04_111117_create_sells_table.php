@@ -23,6 +23,7 @@ return new class extends Migration
             $table->double('total_amount'); //Monto total
             $table->string('sell_date')->nullable(); 
             $table->double('discount_amount')->default(0); 
+            $table->double('total_with_iva'); //Monto total con IVA
 
             $table->enum('payment_status', array_column(PaymentStatusEnum::cases(), 'value'))
             ->default(PaymentStatusEnum::CANCELLED->value);
