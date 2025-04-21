@@ -75,13 +75,13 @@
                 </table>                  
             </div>
 
-            <div class="invoice-section mt-6">
+            <div class="invoice-section">
                     <div class="flex items-center gap-2">
-                        <div class="invoice-section mt-6 grid grid-rows-1 gap-4">
-                        <button type="button" id="add-product" class="mt-2 p-2 bg-blue-500 text-white rounded-md">
+                        <div class="invoice-section grid grid-rows-1 gap-4">
+                        <button type="button" id="add-product" class="mt-2 p-1 bg-blue-500 text-white rounded-md">
                             Agregar Productos
                         </button>
-                        <div class="invoice-section mt-6 grid grid-rows-1 gap-4">
+                        <div class="invoice-section grid grid-rows-1 gap-4">
                             <div>
                                 <label class="invoice-label" for="payment_method">Método de Pago:</label>
                                 <select name="payment_method" id="payment_method" class="w-full border-gray-300 rounded-md">
@@ -139,8 +139,8 @@
                 </div>
             </div>
 
-            <div class="invoice-section mt-6">
-                <button type="submit" class="px-6 py-2 bg-[#fca311] text-black rounded-md shadow">Guardar Factura y Pago</button>
+            <div class="invoice-section mt-3 justify-center">
+                <button type="submit" class="justify-center px-6 py-2 bg-[#fca311] text-black rounded-md shadow">Guardar Factura y Pago</button>
             </div>
         </form>
     </div>
@@ -299,7 +299,7 @@
 <style>
     body {
         font-family: 'Georgia', 'Times New Roman', serif;
-        background-color: #f7f5f2; /* como un beige claro, color papel */
+        background-color: #f7f5f2; 
         color: #3d3d3d;
         margin: 40px;
     }
@@ -308,7 +308,7 @@
         background-color: #fff;
         padding: 40px;
         border: 1px solid #bbb;
-        max-width: 1000px; /* antes era 800px */
+        max-width: 1000px;
         margin: auto;
         box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
     }
@@ -326,7 +326,7 @@
     }
 
     .invoice-section {
-        margin-bottom: 20px;
+        margin-bottom: 5px;
     }
 
     .invoice-label {
@@ -369,11 +369,11 @@
     }
 
     .invoice-table-totals {
-        width: 40%;
+        width: 100%;
         border-collapse: collapse;
-        margin-top: 1px;
-        margin-bottom: 1px;
-        margin-left: 450px;
+        margin-top: 3px;
+        margin-bottom: 3px;
+        margin-left: 135px;
         background-color: #e6e6e6;
     }
 
