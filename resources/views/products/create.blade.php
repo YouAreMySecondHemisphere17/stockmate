@@ -37,7 +37,6 @@
                             </option>
                         @endif
                     </select>
-                    
                     @error('category_id')
                         <p class="text-red-600 text-xs mt-1">No has seleccionado ninguna categoría</p>
                     @enderror
@@ -46,12 +45,17 @@
                 <!-- Proveedor -->
                 <div class="flex-2 min-w-[200px]">
                     <label for="vendor_id" class="block text-sm font-medium text-gray-700">Proveedor</label>
-                    <select name="vendor_id" id="vendor_id" class="w-full border-gray-300 rounded-md">
-                        @foreach($vendors as $vendor)
-                            <option value="{{ $vendor->id }}">{{ $vendor->name }}</option>
-                        @endforeach
+                    <select class="w-full border-gray-300 rounded-md" id="vendor-select" name="vendor_id" placeholder="Selecciona un proveedor...">
+                        @if(old('vendor_id'))
+                            <option value="{{ old('vendor_id') }}" selected>
+                                {{ Vendor::find(old('vendor_id'))->name }}
+                            </option>
+                        @endif
                     </select>
-                </div>             
+                    @error('vendor_id')
+                        <p class="text-red-600 text-xs mt-1">No has seleccionado ningún proveedor</p>
+                    @enderror
+                </div>       
             </div>
 
             <div class="flex flex-wrap gap-4">
@@ -156,6 +160,7 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+
 </script>
   
 <script>
@@ -178,6 +183,36 @@
                     })
                     .catch(error => {
                         console.error('Error loading categories:', error);
+                        callback(); 
+                    });
+            },
+            placeholder: 'Buscar categoría...',
+            allowEmptyOption: true,
+            maxOptions: 10
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new TomSelect('#vendor-select', {
+            valueField: 'id',
+            labelField: 'text',
+            searchField: 'text',
+            load: function(query, callback) {
+                if (!query.length) return callback();
+
+                fetch("{{ route('vendors.search') }}?q=" + encodeURIComponent(query))
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.items) {
+                            callback(data.items);
+                        } else {
+                            callback();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error loading vendors:', error);
                         callback(); 
                     });
             },

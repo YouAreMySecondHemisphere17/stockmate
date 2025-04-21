@@ -122,5 +122,20 @@ class CustomerController extends Controller
         ]);
 
         return redirect()->route('customers.index');
+    }     
+    
+    public function search(Request $request)
+    {
+        $search = $request->input('q');
+    
+        $customers = Customer::query()
+            ->whereLike('name', "%{$search}%") 
+            ->select('id', 'name as text')
+            ->limit(10)
+            ->get();
+    
+        return response()->json([
+            'items' => $customers
+        ]);
     }
 }

@@ -47,6 +47,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/api/categories/search', [CategoryController::class, 'search'])->name('categories.search');
 
+    Route::get('/api/vendors/search', [VendorController::class, 'search'])->name('vendors.search');
+
+    Route::get('/api/products/search', [ProductController::class, 'search'])->name('products.search');
+
+    Route::get('/api/customers/search', [CustomerController::class, 'search'])->name('customers.search');
 
     Route::get('/product-search', function (\Illuminate\Http\Request $request) {
         $search = $request->get('q'); 

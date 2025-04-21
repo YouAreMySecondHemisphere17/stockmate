@@ -164,5 +164,20 @@ class ProductController extends Controller
         ]);
 
         return redirect()->route('products.index');
+    }     
+    
+    public function search(Request $request)
+    {
+        $search = $request->input('q');
+    
+        $products = Product::query()
+            ->whereLike('product_name', "%{$search}%") 
+            ->select('id', 'product_name as text')
+            ->limit(10)
+            ->get();
+    
+        return response()->json([
+            'items' => $products
+        ]);
     }
 }

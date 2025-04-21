@@ -18,19 +18,21 @@
 
             @csrf
 
-            <div class="flex">
-                <div class="flex-2 mr-3">
+            <div class="flex">               
+                <div class="flex-1 mr-3">
                     <label for="product_id" class="block text-sm font-medium text-gray-700">Productos</label>
-                    <select name="product_id" id="product_id" class="w-full border-gray-300 rounded-md">
-                        @foreach($products as $product)
-                        <option value="{{ $product->id }}" data-price="{{ $product->purchase_price }}">
-                            {{ $product->product_name }}
-                        </option>
-                        @endforeach
+                    <select class="w-full border-gray-300 rounded-md" id="product-select" name="product_id" placeholder="Selecciona un producto...">
+                        @if(old('product_id'))
+                            <option value="{{ old('product_id') }}" selected>
+                                {{ Product::find(old('product_id'))->name }}
+                            </option>
+                        @endif
                     </select>
+                    @error('product_id')
+                        <p class="text-red-600 text-xs mt-1">No has seleccionado ningún producto</p>
+                    @enderror
                 </div>
             </div>
-
 
             <div class="flex">
                 <div class="flex-1 mr-3">
@@ -84,5 +86,35 @@
         quantityInput.addEventListener('input', calculateTotal);
 
         calculateTotal();
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new TomSelect('#product-select', {
+            valueField: 'id',
+            labelField: 'text',
+            searchField: 'text',
+            load: function(query, callback) {
+                if (!query.length) return callback();
+
+                fetch("{{ route('products.search') }}?q=" + encodeURIComponent(query))
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.items) {
+                            callback(data.items);
+                        } else {
+                            callback();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error loading products:', error);
+                        callback(); 
+                    });
+            },
+            placeholder: 'Buscar producto...',
+            allowEmptyOption: true,
+            maxOptions: 10
+        });
     });
 </script>

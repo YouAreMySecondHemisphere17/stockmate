@@ -27,34 +27,50 @@
                     @error('product_name')
                         <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
                     @enderror
-                </div>
-
+                </div>    
+                
                 <!-- Categoría -->
                 <div class="flex-2 min-w-[200px]">
                     <label for="category_id" class="block text-sm font-medium text-gray-700">Categoría</label>
-                    <select name="category_id" id="category_id" class="w-full border-gray-300 rounded-md">
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}" 
-                                {{ old('category_id', $product->category->id) == $category->id ? 'selected' : '' }} >
-                                {{ $category->category_name }}
-                            </option>
-                        @endforeach
+                    <select class="w-full border-gray-300 rounded-md" id="category-select" name="category_id" placeholder="Buscar categoría...">
+                        @if(old('category_id'))
+                            @php
+                                $selectedCategory = Category::find(old('category_id'));
+                            @endphp
+                            @if($selectedCategory)
+                                <option value="{{ $selectedCategory->id }}" selected>{{ $selectedCategory->category_name }}</option>
+                            @endif
+                        @elseif(isset($product) && $product->category)
+                            <option value="{{ $product->category->id }}" selected>{{ $product->category->category_name }}</option>
+                        @endif
                     </select>
-                </div>                
+                
+                    @error('category_id')
+                        <p class="text-red-600 text-xs mt-1">No has seleccionado ninguna categoría</p>
+                    @enderror
+                </div>                  
                 
                 <!-- Proveedor -->
                 <div class="flex-2 min-w-[200px]">
                     <label for="vendor_id" class="block text-sm font-medium text-gray-700">Proveedor</label>
-                    <select name="vendor_id" id="vendor_id" class="w-full border-gray-300 rounded-md">
-                        @foreach($vendors as $vendor)
-                        <option value="{{ $vendor->id }}" 
-                            {{ old('vendor_id', $product->vendor->id) == $vendor->id ? 'selected' : '' }} >
-                            {{ $vendor->name }}
-                        </option>
-                        @endforeach
+                    <select class="w-full border-gray-300 rounded-md" id="vendor-select" name="vendor_id" placeholder="Buscar proveedor...">
+                        @if(old('vendor_id'))
+                            @php
+                                $selectedVendor = Vendor::find(old('vendor_id'));
+                            @endphp
+                            @if($selectedVendor)
+                                <option value="{{ $selectedVendor->id }}" selected>{{ $selectedVendor->name }}</option>
+                            @endif
+                        @elseif(isset($product) && $product->vendor)
+                            <option value="{{ $product->vendor->id }}" selected>{{ $product->vendor->name }}</option>
+                        @endif
                     </select>
-                </div>   
-            </div>
+                
+                    @error('vendor_id')
+                        <p class="text-red-600 text-xs mt-1">No has seleccionado ningún proveedor</p>
+                    @enderror
+                </div>                   
+            </div>                                   
 
             <div class="flex flex-wrap gap-4">
                 <!-- Precio de Compra -->
@@ -163,5 +179,65 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new TomSelect('#category-select', {
+            valueField: 'id',
+            labelField: 'text',
+            searchField: 'text',
+            load: function(query, callback) {
+                if (!query.length) return callback();
+
+                fetch("{{ route('categories.search') }}?q=" + encodeURIComponent(query))
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.items) {
+                            callback(data.items);
+                        } else {
+                            callback();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error loading categories:', error);
+                        callback(); 
+                    });
+            },
+            placeholder: 'Buscar categoría...',
+            allowEmptyOption: true,
+            maxOptions: 10
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new TomSelect('#vendor-select', {
+            valueField: 'id',
+            labelField: 'text',
+            searchField: 'text',
+            load: function(query, callback) {
+                if (!query.length) return callback();
+
+                fetch("{{ route('vendors.search') }}?q=" + encodeURIComponent(query))
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.items) {
+                            callback(data.items);
+                        } else {
+                            callback();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error loading vendors:', error);
+                        callback(); 
+                    });
+            },
+            placeholder: 'Buscar categoría...',
+            allowEmptyOption: true,
+            maxOptions: 10
+        });
+    });
 </script>
 

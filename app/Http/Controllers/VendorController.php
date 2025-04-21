@@ -113,5 +113,20 @@ class VendorController extends Controller
         ]);
 
         return redirect()->route('vendors.index');
+    }    
+    
+    public function search(Request $request)
+    {
+        $search = $request->input('q');
+    
+        $vendors = Vendor::query()
+            ->whereLike('name', "%{$search}%") 
+            ->select('id', 'name as text')
+            ->limit(10)
+            ->get();
+    
+        return response()->json([
+            'items' => $vendors
+        ]);
     }
 }
