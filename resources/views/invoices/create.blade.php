@@ -75,37 +75,37 @@
                 </table>                  
             </div>
 
-            <div class="flex items-center gap-2 w-1/2"> <div class="invoice-section grid grid-rows-1 flex-1">
-                <button type="button" id="add-product" class="mt-2 p-2 bg-blue-500 text-white rounded-md">
-                    Agregar Productos
-                </button>
-                <div>
-                    <div class="invoice-section mt-6 grid grid-rows-1 gap-4 flex-1">
-                        <div>
-                            <label class="invoice-label" for="payment_method">Método de Pago:</label>
-                            <select name="payment_method" id="payment_method" class="w-full border-gray-300 rounded-md">
-                                <option value="">Seleccionar método de pago</option>
-                                @foreach($methods as $method)
-                                    <option value="{{ $method->value }}">{{ $method->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('payment_method')
-                                <p class="text-red-600 text-xs mt-1">Debes seleccionar un método de pago</p>
-                            @enderror
-                        </div>
-        
-                        <div>
-                            <label class="invoice-label" for="details">Detalles del Pago:</label>
-                            <textarea name="details" id="details"
+            <div class="invoice-section mt-6">
+                    <div class="flex items-center gap-2">
+                        <div class="invoice-section mt-6 grid grid-rows-1 gap-4">
+                        <button type="button" id="add-product" class="mt-2 p-2 bg-blue-500 text-white rounded-md">
+                            Agregar Productos
+                        </button>
+                        <div class="invoice-section mt-6 grid grid-rows-1 gap-4">
+                            <div>
+                                <label class="invoice-label" for="payment_method">Método de Pago:</label>
+                                <select name="payment_method" id="payment_method" class="w-full border-gray-300 rounded-md">
+                                    <option value="">Seleccionar método de pago</option>
+                                    @foreach($methods as $method)
+                                        <option value="{{ $method->value }}">{{ $method->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('payment_method')
+                                    <p class="text-red-600 text-xs mt-1">Debes seleccionar un método de pago</p>
+                                @enderror
+                            </div>
+                            
+                            <div>
+                                <label class="invoice-label" for="details">Detalles del Pago:</label>
+                                <textarea name="details" id="details"
                                 class="w-full border border-gray-300 bg-gray-50 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                                rows="2" placeholder="Información adicional del pago..."></textarea>
-                            @error('details')
-                                <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
-                            @enderror
+                                rows="2" placeholder="Información adicional del pago..."></textarea>                
+                                @error('details')
+                                    <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
                         </div>
                     </div>
-                </div>
-           
                     <div class="flex items-center gap-2">  
                         <table class="invoice-table-totals">
                         <tbody>
