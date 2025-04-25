@@ -20,20 +20,20 @@
                 class="text-s px-10 py-2 mr-3 rounded-lg border border-[#e5d3b3]"
                 value="{{ request()->get('search') }}"
             >
-            <button type="submit" class="btn text-s px-4 py-2 rounded-lg bg-[#9c8353da] text-amber-950 hover:bg-[#9c8353da]">
+            <button type="submit" class="btn text-s px-4 py-2 rounded-lg bg-[#A6D7C1] text-black hover:bg-[#A6D7C1]">
                 Buscar
             </button>
         </form>
     
-        <a href="{{ route('categories.create') }}" class="btn text-s px-6 py-2 rounded-lg bg-[#9c8353da] text-amber-950 hover:bg-[#9c8353da]">
+        <a href="{{ route('categories.create') }}" class="btn text-s px-6 py-2 rounded-lg bg-[#A6D7C1] text-black hover:bg-[#A6D7C1]">
             Nueva Categoría
         </a>
     </div>
     
     
     <div class="relative overflow-x-auto bg-[#f9f8f6] p-4 rounded-lg border border-[#e5d3b3]">
-        <table class="w-full text-sm text-left rtl:text-right text-amber-950">
-            <thead class="text-xs text-amber-950 uppercase bg-[#9c8353da]">
+        <table class="w-full text-sm text-left rtl:text-right text-black">
+            <thead class="text-xs text-black uppercase bg-[#A6D7C1]">
                 <tr>
                     <th scope="col" class="px-6 py-3">
                         ID
@@ -57,14 +57,14 @@
                         </td>     
                         <td class="px-6 py-4">
                             <div class="flex space-x-2">
-                                <a href="{{ route('categories.edit', ['category' => $category['id']]) }}" class="btn text-xs px-4 py-2 rounded-lg bg-[#9c8353da] text-amber-950 hover:bg-[#9c8353da]">
+                                <a href="{{ route('categories.edit', ['category' => $category['id']]) }}" class="btn text-xs px-4 py-2 rounded-lg bg-[#A6D7C1] text-black hover:bg-[#A6D7C1">
                                     Editar
                                 </a> 
                                 
                                 <form id="delete-form" class="delete-form" action="{{ route('categories.destroy', ['category' => $category['id']]) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn text-xs px-4 py-2 rounded-lg bg-[#d9534f] text-white hover:bg-[#c9302c]">
+                                    <button class="btn text-xs px-4 py-2 rounded-lg bg-[#dd5954] text-white hover:bg-[#dd5954]">
                                         Eliminar
                                     </button>
                                 </form>

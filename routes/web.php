@@ -11,6 +11,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EntryController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Models\Product;
@@ -54,6 +55,30 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/api/customers/search', [CustomerController::class, 'search'])->name('customers.search');
 
     Route::get('/api/products/search2', [ProductController::class, 'search2'])->name('products.search2');
+
+
+    Route::get('reports/index', [ReportController::class, 'index'])->name('reports.index');
+
+    // 1. Current stock report
+    Route::get('reports/stock', [ReportController::class, 'stock'])->name('reports.stock');
+
+    // 2. Low stock report
+    Route::get('/low-stock', [ReportController::class, 'lowStock'])->name('reports.lowStock');
+
+    // 3. Inventory movements (entries & exits)
+    Route::get('/movements', [ReportController::class, 'inventoryMovements'])->name('reports.inventoryMovements');
+
+    // 4. Sales report (by date)
+    Route::get('/sales', [ReportController::class, 'sales'])->name('reports.sales');
+
+    // 5. Top-selling products
+    Route::get('/top-products', [ReportController::class, 'topProducts'])->name('reports.topProducts');
+
+    // 7. Product history (individual product log)
+    Route::get('/product-history/{id}', [ReportController::class, 'productHistory'])->name('reports.productHistory');
+
+    // 8. Purchase report
+    Route::get('/purchases', [ReportController::class, 'purchases'])->name('reports.purchases');
 });
 
 require __DIR__.'/auth.php';
