@@ -97,7 +97,6 @@
         font-family: 'Georgia', 'Times New Roman', serif;
         background-color: #f7f5f2;
         color: #3d3d3d;
-        margin: 40px;
     }
 
     .invoice-container {

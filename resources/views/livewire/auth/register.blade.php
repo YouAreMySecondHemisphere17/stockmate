@@ -1,5 +1,5 @@
 <body class="min-h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('{{ asset('images/bg.jpg') }}'); background-size: cover; background-position: center;">
-    <div class="w-full max-w-sm bg-white backdrop-blur-md rounded-3xl shadow-xl border border-yellow-300 p-4 sm:p-6">
+    <div class="w-full max-w-sm bg-white backdrop-blur-md rounded-3xl shadow-xl border border-gray-400 p-4 sm:p-6">
 
         <!-- Logo y título -->
         <div class="text-center mb-2">
@@ -11,7 +11,7 @@
         </div>
 
         <!-- Estado de sesión -->
-        <x-auth-session-status class="text-center text-green-600 mb-4" :status="session('status')" />
+        <x-auth-session-status class="text-center text-cyan-600 mb-4" :status="session('status')" />
 
         <!-- Formulario -->
         <form wire:submit.prevent="register" class="flex flex-col gap-3">
@@ -27,7 +27,7 @@
                     autofocus
                     autocomplete="name"
                     placeholder="{{ __('Nombre completo') }}"
-                    class="w-full rounded-lg bg-white border-2 border-yellow-300 px-4 py-2 shadow-md focus:ring-2 focus:ring-yellow-400 transition duration-200 ease-in-out"
+                    class="w-full rounded-lg bg-white border-2 border-gray-400 px-4 py-2 shadow-md focus:ring-2 focus:ring-gray-500 transition duration-200 ease-in-out"
                 />
             </div>
 
@@ -41,7 +41,7 @@
                     required
                     autocomplete="email"
                     placeholder="email@ejemplo.com"
-                    class="w-full rounded-lg bg-white border-2 border-yellow-300 px-4 py-2 shadow-md focus:ring-2 focus:ring-yellow-400 transition duration-200 ease-in-out"
+                    class="w-full rounded-lg bg-white border-2 border-gray-400 px-4 py-2 shadow-md focus:ring-2 focus:ring-gray-500 transition duration-200 ease-in-out"
                 />
             </div>
 
@@ -55,7 +55,7 @@
                     required
                     autocomplete="new-password"
                     placeholder="{{ __('Contraseña') }}"
-                    class="w-full rounded-lg bg-white border-2 border-yellow-300 px-4 py-2 shadow-md focus:ring-2 focus:ring-yellow-400 transition duration-200 ease-in-out"
+                    class="w-full rounded-lg bg-white border-2 border-gray-400 px-4 py-2 shadow-md focus:ring-2 focus:ring-gray-50 transition duration-200 ease-in-out"
                 />
             </div>
 
@@ -69,7 +69,7 @@
                     required
                     autocomplete="new-password"
                     placeholder="{{ __('Confirmar contraseña') }}"
-                    class="w-full rounded-lg bg-white border-2 border-yellow-300 px-4 py-2 shadow-md focus:ring-2 focus:ring-yellow-400 transition duration-200 ease-in-out"
+                    class="w-full rounded-lg bg-white border-2 border-gray-400 px-4 py-2 shadow-md focus:ring-2 focus:ring-gray-50 transition duration-200 ease-in-out"
                 />
             </div>
 
@@ -77,7 +77,7 @@
             <div class="flex items-center justify-end">
                 <button
                     type="submit"
-                    class="w-full bg-yellow-400 text-white font-bold py-3 rounded-lg transition hover:bg-yellow-500 shadow-md"
+                    class="w-full bg-teal-500 text-white font-bold py-3 rounded-lg transition hover:bg-teal-700 shadow-md"
                 >
                     {{ __('Crear cuenta') }}
                 </button>
@@ -87,7 +87,7 @@
         <!-- Enlace para iniciar sesión -->
         <div class="mt-4 text-center text-sm text-gray-600">
             {{ __("¿Ya tienes una cuenta?") }}
-            <a href="{{ route('login') }}" class="text-yellow-500 font-semibold hover:text-yellow-600">
+            <a href="{{ route('login') }}" class="text-cyan-700 font-semibold hover:text-cyan-900">
                 {{ __('Iniciar sesión') }}
             </a>
         </div>

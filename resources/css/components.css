@@ -18,6 +18,10 @@
     @apply  bg-red-600 text-white hover:bg-red-800 text-xs rounded-lg font-bold border border-gray-400;
 }
 
+.btn-view { 
+    @apply bg-gray-600 text-white  hover:bg-gray-800 text-xs rounded-lg font-bold border border-gray-400;
+}
+
 .btn-accent { 
     @apply bg-cyan-500 text-white hover:bg-cyan-700;
 }

@@ -10,68 +10,68 @@
         </flux:breadcrumbs.item>
     </flux:breadcrumbs> 
 
-    <a href="{{route('entries.create')}}" class="btn text-s px-6 py-2 rounded-lg bg-[#b1f7cd] text-black hover:bg-[#b1f7cd]">
+    <a href="{{route('entries.create')}}" class="btn btn-primary text-s px-6 py-2 rounded-lg">
         Registrar Entrada
     </a> 
 </div>
 
-<div class="relative overflow-x-auto bg-[#f9f8f6] p-4 rounded-lg border border-[#e5d3b3]">
-    <table class="w-full text-sm text-left rtl:text-right text-black">
-        <thead class="text-xs text-black uppercase bg-[#b1f7cd]">
+<div>
+    <table class="table-bordered">
+        <thead>
             <tr>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     ID
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     Producto
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     Proveedor
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     Cantidad
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     Precio Unitario
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     Monto Total
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     Fecha
                 </th>
-                <th scope="col" class="px-6 py-3 text-center">
+                <th scope="col" width="10px" class="text-center">
                     Acciones
                 </th>
             </tr>
         </thead>
         <tbody>
             @foreach ($entries as $entry)
-                <tr class="bg-white border-b border-[#e5d3b3]">
-                    <th scope="row" class="px-6 py-4 font-medium text-[#3e3b36] whitespace-nowrap">
+                <tr>
+                    <td scope="row">
                         {{$entry->id}}
-                    </th>
-                    <td class="px-6 py-4">
+                    </td>
+                    <td>
                         {{$entry->product->product_name}}
                     </td>
-                    <td class="px-6 py-4">
+                    <td>
                         {{$entry->product->vendor->name}} 
                     </td>
-                    <td class="px-6 py-4">
+                    <td>
                         {{$entry->quantity}}
                     </td>
-                    <td class="px-6 py-4">
+                    <td>
                         {{$entry->product->purchase_price}} USD
                     </td>
-                    <td class="px-6 py-4">
+                    <td>
                         {{$entry->total_amount}} USD
                     </td>
-                    <td class="px-6 py-4">
+                    <td>
                         {{$entry->transaction_date}}
                     </td>    
                     <td class="px-6 py-4">
                         <div class="flex space-x-2">
-                            <a href="{{route('entries.edit', $entry)}}" class="btn text-xs px-4 py-2 rounded-lg bg-[#b1f7cd] text-black hover:bg-[#c0f0d3]">
+                            <a href="{{route('entries.edit', $entry)}}" class="btn-edit px-4 py-2">
                                 Editar
                             </a>
 
@@ -79,7 +79,7 @@
                                 @csrf
                                 @method('DELETE')
 
-                                <button class="btn text-xs px-4 py-2 rounded-lg bg-[#d9534f] text-white hover:bg-[#c9302c]">
+                                <button class="btn-delete px-4 py-2">
                                     Eliminar
                                 </button>
                             </form>

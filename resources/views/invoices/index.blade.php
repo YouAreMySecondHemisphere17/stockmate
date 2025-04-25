@@ -10,40 +10,40 @@
         </flux:breadcrumbs.item>
     </flux:breadcrumbs> 
 
-    <a href="{{route('invoices.create')}}" class="btn text-s px-6 py-2 rounded-lg bg-[#fca311] text-black hover:bg-[#ff8c00]">
+    <a href="{{route('invoices.create')}}" class="btn btn-primary text-s px-6 py-2 rounded-lg">
         Nueva Factura
     </a> 
 </div>
 
-<div class="relative overflow-x-auto bg-[#f9f8f6] p-4 rounded-lg border border-[#e5d3b3]">
-    <table class="w-full text-sm text-left rtl:text-right text-black">
-        <thead class="text-xs text-black uppercase bg-[#fca311]">
+<div>
+    <table class="table-bordered">
+        <thead>
             <tr>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     Número
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     Cliente
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     Monto Total
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     Descuento
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     Monto Con IVA
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     Fecha
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     Estado
                 </th>
-                <th scope="col" class="px-6 py-3">
-                    Método de Pago
+                <th scope="col">
+                    Método (Pago)
                 </th>
-                <th scope="col" class="px-6 py-3 text-center">
+                <th scope="col" width="10px" class="text-center">
                     Acciones
                 </th>
             </tr>
@@ -51,36 +51,36 @@
         <tbody>
             @foreach ($invoices as $invoice)
                 <tr class="bg-white border-b border-[#e5d3b3]">
-                    <th scope="row" class="px-6 py-4 font-medium text-[#3e3b36] whitespace-nowrap">
+                    <td scope="row">
                         {{$invoice->number}}
-                    </th>
-                    <td class="px-6 py-4">
+                    </td>
+                    <td>
                         {{$invoice->customer->name}}
                     </td>
-                    <td class="px-6 py-4">
+                    <td>
                         {{$invoice->total_amount}} USD
                     </td>
-                    <td class="px-6 py-4">
+                    <td>
                         {{$invoice->discount_amount}} USD
                     </td>
-                    <td class="px-6 py-4">
+                    <td>
                         {{$invoice->total_with_iva}} USD
                     </td>
-                    <td class="px-6 py-4">
+                    <td>
                         {{$invoice->sell_date}}
                     </td>
-                    <td class="px-6 py-4">
+                    <td>
                         {{$invoice->payment_status}}
                     </td> 
-                    <td class="px-6 py-4">
+                    <td>
                         {{$invoice->payment->payment_method}}
                     </td>
-                    <td class="px-6 py-4">
+                    <td text-center whitespace-nowrap>
                         <div class="flex space-x-2">
-                            <a href="{{route('invoices.show', $invoice)}}" class="btn text-xs px-4 py-2 rounded-lg bg-[#58ce7f] text-black hover:bg-[#168039]">
+                            <a href="{{route('invoices.show', $invoice)}}" class="btn-view px-4 py-2 bg-">
                                 Ver
                             </a>              
-                            <a href="{{route('invoices.edit', $invoice)}}" class="btn text-xs px-4 py-2 rounded-lg bg-[#fca311] text-black hover:bg-[#ff8c00]">
+                            <a href="{{route('invoices.edit', $invoice)}}" class="btn-edit px-4 py-2">
                                 Editar
                             </a>
                     
@@ -88,7 +88,7 @@
                                 @csrf
                                 @method('DELETE')
                     
-                                <button class="btn text-xs py-2 rounded-lg bg-[#d9534f] text-white hover:bg-[#c9302c]">
+                                <button class="btn-delete px-4 py-2">
                                     Eliminar
                                 </button>
                             </form>

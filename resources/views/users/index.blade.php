@@ -10,38 +10,40 @@
             </flux:breadcrumbs.item>
         </flux:breadcrumbs> 
     
-        <a href="{{route('users.create')}}" class="btn text-s px-6 py-2 rounded-lg bg-[#8398f3da] text-black hover:bg-[#8398f3da]">
+        <a href="{{route('users.create')}}" class="btn btn-primary text-s px-6 py-2 rounded-lg">
             Nuevo Usuario
         </a> 
     </div>
     
-    <div class="relative overflow-x-auto bg-[#f9f8f6] p-4 rounded-lg border border-[#e5d3b3]">
-        <table class="w-full text-sm text-left rtl:text-right text-black">
-            <thead class="text-xs text-black uppercase bg-[#8398f3da]">
+    <div>
+        <table class="table-bordered">
+            <thead>
                 <tr>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col">
                         ID
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col">
                         Nombre
                     </th>
-                    <th scope="col" class="px-6 py-3 text-center" width="10px">
+                    <th scope="col" width="10px" class="text-center">
                         Acciones
                     </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($users as $user)
-                    <tr class="bg-white border-b border-[#e5d3b3]">
-                        <th scope="row" class="px-6 py-4 font-medium text-[#3e3b36] whitespace-nowrap">
-                            {{$user->id}}
-                        </th>
-                        <td class="px-6 py-4">
+                    <tr>
+                        <td scope="row">
+                            {{$user['id']}}
+                        </td>
+                        <td>
                             {{$user->name}}
                         </td>    
-                        <td class="px-6 py-4">
+                        <td>
                             <div class="flex space-x-2">
-                                <a href="{{route('users.edit', $user)}}" class="btn text-xs px-4 py-2 rounded-lg bg-[#8398f3da] text-black hover:bg-[#8398f3da]">
+                                <a href="{{route('users.edit', $user)}}" 
+                                    class="btn-edit px-4 py-2"
+                                >
                                     Editar
                                 </a>
     
@@ -49,7 +51,7 @@
                                     @csrf
                                     @method('DELETE')
     
-                                    <button class="btn text-xs px-4 py-2 rounded-lg bg-[#d9534f] text-white hover:bg-[#c9302c]">
+                                    <button class="btn-delete px-4 py-2">
                                         Eliminar
                                     </button>
                                 </form>
