@@ -8,101 +8,98 @@
             <flux:breadcrumbs.item>
                 Proveedores
             </flux:breadcrumbs.item>
-        </flux:breadcrumbs> 
+        </flux:breadcrumbs>
     </div>
 
     <div class="mb-4 flex justify-between items-center">
         <form action="{{ route('vendors.index') }}" method="GET" class="flex items-center space-x-3">
-            <input 
-                type="text" 
-                name="search" 
+            <input
+                type="text"
+                name="search"
                 placeholder="Buscar..."
-                class="text-s px-10 py-2 rounded-lg border border-[#e5d3b3]"
-                value="{{ request()->get('search') }}"
             >
-            <select name="filter_type" class="text-s px-10 py-2 rounded-lg border border-[#e5d3b3]">
+            <select name="filter_type">
                 <option value="">Seleccionar filtro</option>
                 <option value="name" {{ request()->get('filter_type') == 'name' ? 'selected' : '' }}>Nombre</option>
                 <option value="email" {{ request()->get('filter_type') == 'email' ? 'selected' : '' }}>Email</option>
                 <option value="phone" {{ request()->get('filter_type') == 'phone' ? 'selected' : '' }}>Teléfono</option>
             </select>
-            <button type="submit" class="btn text-s px-4 py-2 rounded-lg bg-[#fddde6] text-black hover:bg-[#fddde6]">
+            <button type="submit" class="btn btn-neutral text-s px-4 py-2 rounded-lg">
                 Buscar
             </button>
         </form>
-    
-        <a href="{{ route('vendors.create') }}" class="btn text-s px-6 py-2 rounded-lg bg-[#fddde6] text-black hover:bg-[#fddde6]">
+
+        <a href="{{ route('vendors.create') }}" class="btn btn-primary text-s px-6 py-2 rounded-lg">
             Nuevo Proveedor
-        </a> 
+        </a>
     </div>
-    
-    
-    <div class="relative overflow-x-auto bg-[#f9f8f6] p-4 rounded-lg border border-[#e5d3b3]">
-        <table class="w-full text-sm text-left rtl:text-right text-black">
-            <thead class="text-xs text-black uppercase bg-[#fddde6]">
+
+    <div>
+        <table class="table-bordered">
+            <thead>
                 <tr>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col">
                         ID
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col">
                         Nombre
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col">
                         Email
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col">
                         Teléfono
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col">
                         Dirección
-                    </th>    
-                    <th scope="col" class="px-6 py-3 text-center" width="10px">
+                    </th>
+                    <th scope="col" width="10px" class="text-center">
                         Acciones
                     </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($vendors as $vendor)
-                    <tr class="bg-white border-b border-[#e5d3b3]">
-                        <th scope="row" class="px-6 py-4 font-medium text-[#3e3b36] whitespace-nowrap">
-                            {{$vendor['id']}} 
-                        </th>
-                        <td class="px-6 py-4">
-                            {{$vendor['name']}} 
+                    <tr>
+                        <td scope="row">
+                            {{$vendor['id']}}
                         </td>
-                        <td class="px-6 py-4">
-                            {{$vendor['email']}} 
+                        <td>
+                            {{$vendor['name']}}
                         </td>
-                        <td class="px-6 py-4">
-                            {{$vendor['phone']}} 
+                        <td>
+                            {{$vendor['email']}}
                         </td>
-                        <td class="px-6 py-4">
-                            {{$vendor['address']}} 
+                        <td>
+                            {{$vendor['phone']}}
                         </td>
-                        <td class="px-6 py-4">
+                        <td>
+                            {{$vendor['address']}}
+                        </td>
+                        <td text-center whitespace-nowrap>
                             <div class="flex space-x-2">
-                                <a href="{{ route('vendors.edit', ['vendor' => $vendor['id']]) }}" class="btn text-xs px-4 py-2 rounded-lg bg-[#fddde6] text-black hover:bg-[#fddde6]">
+                                <a href="{{ route('vendors.edit', ['vendor' => $vendor['id']]) }}" class="btn-edit px-4 py-2">
                                     Editar
                                 </a>
-    
+
                                 <form class="delete-form" action="{{ route('vendors.destroy', ['vendor' => $vendor['id']]) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-    
-                                    <button class="btn text-xs px-4 py-2 rounded-lg bg-[#d9534f] text-white hover:bg-[#c9302c]">
+
+                                    <button class="btn-delete px-4 py-2">
                                         Eliminar
                                     </button>
                                 </form>
                             </div>
                         </td>
-                    </tr>      
+                    </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
 
     @push('js')
-        <script src="{{ mix('js/deleteConfirmation.js') }}"></script> 
+        <script src="{{ mix('js/deleteConfirmation.js') }}"></script>
     @endpush
-    
+
 </x-layouts.app>

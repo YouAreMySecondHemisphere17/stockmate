@@ -30,7 +30,7 @@
             </div>  
   
             <div class="flex justify-end">
-                <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md">Guardar Categoría</button>
+                <button type="submit" class="px-6 py-2 rounded-md">Guardar Categoría</button>
             </div>
 
         </form>

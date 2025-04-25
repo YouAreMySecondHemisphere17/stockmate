@@ -8,76 +8,75 @@
             <flux:breadcrumbs.item>
                 Categorías
             </flux:breadcrumbs.item>
-        </flux:breadcrumbs> 
+        </flux:breadcrumbs>
     </div>
 
     <div class="mb-4 flex justify-between items-center">
-        <form action="{{ route('categories.index') }}" method="GET" class="flex items-center">
-            <input 
-                type="text" 
-                name="search" 
-                placeholder="Buscar por nombre..." 
-                class="text-s px-10 py-2 mr-3 rounded-lg border border-[#e5d3b3]"
+        <form action="{{ route('categories.index') }}" method="GET" class="flex items-center space-x-3">
+            <input
+                type="text"
+                name="search"
+                placeholder="Buscar por nombre..."
                 value="{{ request()->get('search') }}"
             >
-            <button type="submit" class="btn text-s px-4 py-2 rounded-lg bg-[#A6D7C1] text-black hover:bg-[#A6D7C1]">
+            <button type="submit" class="btn btn-neutral text-s px-4 py-2 rounded-lg">
                 Buscar
             </button>
         </form>
-    
-        <a href="{{ route('categories.create') }}" class="btn text-s px-6 py-2 rounded-lg bg-[#A6D7C1] text-black hover:bg-[#A6D7C1]">
+
+        <a href="{{ route('categories.create') }}" class="btn-primary text-s px-6 py-2 rounded-lg font-bold">
             Nueva Categoría
         </a>
     </div>
-    
-    
-    <div class="relative overflow-x-auto bg-[#f9f8f6] p-4 rounded-lg border border-[#e5d3b3]">
-        <table class="w-full text-sm text-left rtl:text-right text-black">
-            <thead class="text-xs text-black uppercase bg-[#A6D7C1]">
+
+
+    <div>
+        <table class="table-bordered">
+            <thead>
                 <tr>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="w-1/3">
                         ID
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="w-1/3">
                         Nombre
                     </th>
-                    <th scope="col" class="px-6 py-3 text-center" width="10px">
+                    <th scope="col" class="text-center">
                         Acciones
                     </th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody >
                 @foreach ($categories as $category)
-                    <tr class="bg-white border-b border-[#e5d3b3]">
-                        <th scope="row" class="px-6 py-4 font-medium text-[#3e3b36] whitespace-nowrap">
+                    <tr>
+                        <th scope="row">
                             {{$category['id']}}
                         </th>
-                        <td class="px-6 py-4">
-                            {{$category['category_name']}}                        
-                        </td>     
-                        <td class="px-6 py-4">
-                            <div class="flex space-x-2">
-                                <a href="{{ route('categories.edit', ['category' => $category['id']]) }}" class="btn text-xs px-4 py-2 rounded-lg bg-[#A6D7C1] text-black hover:bg-[#A6D7C1">
+                        <td>
+                            {{$category['category_name']}}
+                        </td>
+                        <td>
+                            <div class="flex space-x-2 justify-center">
+                                <a href="{{ route('categories.edit', ['category' => $category['id']]) }}" class="btn-edit px-4 py-2">
                                     Editar
-                                </a> 
-                                
+                                </a>
+
                                 <form id="delete-form" class="delete-form" action="{{ route('categories.destroy', ['category' => $category['id']]) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn text-xs px-4 py-2 rounded-lg bg-[#dd5954] text-white hover:bg-[#dd5954]">
+                                    <button class="btn-delete px-4 py-2">
                                         Eliminar
                                     </button>
                                 </form>
                             </div>
                         </td>
-                    </tr>      
+                    </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
 
     @push('js')
-        <script src="{{ mix('js/deleteConfirmation.js') }}"></script> 
+        <script src="{{ mix('js/deleteConfirmation.js') }}"></script>
     @endpush
-    
+
 </x-layouts.app>

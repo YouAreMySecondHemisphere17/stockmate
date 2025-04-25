@@ -45,13 +45,13 @@ $groups = [
     'Gestión de Existencias' => [
         [
             'name' => 'Entradas',
-            'icon' => 'arrow-down-circle',
+            'icon' => 'arrow-down',
             'url' => route('entries.index'),
             'current' => request()->routeIs('entries.*'),
         ],
         [
-            'name' => 'Salidas/Facturación',
-            'icon' => 'minus-circle',
+            'name' => 'Salidas / Facturación',
+            'icon' => 'arrow-up',
             'url' => route('invoices.index'),
             'current' => request()->routeIs('invoices.*'),
         ],
@@ -74,7 +74,12 @@ $groups = [
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #e0f7fa; /* Un azul muy claro, casi blanco */
+            color: #263238; 
         }
 
         .sidebar {
@@ -82,63 +87,81 @@ $groups = [
             top: 0;
             left: 0;
             bottom: 0;
-            width: 250px;
-            background-color: #2D3A47; /* Gris oscuro azulado */
-            color: #B0BEC5; /* Gris claro */
-            padding-top: 20px;
+            right: 0;
+            width: 250px; 
+            background-color: #37474f; 
+            color: #cfd8dc; 
+            padding-top: 25px;
             overflow-y: auto;
-            border-right: 1px solid #394B59; /* Gris oscuro */
+            border-right: 1px solid #263238; 
         }
 
         .main-content {
             margin-left: 250px;
-            padding: 20px;
-            background-color: #F8F8FF;
-            min-height: 100vh;
+            padding: 5px; 
+            background-color: #e0f7fa;
+            flex-grow: 1;
         }
 
         .sidebar .sidebar-header {
-            font-size: 13px;
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 600;
             text-transform: uppercase;
-            margin-bottom: 8px;
-            padding-left: 20px;
-            color: #E0E0E0; /* Gris claro */
+            margin-bottom: 5px;
+            padding: 0 20px;
+            color: #b0bec5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .sidebar .nav-item {
-            margin: 3px 0;
+            margin: 0px 0;
         }
 
         .sidebar .nav-link {
             display: flex;
             align-items: center;
-            padding: 10px 20px;
+            padding: 5px 20px;
             text-decoration: none;
-            color: #B0BEC5; /* Gris claro */
+            color: #ffffff;
             font-size: 15px;
-            transition: background-color 0.2s ease;
-            border-left: 4px solid transparent;
+            transition: background-color 0.3s ease;
+            border-left: 5px solid transparent;
+        }
+
+        .sidebar .nav-link-icon{
+            color: #ffffff;
         }
 
         .sidebar .nav-link:hover {
-            background-color: #394B59; /* Gris oscuro con toque azul */
-            color: #FFFFFF; /* Blanco en hover */
+            background-color: #263238;
+            color: #fff;
         }
 
         .sidebar .nav-link.current {
-            background-color: #F57C00; /* Naranja vibrante */
-            border-left: 4px solid #FFFFFF; /* Resalta con blanco */
-            font-weight: bold;
+            background-color: #00838f; 
+            color: #fff;
+            font-weight: 500;
+            border-left-color: #fff;
         }
 
         .sidebar .nav-link svg {
-            margin-right: 10px;
+            fill: #b0bec5; 
+            transition: fill 0.3s ease;
+        }
+
+        .sidebar .nav-link:hover svg {
+            fill: #fff;
+        }
+
+        .sidebar .nav-link.current svg {
+            fill: #fff;
         }
 
         .sidebar-settings {
-            padding: 15px 20px;
-            border-top: 1px solid #394B59; /* Gris oscuro */
+            padding: 20px;
+            border-top: 1px solid #263238;
         }
 
         .custom-dropdown {
@@ -151,16 +174,16 @@ $groups = [
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 14px;
-            padding: 5px 0;
-            color: #E0E0E0; /* Gris claro */
+            font-size: 15px;
+            padding: 8px 0;
+            color: #cfd8dc;
         }
 
         .user-initial {
-            background-color: #000;
+            background-color: #00695c; 
             color: #fff;
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -173,10 +196,10 @@ $groups = [
             position: absolute;
             top: 100%;
             left: 0;
-            background-color: white;
+            background-color: #fff;
             border: 1px solid #ddd;
-            min-width: 160px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            min-width: 180px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             display: none;
             z-index: 10;
         }
@@ -185,13 +208,14 @@ $groups = [
         .custom-dropdown-menu button {
             display: block;
             width: 100%;
-            padding: 10px;
+            padding: 12px 15px;
             text-align: left;
             background: none;
             border: none;
             cursor: pointer;
-            color: #333;
+            color: #263238;
             font-size: 14px;
+            transition: background-color 0.2s ease;
         }
 
         .custom-dropdown-menu a:hover,
@@ -201,38 +225,63 @@ $groups = [
 
         .toggle-button {
             cursor: pointer;
-            padding: 5px 10px;
-            margin-left: auto;
-            font-size: 18px;
-            color: #E0E0E0;
+            font-size: 16px;
+            color: #b0bec5;
         }
 
-        .hidden-group {
+        .nav-items {
+            margin-bottom: 5px;
+        }
+
+        .nav-items.hidden-group {
             display: none;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+        }
+
+        .sidebar .logo-container {
+            display: flex;
+            align-items: center;
+            padding: 0 20px 25px;
+        }
+
+        .sidebar .logo-container svg {
+            width: 36px;
+            height: 36px;
+            fill: #fff;
+        }
+
+        .sidebar .logo-container span {
+            margin-left: 12px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #fff;
         }
     </style>
 </head>
 
 <body>
     <div class="sidebar">
-        <a href="{{ route('dashboard') }}" style="display: flex; align-items: center; padding: 0 20px 20px;">
-            <x-app-logo style="width: 32px; height: 32px;" />
-            <span style="margin-left: 10px; font-weight: bold; font-size: 17px; color: #FFFFFF;">StockMate</span>
+        <a href="{{ route('dashboard') }}" class="logo-container">
+            <x-app-logo-white />
+            <span>StockMate</span>
         </a>
 
         <nav>
             @foreach ($groups as $group => $links)
                 <div class="sidebar-group">
-                    <div class="sidebar-header">
+                    <div class="sidebar-header" onclick="toggleGroup('{{ Str::slug($group) }}')">
                         {{ $group }}
-                        <span class="toggle-button" onclick="toggleGroup('{{ $group }}')">+</span>
+                        <span class="toggle-button" id="toggle-{{ Str::slug($group) }}">+</span>
                     </div>
-                    <div class="nav-items {{ $group }} hidden-group">
+                    <div class="nav-items {{ Str::slug($group) }} hidden-group">
                         @foreach ($links as $link)
                             <div class="nav-item">
                                 <a href="{{ $link['url'] }}"
                                    class="nav-link {{ $link['current'] ? 'current' : '' }}">
-                                    <x-icon name="{{ $link['icon'] }}" style="width: 18px; height: 18px;" />
+                                    <x-icon name="{{ $link['icon'] }}" style="width: 18px; height: 18px; margin-right: 8px;" class="nav-link-icon" />
                                     <span>{{ $link['name'] }}</span>
                                 </a>
                             </div>
@@ -264,9 +313,9 @@ $groups = [
     </div>
 
     <script>
-        function toggleGroup(groupName) {
-            const group = document.querySelector(`.${groupName}`);
-            const toggleButton = group.previousElementSibling.querySelector('.toggle-button');
+        function toggleGroup(groupSlug) {
+            const group = document.querySelector(`.${groupSlug}`);
+            const toggleButton = document.getElementById(`toggle-${groupSlug}`);
             if (group.classList.contains('hidden-group')) {
                 group.classList.remove('hidden-group');
                 toggleButton.textContent = '-';
@@ -288,6 +337,23 @@ $groups = [
                 menu.style.display = 'none';
             }
         });
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentLink = document.querySelector('.nav-link.current');
+            if (currentLink) {
+            const navItems = currentLink.closest('.nav-items');
+            if (navItems) {
+                navItems.classList.remove('hidden-group');
+
+                const groupSlug = navItems.classList[0];
+                const toggleButton = document.getElementById(`toggle-${groupSlug}`);
+                if (toggleButton) {
+                toggleButton.textContent = '-';
+                }
+            }
+        }
+    });
+
     </script>
 </body>
 </html>

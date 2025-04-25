@@ -18,24 +18,23 @@
                         type="text" 
                         name="search" 
                         placeholder="Buscar..."
-                        class="text-s px-10 py-2 rounded-lg border border-[#faefbddc]"
                         value="{{ request()->get('search') }}"
                     >
-                    <select name="filter_type" class="text-s px-10 py-2 rounded-lg border border-[#faefbddc]">
+                    <select name="filter_type">
                         <option value="">Seleccionar filtro</option>
                         <option value="product_name" {{ request()->get('filter_type') == 'product_name' ? 'selected' : '' }}>Nombre</option>
                         <option value="category_id" {{ request()->get('filter_type') == 'category_id' ? 'selected' : '' }}>Categoría</option>
                         <option value="vendor_id" {{ request()->get('filter_type') == 'vendor_id' ? 'selected' : '' }}>Proveedor</option>
                         <option value="details" {{ request()->get('filter_type') == 'details' ? 'selected' : '' }}>Detalles</option>
                     </select>
-                    <button type="submit" class="btn text-s px-4 py-2 rounded-lg bg-[#faefbddc] text-black hover:bg-[#faefbddc]">
+                    <button type="submit" class="btn btn-neutral text-s px-4 py-2 rounded-lg">
                         Buscar
                     </button>
                 </div>
     
                 <a 
                     href="{{ route('products.create') }}" 
-                    class="btn text-s px-6 py-2 rounded-lg bg-[#faefbddc] text-black hover:bg-[#faefbddc]"
+                    class="btn btn-primary text-s px-6 py-2 rounded-lg"
                 >
                     Nuevo Producto
                 </a> 
@@ -79,10 +78,10 @@
                 <!-- Info del producto -->
                 <div class="p-4 text-black">
                     <h3 class="text-lg font-semibold mb-1 break-words">{{ $product['product_name'] }}</h3>
-                    <p class="text-sm text-yellow-900 font-medium">
+                    <p class="text-sm text-cyan-600 font-medium">
                         Categoría: {{ $product['category_name'] ?? 'Sin categoría' }}
                     </p>
-                    <p class="text-sm text-pink-700 font-medium">
+                    <p class="text-sm text-blue-800 font-medium">
                         Proveedor: {{ $product['vendor_name'] }}
                     </p>
                     <p class="text-sm text-green-600 font-medium">Stock actual: {{ $product['current_stock'] }}</p>
@@ -105,7 +104,7 @@
                     <div class="flex items-center gap-2">
                         <a 
                             href="{{ route('products.edit', ['product' => $product['id']]) }}" 
-                            class="btn text-xs px-4 py-2 rounded-lg bg-[#faefbddc] text-black hover:bg-[#faefbd]"
+                            class="btn text-xs px-4 py-2 rounded-lg bg-cyan-500 text-white hover:bg-cyan-700"
                         >
                             Editar
                         </a>

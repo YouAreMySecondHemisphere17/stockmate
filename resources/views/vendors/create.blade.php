@@ -1,12 +1,12 @@
 <x-layouts.app>
     <flux:breadcrumbs class="mb-4 text-gray-600">
-        <flux:breadcrumbs.item :href="route('dashboard')" class="hover:text-blue-500">
+        <flux:breadcrumbs.item :href="route('dashboard')">
             Dashboard
         </flux:breadcrumbs.item>
-        <flux:breadcrumbs.item :href="route('vendors.index')" class="hover:text-blue-500">
+        <flux:breadcrumbs.item :href="route('vendors.index')">
             Proveedores
         </flux:breadcrumbs.item>
-        <flux:breadcrumbs.item class="text-blue-600">
+        <flux:breadcrumbs.item>
             Nuevo
         </flux:breadcrumbs.item>
     </flux:breadcrumbs> 
@@ -54,7 +54,7 @@
             </div>  
 
             <div class="flex justify-end">
-                <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md">Guardar Proveedor</button>
+                <button type="submit" class="px-6 py-2 rounded-md">Guardar Proveedor</button>
             </div>
         </form>
     </div>

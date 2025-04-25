@@ -2,44 +2,55 @@
     @apply font-bold py-2 px-4 rounded;
 }
 
-.btn-blue {
-    @apply bg-blue-500 text-white hover:bg-blue-700;
+.btn-primary {
+    @apply bg-teal-500 text-white hover:bg-teal-700;
+}
+
+.btn-secondary { 
+    @apply bg-gray-600 text-white hover:bg-gray-800;
+}
+
+.btn-edit { 
+    @apply bg-cyan-500 text-white hover:bg-cyan-700 text-xs rounded-lg font-bold border border-gray-400;
+}
+
+.btn-delete { 
+    @apply  bg-red-600 text-white hover:bg-red-800 text-xs rounded-lg font-bold border border-gray-400;
+}
+
+.btn-accent { 
+    @apply bg-cyan-500 text-white hover:bg-cyan-700;
+}
+
+.btn-neutral {
+    @apply bg-gray-300 text-gray-800 hover:bg-gray-400 border border-gray-400;
+}
+
+.btn-danger {
+    @apply bg-red-600 text-white hover:bg-red-800;
 }
 
 .btn-cambiar-imagen {
     @apply bg-gray-200 text-black px-4 py-2 rounded-lg cursor-pointer font-semibold border border-gray-400 hover:bg-gray-300;
 }
 
-.btn-red {
-    @apply bg-red-500 text-white hover:bg-red-700;
-}
-
 .card {
     @apply bg-white px-6 py-8 shadow-lg rounded-lg;
 }
 
-.cell-head-bordered {
-    @apply border border-black text-center px-6 py-2;
-}
-
-.cell-bordered {
-    @apply border border-black px-6 py-2;
-}
-
 .container-lightgray {
-    @apply bg-gray-100 p-6 rounded-lg shadow-md;
+    @apply bg-gray-200 p-6 rounded-lg shadow-md;
 }
-
 
 :root {
-    --color-background: #f9f8f6;
-    --color-border: #e5d3b3;
-    --color-primary: #fca311;
-    --color-primary-hover: #ff8c00;
-    --color-text: #3e3b36;
-    --color-label: #6b7280;
-    --color-input-background: #ffffff;
-    --color-secondary: #5a9e6f;
+    --color-background: #f5f5f5; 
+    --color-border: #d1d5db;
+    --color-primary: #26a69a; 
+    --color-primary-hover: #00897b; 
+    --color-text: #212121; 
+    --color-label: #757575; 
+    --color-input-background: #ffffff; 
+    --color-secondary: #607d8b; 
 }
 
 .form-custom {
@@ -50,13 +61,13 @@
 }
 
 .form-custom input,
-.form-custom select
- {
+.form-custom select {
     border: 1px solid var(--color-border);
     border-radius: 5px;
     padding: 8px;
     font-size: 14px;
     background-color: var(--color-input-background);
+    color: var(--color-text);
 }
 
 .form-custom textarea {
@@ -66,6 +77,7 @@
     font-size: 14px;
     background-color: var(--color-input-background);
     width: 100%;
+    color: var(--color-text); 
 }
 
 .form-custom label {
@@ -75,7 +87,7 @@
 
 .form-custom button {
     background-color: var(--color-primary);
-    color: var(--color-text); 
+    color: white; 
     padding: 10px 20px;
     border-radius: 5px;
     border: none;
@@ -90,14 +102,14 @@
 
 .form-custom .add-product-btn {
     background-color: var(--color-secondary);
-    color: var(--color-text); 
+    color: white;
     padding: 8px 16px;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .form-custom .add-product-btn:hover {
-    background-color: #38755b;
+    background-color: #455a64; 
 }
 
 .form-custom select {
@@ -111,3 +123,51 @@
     outline: none;
 }
 
+.table-container {
+    @apply relative overflow-x-auto bg-[#f9f8f6] p-6 rounded-lg border border-[#e5d3b3]; 
+  }
+  
+  table {
+    @apply w-full text-sm text-left rtl:text-right text-black; 
+  }
+  
+  thead {
+    @apply text-xs text-black uppercase bg-[#A6D7C1] border-b border-[#A6D7C1]; 
+  }
+  
+  thead th {
+    @apply px-2 py-2; 
+  }
+  
+  tbody tr {
+    @apply bg-white border-b border-[#e5d3b3];
+  }
+  
+  tbody th {
+    @apply px-2 py-2 font-medium text-[#3e3b36] whitespace-nowrap;
+  }
+  
+  tbody td {
+    @apply px-2 py-2;
+  }
+
+  .border-theme {
+    border-color: var(--color-border);
+}
+
+input[name="search"] {
+    @apply text-sm px-5 py-2 rounded-lg border border-gray-400;
+  }
+  
+  select {
+    @apply text-sm px-5 py-2 rounded-lg border border-gray-400;
+  }
+
+.table-bordered th,
+.table-bordered td {
+    @apply border border-gray-400; 
+}
+
+.table-bordered thead th {
+    @apply border-b border-gray-700; 
+}
