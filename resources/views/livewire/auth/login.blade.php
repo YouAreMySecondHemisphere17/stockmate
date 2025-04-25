@@ -1,4 +1,4 @@
-<body class="min-h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('{{ asset('images/bg.jpg') }}'); background-size: cover; background-position: center;">
+<body class="min-h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('{{ asset('images/bg.png') }}'); background-size: cover; background-position: center;">
     <div class="w-full max-w-sm bg-white backdrop-blur-md rounded-3xl shadow-xl border border-gray-400 p-6 sm:p-8">
     
     <!-- Logo e introducción -->
