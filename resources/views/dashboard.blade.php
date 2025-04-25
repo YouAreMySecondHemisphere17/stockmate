@@ -1,5 +1,5 @@
 @php
-    $cardBase = "flex items-center justify-start gap-4 p-3 rounded-xl shadow-md cursor-pointer h-[130px] overflow-hidden";
+    $cardBase = "flex items-center justify-start gap-4 p-3 rounded-xl shadow-md cursor-pointer h-[130px] overflow-hidden transition-all hover:brightness-110";
 @endphp
 
 <x-layouts.app :title="__('Dashboard')">
@@ -9,7 +9,7 @@
         <div class="col-span-full text-xl font-bold text-gray-700">Inventario Actual</div>
 
         <!-- Stock Crítico -->
-        <div id="openCriticalStockModal" class="{{ $cardBase }} bg-red-400 text-white">
+        <div id="openCriticalStockModal" class="{{ $cardBase }} bg-red-500 text-white">
             <i class="fas fa-exclamation-triangle text-4xl text-white"></i>
             <div>
                 <div class="text-lg font-semibold">Stock Crítico</div>
@@ -18,7 +18,7 @@
         </div>
 
         <!-- Existencia Actual -->
-        <div class="{{ $cardBase }} text-white" style="background-color: #4DA9C2; ">
+        <div class="{{ $cardBase }} bg-cyan-700 text-white">
             <i class="fas fa-cube text-4xl text-white"></i>
             <div>
                 <div class="text-lg font-semibold">Existencia Actual</div>
@@ -27,17 +27,17 @@
         </div>
 
         <!-- Existencia Vendida -->
-        <div class="{{ $cardBase }} text-white" style="background-color: #62dba5; ">
+        <div class="{{ $cardBase }} bg-emerald-600 text-white">
             <i class="fas fa-box-open text-4xl text-white"></i>
             <div>
                 <div class="text-lg font-semibold">Existencia Vendida</div>
                 <div class="text-3xl font-bold">{{ $totalSoldProducts }}</div>
             </div>
         </div>
-        
+
         <!-- Productos -->
-        <div class="{{ $cardBase }} text-white" style="background-color: #fcdc5e" >
-            <i class="fas fa-boxes text-4xl text-white"></i>
+        <div class="{{ $cardBase }} bg-yellow-300 text-gray-800">
+            <i class="fas fa-boxes text-4xl text-gray-800"></i>
             <div>
                 <div class="text-lg font-semibold">Productos</div>
                 <div class="text-3xl font-bold">{{ $totalProducts }}</div>
@@ -45,7 +45,7 @@
         </div>
 
         <!-- Categorías -->
-        <div class="{{ $cardBase }} text-white" style="background-color: #FC9BAC" >
+        <div class="{{ $cardBase }} bg-orange-400 text-white">
             <i class="fas fa-tags text-4xl text-white"></i>
             <div>
                 <div class="text-lg font-semibold">Categorías</div>
@@ -57,7 +57,7 @@
         <div class="col-span-full text-xl font-bold text-gray-700">Movimiento Comercial</div>
 
         <!-- Ventas del mes -->
-        <div class="{{ $cardBase }} text-white" style="background-color: #4DA9C2;">
+        <div class="{{ $cardBase }} bg-indigo-600 text-white">
             <i class="fas fa-chart-line text-4xl text-white"></i>
             <div>
                 <div class="text-lg font-semibold">Ventas del mes</div>
@@ -66,7 +66,7 @@
         </div>
 
         <!-- Importe Vendido -->
-        <div class="{{ $cardBase }} text-white" style="background-color: #62dba5;">
+        <div class="{{ $cardBase }} bg-teal-600 text-white">
             <i class="fas fa-cash-register text-4xl text-white"></i>
             <div>
                 <div class="text-lg font-semibold">Importe Vendido</div>
@@ -75,7 +75,7 @@
         </div>
 
         <!-- Beneficio Bruto -->
-        <div class="{{ $cardBase }} text-white" style="background-color: #fcdc5e">
+        <div class="{{ $cardBase }} bg-green-600 text-white">
             <i class="fas fa-dollar-sign text-4xl text-white"></i>
             <div>
                 <div class="text-lg font-semibold">Beneficio Bruto</div>
@@ -84,7 +84,7 @@
         </div>
 
         <!-- Facturas -->
-        <div class="{{ $cardBase }} text-white" style="background-color: #FC9BAC">
+        <div class="{{ $cardBase }} bg-slate-600 text-white">
             <i class="fas fa-file-invoice-dollar text-4xl text-white"></i>
             <div>
                 <div class="text-lg font-semibold">Facturas</div>
@@ -96,8 +96,8 @@
         <div class="col-span-full text-xl font-bold text-gray-700">Personas</div>
 
         <!-- Clientes -->
-        <div class="{{ $cardBase }} bg-indigo-500 text-black">
-            <i class="fas fa-users text-4xl text-black"></i>
+        <div class="{{ $cardBase }} bg-sky-500 text-white">
+            <i class="fas fa-users text-4xl text-white"></i>
             <div>
                 <div class="text-lg font-semibold">Clientes</div>
                 <div class="text-3xl font-bold">{{ $totalCustomers }}</div>
@@ -114,7 +114,7 @@
         </div>
 
         <!-- Usuarios -->
-        <div class="{{ $cardBase }} bg-blue-800 text-white">
+        <div class="{{ $cardBase }} bg-gray-800 text-white">
             <i class="fas fa-user text-4xl text-white"></i>
             <div>
                 <div class="text-lg font-semibold">Usuarios</div>
